@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 public class Client {
 
-    private static final int PORT = 9999;
-    private static final String SERVER = "Localhost";
+    private static final int PORT = 9000;
+    private static
+            String SERVER = "Localhost";
     private static int tries = 0;
 
     //DataInputStream inputFromServer;
@@ -17,6 +18,14 @@ public class Client {
     Socket socket;
 
     public static void main(String[] args) {
+        Scanner serverIP = new Scanner(System.in);
+        System.out.println("Current server are "+ SERVER+" for other server print server ip number or just press enter for current!");
+        String newIp = serverIP.nextLine();
+        if(newIp != ""){
+            SERVER = newIp;
+        }
+            
+        
         String server = SERVER;
         int port = PORT;
 

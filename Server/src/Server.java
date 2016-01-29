@@ -4,7 +4,7 @@ import java.net.*;
 
 public class Server {
 
-    private static final int PORT = 9999;
+    private static final int PORT = 9000;
     private ServerSocket serverSocket;
     Socket socket;
 
