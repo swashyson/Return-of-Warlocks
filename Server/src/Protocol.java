@@ -33,6 +33,9 @@ public class Protocol {
             }
 
         }
+        else{
+            return "Command doesent exist";
+        }
         return "";
 
     }

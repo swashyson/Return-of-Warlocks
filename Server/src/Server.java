@@ -58,10 +58,10 @@ public class Server {
 
                     String syntax = p.checkForCommands(typo);
 
-                    if (!syntax.equals("")) {
+                    //if (!syntax.equals("")) {
                         System.out.println("Server: " + syntax);
 
-                    }
+                    //}
                     out.println(syntax);
                     out.flush();
                 }

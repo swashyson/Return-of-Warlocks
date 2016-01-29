@@ -58,12 +58,12 @@ public class Client {
 
                 String syntax = in.readLine();
 
-                if (!syntax.equals("")) {
-                    System.out.println("Current directory: " + syntax);
-                }
+                //if (!syntax.equals("")) {
+                    System.out.println("Server: " + syntax);
+                //}
 
             }
-
+            
         } catch (IOException e) {
             //e.printStackTrace();
             retryException(server, port);
