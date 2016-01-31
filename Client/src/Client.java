@@ -6,8 +6,7 @@ import java.util.Scanner;
 public class Client {
 
     private static final int PORT = 9000;
-    private static
-            String SERVER = "Localhost";
+    private static String SERVER = "Localhost";
     private static int tries = 0;
 
     //DataInputStream inputFromServer;
