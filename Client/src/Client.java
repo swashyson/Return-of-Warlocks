@@ -63,13 +63,14 @@ public class Client {
 
                 out.println(typo);
                 out.flush();
-
                 String syntax = in.readLine();
-
+                
+                String[] splitRes = syntax.split(",");
                 //if (!syntax.equals("")) {
-                    System.out.println("Server: " + syntax);
+                for(int i = 0; i <splitRes.length; i++){
+                    System.out.println("Server: " + splitRes[i]);
+                }
                 //}
-
             }
             
         } catch (IOException e) {

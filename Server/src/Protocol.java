@@ -32,6 +32,22 @@ public class Protocol {
                 ex.printStackTrace();
             }
 
+        }else if(command.equalsIgnoreCase("List")){
+            try{
+            String[] fileList = file.list();
+            StringBuilder allFiles = new StringBuilder();
+            System.out.println("Files in directory "+file.getCanonicalPath());
+                for(int i = 0 ;i<fileList.length; i++){
+                
+                  allFiles.append(fileList[i]+",");
+                }
+                  System.out.println(allFiles);
+                return allFiles.toString();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+                        
         }
         else{
             return "Command doesent exist";
