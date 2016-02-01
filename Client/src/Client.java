@@ -48,6 +48,7 @@ public class Client {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            
 
             System.out.println("Your Ip: " + socket.getInetAddress());
 
@@ -72,6 +73,9 @@ public class Client {
                         System.out.println(splitRes[i]);
                     }
                     //}
+                }
+                if(typo.equals("dl")){
+                    
                 }
             }
             
