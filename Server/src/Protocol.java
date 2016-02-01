@@ -37,6 +37,7 @@ public class Protocol {
             String[] fileList = file.list();
             StringBuilder allFiles = new StringBuilder();
             System.out.println("Files in directory "+file.getCanonicalPath());
+                allFiles.append("Files in directory "+file.getCanonicalPath());
                 for(int i = 0 ;i<fileList.length; i++){
                 
                   allFiles.append(fileList[i]+",");

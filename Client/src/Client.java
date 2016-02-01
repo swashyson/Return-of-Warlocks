@@ -63,14 +63,16 @@ public class Client {
 
                 out.println(typo);
                 out.flush();
-                String syntax = in.readLine();
-                
-                String[] splitRes = syntax.split(",");
-                //if (!syntax.equals("")) {
-                for(int i = 0; i <splitRes.length; i++){
-                    System.out.println("Server: " + splitRes[i]);
+                if(typo.equals("List") ||typo.equals("apa")){
+                    String syntax = in.readLine();
+
+                    String[] splitRes = syntax.split(",");
+                    //if (!syntax.equals("")) {
+                    for(int i = 0; i <splitRes.length; i++){
+                        System.out.println(splitRes[i]);
+                    }
+                    //}
                 }
-                //}
             }
             
         } catch (IOException e) {
