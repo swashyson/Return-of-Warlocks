@@ -55,10 +55,16 @@ public class Protocol {
                     String filePath =file.getCanonicalPath()+"\\"+syntaxCommand[1]; 
 
                     System.out.println("downloading "+filePath);
+                    return filePath;
                 }catch (Exception ex) {
                     ex.printStackTrace();
                 }
+            }else{
+                return "Chosse a file";
             }
+        }
+        else if(syntaxCommand[0].equalsIgnoreCase("sup")){
+            return syntaxCommand[1];
         }
         else{
             return "Command doesent exist";
