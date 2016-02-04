@@ -48,6 +48,8 @@ public class Client {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            DataInputStream DIS = new DataInputStream(socket.getInputStream());
+            
 
             System.out.println("Your Ip: " + socket.getInetAddress());
 
@@ -63,14 +65,19 @@ public class Client {
 
                 out.println(typo);
                 out.flush();
-                String syntax = in.readLine();
-                
-                String[] splitRes = syntax.split(",");
-                //if (!syntax.equals("")) {
-                for(int i = 0; i <splitRes.length; i++){
-                    System.out.println("Server: " + splitRes[i]);
+                if(typo.equals("List") ||typo.equals("apa")){
+                    String syntax = in.readLine();
+
+                    String[] splitRes = syntax.split(",");
+                    //if (!syntax.equals("")) {
+                    for(int i = 0; i <splitRes.length; i++){
+                        System.out.println(splitRes[i]);
+                    }
+                    //}
                 }
-                //}
+                if(typo.equals("dl")){
+                    DIS.readByte();
+                }
             }
             
         } catch (IOException e) {

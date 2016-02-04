@@ -9,7 +9,7 @@ public class Server {
     Socket socket;
 
     //DataInputStream inputFromClient;
-    //DataOutputStream outputToClient;
+    DataOutputStream outputToClient;
     PrintWriter out;
     BufferedReader in;
 
@@ -42,7 +42,7 @@ public class Server {
                 socket = serverSocket.accept();
                 shutDownHook(socket);
                 System.out.println("Client Connected");
-
+                outputToClient = new DataOutputStream(socket.getOutputStream());
                 out = new PrintWriter(socket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 System.out.println("Connection succssed");
@@ -55,16 +55,20 @@ public class Server {
                 while (true) {
 
                     String typo = in.readLine();
+                    String[] typoSplit = typo.split(" ");
                     System.out.println("Client: " + typo);
+                    String syntax = p.checkForCommands(typoSplit[0]);
+                    if(typoSplit[0].equals("List")||typoSplit[0].equals("apa")){
+                        //if (!syntax.equals("")) {
+                            System.out.println("Server: " + syntax);
 
-                    String syntax = p.checkForCommands(typo);
-
-                    //if (!syntax.equals("")) {
-                        System.out.println("Server: " + syntax);
-
-                    //}
-                    out.println(syntax);
-                    out.flush();
+                        //}
+                        out.println(syntax);
+                        out.flush();
+                    }else if(typoSplit[0].equals("dl")){
+                        outputToClient.writeBytes(syntax);
+                    }
+                    
                 }
 
             } catch (IOException e) {
