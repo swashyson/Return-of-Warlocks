@@ -40,6 +40,7 @@ public class Server {
                 // listen for a connection
                 System.out.println("Waiting for connection...");
                 socket = serverSocket.accept();
+                shutDownHook(socket);
                 System.out.println("Client Connected");
 
                 out = new PrintWriter(socket.getOutputStream(), true);

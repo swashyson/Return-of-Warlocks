@@ -20,7 +20,7 @@ public class Client {
         Scanner serverIP = new Scanner(System.in);
         System.out.println("Current server are "+ SERVER+" for other server print server ip number or just press enter for current!");
         String newIp = serverIP.nextLine();
-        if(newIp != ""){
+        if(!"".equals(newIp)){
             SERVER = newIp;
         }
             
