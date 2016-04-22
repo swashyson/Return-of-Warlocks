@@ -5,12 +5,17 @@
  */
 package chatSystem;
 
+import controllers.FXMLDocumentSecondScene;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -38,6 +43,17 @@ public class Chat {
             System.out.println("Failed to connect to chat, is the chat server up?");
         }
 
+    }
+    public void sendMessage(){
+            try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Pane p = fxmlLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentSecondScene.fxml").openStream());
+            FXMLDocumentSecondScene controller = (FXMLDocumentSecondScene) fxmlLoader.getController();
+            
+            //använd controllern sen för att FXML ska kunna prata med java filer
+        } catch (IOException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

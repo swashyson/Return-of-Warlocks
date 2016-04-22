@@ -52,14 +52,14 @@ public class FXMLDocumentSecondScene implements Initializable {
         chat.clientConnect("Localhost", 9006);
         
         
-        keyListener();
+        keyListener(chat);
 
     }
 
-    private void keyListener() {
+    private void keyListener(chatSystem.Chat chat) {
         typeToChat.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
-                //send with TCP
+                chat.sendMessage();
                 System.out.println("send with TCP");
             }
         });
