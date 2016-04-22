@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import dataStorage.DataStorage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,6 +43,7 @@ public class FXMLDocumentController implements Initializable {
 
         if (checkName() == true) {
 
+            storeName();
             changeScene(event);
 
         } else {
@@ -61,13 +63,16 @@ public class FXMLDocumentController implements Initializable {
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.out.println("Failed to load scene");
         }
     }
 
     public boolean checkName() {
 
         return !textfieldName.getText().isEmpty();
+    }
+    public void storeName(){
+    
+        DataStorage.setUserName(textfieldName.getText());
     }
 
     @Override

@@ -6,6 +6,8 @@
 package chatSystem;
 
 import controllers.FXMLDocumentSecondScene;
+import dataStorage.DataStorage;
+import dataStorage.informationStorage;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -29,31 +31,51 @@ public class Chat {
 
     public void clientConnect(String server, int port) {
 
-        BufferedReader in = null;
-        PrintWriter out = null;
-
         try {
             System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientSocket = new Socket(server, port);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
             System.out.println("Connecion succeed");
-
+            
         } catch (IOException ex) {
             System.out.println("Failed to connect to chat, is the chat server up?");
         }
 
     }
-    public void sendMessage(){
-            try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Pane p = fxmlLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentSecondScene.fxml").openStream());
-            FXMLDocumentSecondScene controller = (FXMLDocumentSecondScene) fxmlLoader.getController();
-            
-            //använd controllern sen för att FXML ska kunna prata med java filer
+    
+    public void saveServerInformation(){
+    
+        informationStorage.setServerIP(SERVER);
+    }
+    
+
+    public void sendMessage(String message) {
+
+        PrintWriter out = null;
+
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println(DataStorage.getUserName() + ": " + message);
+            out.flush();
+
         } catch (IOException ex) {
-            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+    }
+
+    public void checkForIncommingMessage() {
+
+        BufferedReader in = null;
+
+        try {
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            while(true){
+            String test = in.readLine();
+            DataStorage.getAllChat().appendText(test + "\n");
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
 }

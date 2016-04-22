@@ -6,6 +6,8 @@
 package controllers;
 
 import chatSystem.Chat;
+import dataStorage.DataStorage;
+import dataStorage.informationStorage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -38,6 +41,8 @@ public class FXMLDocumentSecondScene implements Initializable {
     private Button startButton;
     @FXML
     private TextField typeToChat;
+    @FXML
+    private TextArea allChat;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -50,19 +55,42 @@ public class FXMLDocumentSecondScene implements Initializable {
 
         chatSystem.Chat chat = new Chat();
         chat.clientConnect("Localhost", 9006);
-        
-        
+        listenForIncommingMessages(chat);
         keyListener(chat);
+        startAllChat();
+    }
 
+    public void startAllChat() {
+
+        DataStorage.setAllChat(allChat);
+        welcomeMessage();
+
+    }
+
+    public void welcomeMessage() {
+
+        DataStorage.getAllChat().appendText("Welcome to the chat server at ip: " + informationStorage.getServerIP() + "\n");
+        DataStorage.getAllChat().appendText("Please keep the chat mature \n");
     }
 
     private void keyListener(chatSystem.Chat chat) {
         typeToChat.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
-                chat.sendMessage();
+                chat.sendMessage(typeToChat.getText());
+                typeToChat.clear();
                 System.out.println("send with TCP");
             }
         });
+    }
+
+    public void listenForIncommingMessages(chatSystem.Chat chat) {
+
+        Thread t1 = new Thread(new Runnable() {
+            public void run() {
+                chat.checkForIncommingMessage();
+            }
+        });
+        t1.start();
     }
 
 }
