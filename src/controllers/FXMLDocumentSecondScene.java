@@ -5,12 +5,14 @@
  */
 package controllers;
 
+import chatSystem.Chat;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +22,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -33,19 +37,32 @@ public class FXMLDocumentSecondScene implements Initializable {
     @FXML
     private Button startButton;
     @FXML
-    private TextField textfieldName;
+    private TextField typeToChat;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
-        
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        chatSystem.Chat chat = new Chat();
+        chat.clientConnect("Localhost", 9006);
+        
+        
+        keyListener();
+
+    }
+
+    private void keyListener() {
+        typeToChat.setOnKeyPressed((KeyEvent ke) -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                //send with TCP
+                System.out.println("send with TCP");
+            }
+        });
     }
 
 }
