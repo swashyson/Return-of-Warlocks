@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author Swashy
  */
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentSecondScene implements Initializable {
 
     @FXML
     private Label label;
@@ -39,36 +39,9 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
-
-        if (checkName() == true) {
-
-            changeScene(event);
-
-        } else {
-
-            System.out.println("Skriv in ett giltigt namn");
-        }
-    }
-
-    private void changeScene(ActionEvent event) {
         
-        try {
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentSecondScene.fxml"));
-            Scene scene = new Scene(blah);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.show();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Failed to load scene");
-        }
     }
 
-    public boolean checkName() {
-
-        return !textfieldName.getText().isEmpty();
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
