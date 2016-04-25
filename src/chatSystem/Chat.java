@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,11 @@ public class Chat {
     private static final int PORT = 9006;
     private static String SERVER = "Localhost";
     private Socket clientSocket;
+    
+    public Chat(){
+    
+        saveServerInformation();
+    }
 
     public void clientConnect(String server, int port) {
 
@@ -35,18 +41,17 @@ public class Chat {
             System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientSocket = new Socket(server, port);
             System.out.println("Connecion succeed");
-            
+
         } catch (IOException ex) {
             System.out.println("Failed to connect to chat, is the chat server up?");
         }
 
     }
-    
-    public void saveServerInformation(){
-    
+
+    public final void saveServerInformation() {
+
         informationStorage.setServerIP(SERVER);
     }
-    
 
     public void sendMessage(String message) {
 
@@ -68,12 +73,14 @@ public class Chat {
 
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            while(true){
-            String test = in.readLine();
-            DataStorage.getAllChat().appendText(test + "\n");
+            while (true) {
+                String test = in.readLine();
+                DataStorage.getAllChat().appendText(test + "\n");
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (SocketException ex) {
+            System.out.println("Lost connection");
+        } catch (Exception ex2) {
+            ex2.printStackTrace();
         }
 
     }

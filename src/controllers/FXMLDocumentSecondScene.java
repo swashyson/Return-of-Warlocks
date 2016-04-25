@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -84,13 +85,15 @@ public class FXMLDocumentSecondScene implements Initializable {
     }
 
     public void listenForIncommingMessages(chatSystem.Chat chat) {
-
-        Thread t1 = new Thread(new Runnable() {
-            public void run() {
+        
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
                 chat.checkForIncommingMessage();
+                return null;
             }
-        });
-        t1.start();
+        };
+        new Thread(task).start();
     }
 
 }
