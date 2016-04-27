@@ -9,9 +9,11 @@ import controllers.FXMLDocumentSecondScene;
 import dataStorage.DataStorage;
 import dataStorage.informationStorage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
@@ -28,7 +30,7 @@ import javafx.scene.layout.Pane;
 public class Chat {
 
     private static final int PORT = 9006;
-    private static String SERVER = "194.47.32.97";
+    private static String SERVER = "Localhost";
     private Socket clientSocket;
     
     public Chat(){
@@ -44,7 +46,7 @@ public class Chat {
         try {
             System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientSocket = new Socket(server, port);
-            System.out.println("Your Ip: " + clientSocket.getInetAddress());
+            
             System.out.println("Connecion succeed");
 
         } catch (IOException ex) {
