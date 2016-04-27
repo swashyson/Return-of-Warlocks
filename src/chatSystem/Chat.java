@@ -28,7 +28,7 @@ import javafx.scene.layout.Pane;
 public class Chat {
 
     private static final int PORT = 9006;
-    private static String SERVER = "Localhost";
+    private static String SERVER = "194.47.32.97";
     private Socket clientSocket;
     
     public Chat(){
@@ -36,11 +36,15 @@ public class Chat {
         saveServerInformation();
     }
 
+    public String getServerIp(){
+        return SERVER;
+    }
     public void clientConnect(String server, int port) {
 
         try {
             System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientSocket = new Socket(server, port);
+            System.out.println("Your Ip: " + clientSocket.getInetAddress());
             System.out.println("Connecion succeed");
 
         } catch (IOException ex) {

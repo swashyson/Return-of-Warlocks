@@ -59,7 +59,7 @@ public class FXMLDocumentSecondScene implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         
-        chat.clientConnect("Localhost", 9006);
+        chat.clientConnect(chat.getServerIp(), 9006);
         listenForIncommingMessages(chat);
         keyListener(chat);
         startAllChat();
