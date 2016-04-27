@@ -41,7 +41,7 @@ public class FXMLDocumentSecondScene implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private Button startButton;
+    private Button sendButton;
     @FXML
     private TextField typeToChat;
     @FXML
@@ -59,7 +59,7 @@ public class FXMLDocumentSecondScene implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         
-        chat.clientConnect("Localhost", 9006);
+        chat.clientConnect("192.47.44.87", 9006);
         listenForIncommingMessages(chat);
         keyListener(chat);
         startAllChat();

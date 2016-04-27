@@ -28,7 +28,7 @@ import javafx.scene.layout.Pane;
 public class Chat {
 
     private static final int PORT = 9006;
-    private static String SERVER = "Localhost";
+    private static String SERVER = "192.47.44.87";
     private Socket clientSocket;
     
     public Chat(){
