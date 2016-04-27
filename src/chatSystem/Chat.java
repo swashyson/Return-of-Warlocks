@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
@@ -75,7 +76,13 @@ public class Chat {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             while (true) {
                 String test = in.readLine();
-                DataStorage.getAllChat().appendText(test + "\n");
+                Platform.runLater(new Runnable() {
+                           @Override
+                            public void run() {  
+                                DataStorage.getAllChat().appendText(test + "\n");
+                            }
+                        });
+                
             }
         } catch (SocketException ex) {
             System.out.println("Lost connection");

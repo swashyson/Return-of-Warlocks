@@ -17,10 +17,12 @@ final public class DataStorage {
     static TextArea allChat;
 
     public static TextArea getAllChat() {
+        
         return allChat;
     }
 
     public static void setAllChat(TextArea allChat) {
+        
         DataStorage.allChat = allChat;
     }
 

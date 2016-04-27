@@ -9,6 +9,8 @@ import chatSystem.Chat;
 import dataStorage.DataStorage;
 import dataStorage.informationStorage;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -44,17 +46,19 @@ public class FXMLDocumentSecondScene implements Initializable {
     private TextField typeToChat;
     @FXML
     private TextArea allChat;
-
+    chatSystem.Chat chat = new Chat();
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        label.setText(typeToChat.getText());
+        chat.sendMessage(typeToChat.getText());
+        typeToChat.clear();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        chatSystem.Chat chat = new Chat();
+        
         chat.clientConnect("Localhost", 9006);
         listenForIncommingMessages(chat);
         keyListener(chat);
