@@ -26,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -39,6 +40,8 @@ import javafx.stage.Stage;
 public class FXMLDocumentSecondScene implements Initializable {
 
     @FXML
+    private ListView playerList;
+    @FXML
     private Label label;
     @FXML
     private Button sendButton;
@@ -46,7 +49,9 @@ public class FXMLDocumentSecondScene implements Initializable {
     private TextField typeToChat;
     @FXML
     private TextArea allChat;
+
     chatSystem.Chat chat = new Chat();
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -58,11 +63,12 @@ public class FXMLDocumentSecondScene implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
-        chat.clientConnect("192.47.44.87", 9006);
+        chat.clientConnect("Localhost", 9006);
         listenForIncommingMessages(chat);
         keyListener(chat);
         startAllChat();
+        startPlayerList();
+        chat.sendNameToServer();
     }
 
     public void startAllChat() {
@@ -70,6 +76,10 @@ public class FXMLDocumentSecondScene implements Initializable {
         DataStorage.setAllChat(allChat);
         welcomeMessage();
 
+    }
+    public void startPlayerList(){
+    
+        DataStorage.setPlayerList(playerList);
     }
 
     public void welcomeMessage() {
@@ -89,7 +99,7 @@ public class FXMLDocumentSecondScene implements Initializable {
     }
 
     public void listenForIncommingMessages(chatSystem.Chat chat) {
-        
+
         Task task = new Task<Void>() {
             @Override
             public Void call() {

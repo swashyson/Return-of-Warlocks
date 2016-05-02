@@ -18,7 +18,10 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 
 /**
@@ -28,11 +31,11 @@ import javafx.scene.layout.Pane;
 public class Chat {
 
     private static final int PORT = 9006;
-    private static String SERVER = "192.47.44.87";
+    private static String SERVER = "Localhost";
     private Socket clientSocket;
-    
-    public Chat(){
-    
+
+    public Chat() {
+
         saveServerInformation();
     }
 
@@ -77,17 +80,53 @@ public class Chat {
             while (true) {
                 String test = in.readLine();
                 Platform.runLater(new Runnable() {
-                           @Override
-                            public void run() {  
-                                DataStorage.getAllChat().appendText(test + "\n");
-                            }
-                        });
-                
+                    @Override
+                    public void run() {
+                        if (test.contains("|||||")) {
+
+                            playerNamesSplitterAndAdder();
+
+                        } else {
+                            DataStorage.getAllChat().appendText(test + "\n");
+
+                        }
+
+                    }
+
+                    private void playerNamesSplitterAndAdder() {
+                        
+                        DataStorage.newObservableList();
+
+                        System.out.println("DISPLAY NAME " + DataStorage.getPlayerListAdapter().size());
+
+                        String name = test.substring(5);
+
+                        String[] splitArray = name.split(",");
+                        for (String s : splitArray) {
+                            DataStorage.getPlayerListAdapter().add(s);
+                        }
+                        DataStorage.getPlayerList().setItems(DataStorage.getPlayerListAdapter());
+                    }
+                });
+
             }
         } catch (SocketException ex) {
             System.out.println("Lost connection");
         } catch (Exception ex2) {
             ex2.printStackTrace();
+        }
+
+    }
+
+    public void sendNameToServer() {
+
+        PrintWriter out = null;
+
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println("|||||" + DataStorage.getUserName());
+        } catch (IOException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
