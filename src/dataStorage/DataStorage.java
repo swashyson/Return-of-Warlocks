@@ -5,6 +5,9 @@
  */
 package dataStorage;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
 /**
@@ -15,6 +18,30 @@ final public class DataStorage {
 
     static String userName;
     static TextArea allChat;
+    static ListView playerList;
+    static ObservableList playerListAdapter = FXCollections.observableArrayList();;
+
+    public static ObservableList getPlayerListAdapter() {
+        return playerListAdapter;
+    }
+    public static void newObservableList(){
+    
+        playerListAdapter = null;
+        playerListAdapter = FXCollections.observableArrayList();
+        
+    } 
+
+    public static void setPlayerListAdapter(ObservableList playerListAdapter) {
+        DataStorage.playerListAdapter = playerListAdapter;
+    }
+
+    public static ListView getPlayerList() {
+        return playerList;
+    }
+
+    public static void setPlayerList(ListView playerList) {
+        DataStorage.playerList = playerList;
+    }
 
     public static TextArea getAllChat() {
         
