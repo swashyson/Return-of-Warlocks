@@ -41,7 +41,7 @@ public class FXMLDocumentSecondScene implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private Button startButton;
+    private Button sendButton;
     @FXML
     private TextField typeToChat;
     @FXML
