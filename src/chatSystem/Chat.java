@@ -43,15 +43,16 @@ public class Chat {
         saveServerInformation();
     }
 
-    public String getServerIp(){
+    public String getServerIp() {
         return SERVER;
     }
+
     public void clientConnect(String server, int port) {
 
         try {
             System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientSocket = new Socket(server, port);
-            
+
             System.out.println("Connecion succeed");
             DataStorage.setClientSocket(clientSocket);
 
@@ -64,6 +65,7 @@ public class Chat {
     public final void saveServerInformation() {
 
         informationStorage.setServerIP(SERVER);
+        System.out.println("Test");
     }
 
     public void sendMessage(String message) {
