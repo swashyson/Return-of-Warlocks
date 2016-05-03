@@ -6,7 +6,11 @@
 package controllers;
 
 import chatSystem.Chat;
+import chatSystem.AllChatToLocal;
+import chatSystem.LocalChatMaster;
+import chatSystem.LocalChatSlave;
 import dataStorage.DataStorage;
+import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
 import java.io.IOException;
 import java.io.BufferedWriter;
@@ -15,8 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,7 +41,7 @@ import javafx.stage.Stage;
  *
  * @author Swashy
  */
-public class FXMLDocumentSecondScene implements Initializable {
+public class FXMLDocumentCreateLobby implements Initializable {
 
     @FXML
     private ListView playerList;
@@ -56,7 +58,14 @@ public class FXMLDocumentSecondScene implements Initializable {
     @FXML
     private Button createGameButton;
 
-    chatSystem.Chat chat = new Chat();
+    @FXML
+    private Label player1;
+    @FXML
+    private Label player2;
+
+    chatSystem.AllChatToLocal chat;
+    chatSystem.LocalChatMaster masterChat;
+    chatSystem.LocalChatSlave slaveChat;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -66,34 +75,30 @@ public class FXMLDocumentSecondScene implements Initializable {
         typeToChat.clear();
     }
 
-    public void lobbyListListener() {
+    @FXML
+    private void handleServerList(ActionEvent event) {
 
-        lobbyList.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    int id = lobbyList.getSelectionModel().getSelectedIndex();
-                    chat.selectedServerJoin(id);
-                }
-        );
+        lobbyList.getSelectionModel().getSelectedItem();
     }
 
     @FXML
-    private void createGame(ActionEvent event) {
+    private void handleDisconnectFromLobby(ActionEvent event) {
 
-        changeScene(event, true);
+        if (informationStorage.isMasterOrNot() == true) {
+
+            masterChat.Disconnect();
+            changeScene(event);
+        }
+
     }
 
-    @FXML
-    private void joinGame(ActionEvent event) {
-
-        changeScene(event, false);
-    }
-
-    private void changeScene(ActionEvent event, boolean masterOrNot) {
+    private void changeScene(ActionEvent event) {
 
         try {
-            informationStorage.setMasterOrNot(masterOrNot);
-
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentCreateLobby.fxml"));
+            chat = null;
+            masterChat = null;
+            slaveChat = null;
+            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocument.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
@@ -107,16 +112,25 @@ public class FXMLDocumentSecondScene implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //DISC
-        chat.clientConnect("Localhost", 9006);
-        listenForIncommingMessages(chat);
-        chat.sendNameToServer();
-        keyListener(chat);
-        startAllChat();
-        startPlayerList();
-        startLobbyList();
+        chat = new AllChatToLocal();
+        slaveChat = new LocalChatSlave();
+        if (informationStorage.isMasterOrNot() == true) {
+            masterChat = new LocalChatMaster();
+            masterChat.CreateServer(9007);
+            masterChat.StartServer(9007);
+            masterChat.sendMasterPort();
+            masterChat.sendMasterIP();
+        }
 
-        lobbyListListener();
+        listenForIncommingMessages(chat);
+        keyListener(chat, slaveChat);
+        startAllChat();
+        startPlayerFrames();
+
+        slaveChat.clientConnect("Localhost", 9007);
+        listenForIncommingMessagesFromMaster(slaveChat);
+        slaveChat.sendNameToServer();
+
     }
 
     public void startAllChat() {
@@ -126,33 +140,56 @@ public class FXMLDocumentSecondScene implements Initializable {
 
     }
 
-    public void startPlayerList() {
+    public void startPlayerFrames() {
 
-        DataStorage.setPlayerList(playerList);
-    }
+        PlayersStorage.setPlayer1(player1);
+        PlayersStorage.setPlayer2(player2);
 
-    public void startLobbyList() {
-
-        DataStorage.setLobbyList(lobbyList);
     }
 
     public void welcomeMessage() {
 
         DataStorage.getAllChat().appendText("Welcome to the chat server at ip: " + informationStorage.getServerIP() + "\n");
+        DataStorage.getAllChat().appendText("Please use /all to type in all chat\n");
         DataStorage.getAllChat().appendText("Please keep the chat mature \n");
     }
 
-    private void keyListener(chatSystem.Chat chat) {
+    private void keyListener(chatSystem.AllChatToLocal chat, chatSystem.LocalChatSlave chat2) {
         typeToChat.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
-                chat.sendMessage(typeToChat.getText());
-                typeToChat.clear();
-                System.out.println("send with TCP");
+                String upToNCharacters = typeToChat.getText().substring(0, Math.min(typeToChat.getText().length(), 5));
+
+                System.out.println("SUB" + upToNCharacters);
+                if (upToNCharacters.contains("/all ")) {
+
+                    chat.sendMessage(typeToChat.getText().substring(5));
+                    typeToChat.clear();
+                    System.out.println("send with TCP");
+
+                } else {
+
+                    chat2.sendMessage(typeToChat.getText());
+                    typeToChat.clear();
+                    System.out.println("LocalChat");
+                }
+
             }
         });
     }
 
-    public void listenForIncommingMessages(chatSystem.Chat chat) {
+    public void listenForIncommingMessages(chatSystem.AllChatToLocal chat) {
+
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
+                chat.checkForIncommingMessage();
+                return null;
+            }
+        };
+        new Thread(task).start();
+    }
+
+    public void listenForIncommingMessagesFromMaster(chatSystem.LocalChatSlave chat) {
 
         Task task = new Task<Void>() {
             @Override

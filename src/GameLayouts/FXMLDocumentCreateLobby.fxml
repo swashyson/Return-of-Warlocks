@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1196.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLDocumentCreateLobby">
+    <children>
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <TextArea fx:id="allChat" editable="false" layoutX="53.0" layoutY="14.0" prefHeight="426.0" prefWidth="620.0" />
+      <TextField fx:id="typeToChat" layoutX="53.0" layoutY="454.0" prefHeight="25.0" prefWidth="544.0" />
+        <Button fx:id="sendButton" layoutX="613.0" layoutY="454.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="69.0" text="Send" />
+      <Label layoutX="930.0" layoutY="65.0" text="Players" />
+      <Button layoutX="587.0" layoutY="675.0" mnemonicParsing="false" text="StartGame" />
+      <Label fx:id="player1" layoutX="857.0" layoutY="137.0" text="Player1" />
+      <Label fx:id="player2" layoutX="857.0" layoutY="172.0" text="Player2" />
+      <CheckBox layoutX="1027.0" layoutY="137.0" mnemonicParsing="false" text="Ready" />
+      <CheckBox layoutX="1027.0" layoutY="172.0" mnemonicParsing="false" text="Ready" />
+      <Button fx:id="disconnect" layoutX="586.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleDisconnectFromLobby" text="Disconnect" />
+    </children>
+</AnchorPane>

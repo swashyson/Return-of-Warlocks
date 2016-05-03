@@ -7,14 +7,12 @@ package chatSystem;
 
 import controllers.FXMLDocumentSecondScene;
 import dataStorage.DataStorage;
-import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
@@ -30,29 +28,16 @@ import javafx.scene.layout.Pane;
  *
  * @author Swashy
  */
-public class Chat {
+public class AllChatToLocal {
 
     private static final int PORT = 9006;
     private static String SERVER = "Localhost";
     private Socket clientSocket;
 
-    public Chat() {
+    public AllChatToLocal() {
 
+        clientSocket = DataStorage.getClientSocket();
         saveServerInformation();
-    }
-
-    public void clientConnect(String server, int port) {
-
-        try {
-            System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
-            clientSocket = new Socket(server, port);
-            System.out.println("Connecion succeed");
-            DataStorage.setClientSocket(clientSocket);
-
-        } catch (IOException ex) {
-            System.out.println("Failed to connect to chat, is the chat server up?");
-        }
-
     }
 
     public final void saveServerInformation() {
@@ -89,20 +74,10 @@ public class Chat {
 
                             playerNamesSplitterAndAdder();
 
-                        } else if (test.contains("||||&")) {
-
+                        }else if(test.contains("||||&")){
+                        
                             LobbysSplitterAndAdder();
-
-                        } else if (test.contains("||||%")) {
-
-                            String name = test.substring(5);
-                            PlayersStorage.getMasterSocketPortList().add(name);
-
-                        } else if (test.contains("||||!")) {
-
-                            String name = test.substring(5);
-                            PlayersStorage.getMasterSocketIPList().add(name);
-
+                            
                         } else {
                             DataStorage.getAllChat().appendText(test + "\n");
 
@@ -113,7 +88,6 @@ public class Chat {
                     private void LobbysSplitterAndAdder() {
 
                         DataStorage.newObservableListLobbys();
-                        DataStorage.newObservableList();
 
                         String name = test.substring(5);
                         String[] splitArray = name.split(",");
@@ -123,12 +97,10 @@ public class Chat {
                         DataStorage.getLobbyList().setItems(DataStorage.getLobbyListAdapter());
 
                         DataStorage.newObservableListLobbys();
-                        DataStorage.newObservableList();
                     }
 
                     private void playerNamesSplitterAndAdder() {
 
-                        DataStorage.newObservableListLobbys();
                         DataStorage.newObservableList();
 
                         System.out.println("DISPLAY NAME " + DataStorage.getPlayerListAdapter().size());
@@ -140,53 +112,19 @@ public class Chat {
                             DataStorage.getPlayerListAdapter().add(s);
                         }
                         DataStorage.getPlayerList().setItems(DataStorage.getPlayerListAdapter());
-
-                        DataStorage.newObservableListLobbys();
-                        DataStorage.newObservableList();
                     }
                 });
 
             }
         } catch (SocketException ex) {
-            System.out.println("Lost connection 3");
-            //ex.printStackTrace();
+            try {
+                System.out.println("Lost connection 2");
+                clientSocket.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(AllChatToLocal.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } catch (Exception ex2) {
             ex2.printStackTrace();
-        }
-
-    }
-
-    public void sendNameToServer() {
-
-        PrintWriter out = null;
-
-        try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println("|||||" + DataStorage.getUserName());
-            setMasterServer();
-        } catch (IOException ex) {
-            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void setMasterServer() {
-
-        PlayersStorage.setServerSocketToMaster(clientSocket);
-    }
-
-    public void selectedServerJoin(int value) {
-
-        if (value != -1) {
-            System.out.println("Selected: " + value);
-            System.out.println("IP/PORT: " + PlayersStorage.getMasterSocketIPList().get(value) + " " + PlayersStorage.getMasterSocketPortList().get(value));
-            System.out.println(PlayersStorage.getMasterSocketIPList().size());
-            System.out.println(PlayersStorage.getMasterSocketPortList().size());
-
-            PlayersStorage.setMasterSocketIP(PlayersStorage.getMasterSocketIPList().get(value).toString());
-            String portString = (String) PlayersStorage.getMasterSocketPortList().get(value);
-            PlayersStorage.setMasterSocketPORTString(portString);
-
         }
 
     }

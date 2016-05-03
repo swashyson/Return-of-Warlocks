@@ -18,9 +18,9 @@
       <Label layoutX="1030.0" layoutY="48.0" prefWidth="51.0" text="Players:" />
       <ListView fx:id="playerList" layoutX="955.0" layoutY="74.0" prefHeight="653.0" prefWidth="200.0" />
       <Label layoutX="810.0" layoutY="48.0" text="Public lobbys:" />
-      <ListView layoutX="746.0" layoutY="74.0" prefHeight="653.0" prefWidth="200.0" />
-      <Button layoutX="135.0" layoutY="629.0" mnemonicParsing="false" text="Create game" />
-      <Button layoutX="305.0" layoutY="629.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Join game" />
+      <ListView fx:id="lobbyList" layoutX="746.0" layoutY="74.0" prefHeight="653.0" prefWidth="200.0" />
+      <Button fx:id="createGameButton" layoutX="135.0" layoutY="629.0" mnemonicParsing="false" onAction="#createGame" text="Create game" />
+      <Button layoutX="305.0" layoutY="629.0" mnemonicParsing="false" onAction="#joinGame" prefHeight="25.0" prefWidth="84.0" text="Join game" />
         <Button fx:id="sendButton" layoutX="629.0" layoutY="514.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="69.0" text="Send" />
       <Button layoutX="469.0" layoutY="629.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Exit" />
     </children>

@@ -12,6 +12,24 @@ package dataStorage;
 final public class informationStorage {
     
     static String serverIP;
+    static boolean masterOrNot;
+    static int dontRetry = 0;
+
+    public static int getDontRetry() {
+        return dontRetry;
+    }
+
+    public static void setDontRetry(int dontRetry) {
+        informationStorage.dontRetry = dontRetry;
+    }
+
+    public static boolean isMasterOrNot() {
+        return masterOrNot;
+    }
+
+    public static void setMasterOrNot(boolean masterOrNot) {
+        informationStorage.masterOrNot = masterOrNot;
+    }
 
     public static String getServerIP() {
         return serverIP;
