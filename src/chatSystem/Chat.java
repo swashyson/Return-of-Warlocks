@@ -10,9 +10,11 @@ import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -41,11 +43,15 @@ public class Chat {
         saveServerInformation();
     }
 
+    public String getServerIp(){
+        return SERVER;
+    }
     public void clientConnect(String server, int port) {
 
         try {
             System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientSocket = new Socket(server, port);
+            
             System.out.println("Connecion succeed");
             DataStorage.setClientSocket(clientSocket);
 
