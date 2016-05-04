@@ -1,33 +1,33 @@
-	.split-pane: vertical {
-		-fx-background-color: transparent;
-	
-	}   
+.split-pane:vertical {
+    -fx-background-color: transparent;
 
-	.split-pane: vertical > * > .split-pane-divider {
-	   -fx-border-color:  transparent;
-	   -fx-background-color: transparent;
-	   -fx-background-insets: 0;
-	}
+}   
 
-	.split-pane *.vertical-grabber {
+.split-pane:vertical > * > .split-pane-divider {
+    -fx-border-color:  transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.split-pane *.vertical-grabber {
     -fx-padding: 0;
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-shape: " ";
 }
-	
 
-   .lobbypane{
-		-fx-background-image: url("stone_background_1196x800.jpg");
-        -fx-background-repeat: stretch;
-        -fx-background-size: 1196 800;
-        -fx-background-position: center center;
-	}
-	
-	.loginpane{
-        -fx-background-image: url("stone_background_800x800.png");
-        -fx-background-repeat: stretch;   
-        -fx-background-size: 800 800;
-        -fx-background-position: center center;
-    }
+
+.lobbypane{
+    -fx-background-image: url("stone_background_1196x800.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1196 800;
+    -fx-background-position: center center;
+}
+
+.loginpane{
+    -fx-background-image: url("stone_background_800x800.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 800 800;
+    -fx-background-position: center center;
+}
 
