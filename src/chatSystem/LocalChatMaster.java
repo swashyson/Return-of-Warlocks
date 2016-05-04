@@ -5,6 +5,7 @@
  */
 package chatSystem;
 
+import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
 import java.io.BufferedReader;
@@ -219,12 +220,14 @@ public class LocalChatMaster {
         System.out.println("Disconnected");
         try {
             sendRemoveRequestFromLobbyList();
+            requestLobbyIpRemove();
+            requestLobbyPortRemove();
 
             serverSocket.close();
             //clientSocket.close();
             BroadCastSystemForMaster.getBroadCastList().clear();
             BroadCastSystemForMaster.getClientSockets().clear();
-            PlayersStorage.getPlayerNames().clear();
+            PlayersStorage.clearAll();
             informationStorage.setDontRetry(1);
             System.out.println("Done");
 
@@ -261,11 +264,12 @@ public class LocalChatMaster {
         public void run() {
             BufferedReader in;
             String name = "";
+            boolean lock = true;
             try {
 
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                while (true) {
+                while (true && lock == true) {
                     String test = in.readLine();
                     if (test.contains("|||||")) {
                         name = test.substring(5);
@@ -282,8 +286,25 @@ public class LocalChatMaster {
             } catch (SocketException ex) {
                 removeIfDisconnected(name);
             } catch (Exception ex2) {
+                System.out.println("Jag har får null");
+                //ex2.printStackTrace();
+                lock = false;
+                slaveDisconnect(name);
+            }
+        }
+        private void slaveDisconnect(String name){
+            try {
 
-                ex2.printStackTrace();
+                System.out.println("TASDASDAS");
+
+                BroadCastSystemForMaster.getBroadCastList().remove(clientSocket);
+                BroadCastSystemForMaster.getClientSockets().remove(clientSocket);
+                PlayersStorage.getPlayerNames().remove(name);
+                PlayersStorage.getLobbyList().remove(name);
+                //LocalChatMaster.broadCastPlayerNames();
+                //LocalChatMaster.broadCastLobbys();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
 
@@ -305,6 +326,34 @@ public class LocalChatMaster {
             }
         }
 
+    }
+    public void requestLobbyIpRemove(){
+        System.out.println("request remove lobbyipclient");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||4"+PlayersStorage.getMasterSocketIP());
+            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+    public void requestLobbyPortRemove(){
+        System.out.println("request remove lobbyipclient");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||5"+PlayersStorage.getMasterSocketPORT());
+            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
     }
 
 }

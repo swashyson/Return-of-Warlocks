@@ -97,6 +97,7 @@ public class Chat {
         }
         
     }
+    
     public void requestLobbyList(){
         PrintWriter out = null;
         try {
@@ -178,6 +179,7 @@ public class Chat {
 
                         DataStorage.newObservableListLobbys();
                         DataStorage.newObservableList();
+                        DataStorage.getPlayerListAdapter().clear();
                     }
                 });
 

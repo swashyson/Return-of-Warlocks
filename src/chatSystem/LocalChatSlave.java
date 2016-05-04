@@ -108,15 +108,15 @@ public class LocalChatSlave {
             }
         } catch (SocketException ex) {
             System.out.println("Lost connection 1");
+            handleSlaveDisconnect();
         } catch (Exception ex2) {
-            try {
-                ex2.printStackTrace();
-                clientSocket.close();
-            } catch (IOException ex) {
-                Logger.getLogger(LocalChatSlave.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+            ex2.printStackTrace();
         }
 
+    }
+    private void handleSlaveDisconnect(){
+        System.out.println("disconnected");
     }
 
     public void sendNameToServer() {
@@ -133,7 +133,15 @@ public class LocalChatSlave {
         }
 
     }
-
+    public void disconnect(){
+        
+        try {
+            DataStorage.getLobbyClientSocket().close();
+            System.out.println("closing slave: "+DataStorage.getLobbyClientSocket());
+        } catch (Exception ex) {
+            Logger.getLogger(LocalChatSlave.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void setPlayerFrames() {
 
         List<String> list = Arrays.asList(PlayersStorage.getDisplayPlayerNamesFrames().toString().split("\\s*,\\s*"));

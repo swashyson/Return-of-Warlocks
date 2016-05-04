@@ -28,6 +28,13 @@ final public class PlayersStorage {
     static String masterSocketPORTString;
     static ArrayList displayPlayerNamesFrames = new ArrayList();
 
+    public static void clearAll(){
+        playerNames.clear();
+        lobbyList.clear();
+        masterSocketIPList.clear();
+        masterSocketPortList.clear();
+        displayPlayerNamesFrames.clear();
+    }
     public static ArrayList getDisplayPlayerNamesFrames() {
         return displayPlayerNamesFrames;
     }

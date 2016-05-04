@@ -89,6 +89,10 @@ public class FXMLDocumentCreateLobby implements Initializable {
             masterChat.Disconnect();
             changeScene(event);
         }
+        else{
+            slaveChat.disconnect();
+            changeScene(event);
+        }
 
     }
 
@@ -127,7 +131,7 @@ public class FXMLDocumentCreateLobby implements Initializable {
         startAllChat();
         startPlayerFrames();
 
-        slaveChat.clientConnect("Localhost", 9007);
+        slaveChat.clientConnect(PlayersStorage.getMasterSocketIP(), PlayersStorage.getMasterSocketPORT());
         listenForIncommingMessagesFromMaster(slaveChat);
         slaveChat.sendNameToServer();
 
