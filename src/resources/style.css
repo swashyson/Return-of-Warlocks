@@ -1,0 +1,7 @@
+    .pane{
+        -fx-background-image: url("stone_background_800x800.jpg");
+        -fx-background-repeat: stretch;   
+        -fx-background-size: 800 800;
+        -fx-background-position: center center;
+    }
+

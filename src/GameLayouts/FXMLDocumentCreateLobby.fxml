@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -10,18 +11,71 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1196.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLDocumentCreateLobby">
+<AnchorPane id="AnchorPane" maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLDocumentCreateLobby">
     <children>
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <TextArea fx:id="allChat" editable="false" layoutX="53.0" layoutY="14.0" prefHeight="426.0" prefWidth="620.0" />
-      <TextField fx:id="typeToChat" layoutX="53.0" layoutY="454.0" prefHeight="25.0" prefWidth="544.0" />
-        <Button fx:id="sendButton" layoutX="613.0" layoutY="454.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="69.0" text="Send" />
+      <BorderPane prefHeight="800.0" prefWidth="1196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane prefHeight="100.0" prefWidth="1196.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="575.0" minWidth="575.0" prefWidth="575.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="disconnect" mnemonicParsing="false" onAction="#handleDisconnectFromLobby" text="Disconnect" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Button>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="575.0" minWidth="575.0" prefWidth="575.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="25.0" minWidth="25.0" prefWidth="25.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="564.0" minHeight="10.0" prefHeight="487.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="180.0" minHeight="180.0" prefHeight="180.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="typeToChat" prefHeight="25.0" prefWidth="544.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Button fx:id="sendButton" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="69.0" text="Send" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <TextArea fx:id="allChat" editable="false" prefHeight="415.0" prefWidth="657.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" text="Start Game!" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="15.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
+        <Label fx:id="label" layoutX="86.0" layoutY="-220.0" minHeight="16" minWidth="69" />
       <Label layoutX="930.0" layoutY="65.0" text="Players" />
-      <Button layoutX="587.0" layoutY="675.0" mnemonicParsing="false" text="StartGame" />
       <Label fx:id="player1" layoutX="857.0" layoutY="137.0" text="Player1" />
       <Label fx:id="player2" layoutX="857.0" layoutY="172.0" text="Player2" />
       <CheckBox layoutX="1027.0" layoutY="137.0" mnemonicParsing="false" text="Ready" />
       <CheckBox layoutX="1027.0" layoutY="172.0" mnemonicParsing="false" text="Ready" />
-      <Button fx:id="disconnect" layoutX="586.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleDisconnectFromLobby" text="Disconnect" />
     </children>
 </AnchorPane>
