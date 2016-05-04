@@ -41,7 +41,7 @@ public class LocalChatSlave {
             //System.out.println("Attempting to connect to " + PlayersStorage.getMasterSocketIP().toString().replace("[", "").replace("]", "") + ":" + PlayersStorage.getMasterSocketPORTString().toString().replace("[", "").replace("]", ""));
             clientSocket = new Socket(PlayersStorage.getMasterSocketIP().replace("[", "").replace("]", ""), PORT);
             System.out.println("Connecion succeed" + PlayersStorage.getMasterSocketIP() + PORT);
-            DataStorage.setClientSocket(clientSocket);
+            DataStorage.setLobbyClientSocket(clientSocket);
 
         } catch (IOException ex) {
             System.out.println("Failed to connect to chat, is the chat server up?");
@@ -60,7 +60,7 @@ public class LocalChatSlave {
         PrintWriter out = null;
 
         try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out = new PrintWriter(DataStorage.getLobbyClientSocket().getOutputStream(), true);
             out.println(DataStorage.getUserName() + ": " + message);
             out.flush();
 

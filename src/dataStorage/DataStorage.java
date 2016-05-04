@@ -23,7 +23,16 @@ final public class DataStorage {
     static ObservableList playerListAdapter = FXCollections.observableArrayList();
     static ListView lobbyList;
     static ObservableList lobbyListAdapter = FXCollections.observableArrayList();
-    static Socket clientSocket;
+    static Socket chatClientSocket;
+    static Socket lobbyClientSocket; 
+
+    public static void setLobbyClientSocket(Socket lobbyClientSocket) {
+        DataStorage.lobbyClientSocket = lobbyClientSocket;
+    }
+
+    public static Socket getLobbyClientSocket() {
+        return lobbyClientSocket;
+    }
 
     public static ListView getLobbyList() {
         return lobbyList;
@@ -41,12 +50,12 @@ final public class DataStorage {
         DataStorage.lobbyListAdapter = lobbyListAdapter;
     }
 
-    public static Socket getClientSocket() {
-        return clientSocket;
+    public static Socket getChatClientSocket() {
+        return chatClientSocket;
     }
 
-    public static void setClientSocket(Socket clientSocket) {
-        DataStorage.clientSocket = clientSocket;
+    public static void setChatClientSocket(Socket clientSocket) {
+        DataStorage.chatClientSocket = clientSocket;
     }
 
     public static ObservableList getPlayerListAdapter() {
@@ -76,6 +85,7 @@ final public class DataStorage {
     }
 
     public static void setPlayerList(ListView playerList) {
+        DataStorage.playerList = null;
         DataStorage.playerList = playerList;
     }
 

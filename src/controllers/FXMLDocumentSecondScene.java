@@ -57,6 +57,7 @@ public class FXMLDocumentSecondScene implements Initializable {
     private Button createGameButton;
 
     chatSystem.Chat chat = new Chat();
+    int x  = 0;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -108,14 +109,22 @@ public class FXMLDocumentSecondScene implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //DISC
+        if(dataStorage.DataStorage.getChatClientSocket() == null){
+            System.out.println("null");
         chat.clientConnect("Localhost", 9006);
-        listenForIncommingMessages(chat);
         chat.sendNameToServer();
+        listenForIncommingMessages(chat);
+        }
+        else{
+            System.out.println("true hej ");
+            chat.requestNameList();
+            //chat.requestLobbyList();
+        }
+        
         keyListener(chat);
         startAllChat();
         startPlayerList();
         startLobbyList();
-
         lobbyListListener();
     }
 

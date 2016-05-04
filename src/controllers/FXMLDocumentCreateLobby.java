@@ -98,7 +98,7 @@ public class FXMLDocumentCreateLobby implements Initializable {
             chat = null;
             masterChat = null;
             slaveChat = null;
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocument.fxml"));
+            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentSecondScene.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);

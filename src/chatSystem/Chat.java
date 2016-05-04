@@ -54,7 +54,8 @@ public class Chat {
             clientSocket = new Socket(server, port);
 
             System.out.println("Connecion succeed");
-            DataStorage.setClientSocket(clientSocket);
+            DataStorage.setChatClientSocket(clientSocket);
+            
 
         } catch (IOException ex) {
             System.out.println("Failed to connect to chat, is the chat server up?");
@@ -73,8 +74,34 @@ public class Chat {
         PrintWriter out = null;
 
         try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println(DataStorage.getUserName() + ": " + message);
+            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void requestNameList(){
+        System.out.println("request name client");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||1");
+            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+    public void requestLobbyList(){
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println("||||2");
             out.flush();
 
         } catch (IOException ex) {

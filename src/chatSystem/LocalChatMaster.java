@@ -90,6 +90,19 @@ public class LocalChatMaster {
         new Thread(task).start();
     }
 
+    public void removeLobbyFromServer() {
+        PrintWriter out = null;
+        try {
+
+            out = new PrintWriter(dataStorage.DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||3" + dataStorage.DataStorage.getUserName() + "'s Lobby");
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void broadCast() {
 
         PrintWriter out = null;
@@ -205,11 +218,13 @@ public class LocalChatMaster {
 
         System.out.println("Disconnected");
         try {
+            sendRemoveRequestFromLobbyList();
 
             serverSocket.close();
             //clientSocket.close();
             BroadCastSystemForMaster.getBroadCastList().clear();
             BroadCastSystemForMaster.getClientSockets().clear();
+            PlayersStorage.getPlayerNames().clear();
             informationStorage.setDontRetry(1);
             System.out.println("Done");
 
@@ -218,6 +233,18 @@ public class LocalChatMaster {
             ex.printStackTrace();
         }
 
+    }
+
+    private void sendRemoveRequestFromLobbyList() {
+        PrintWriter out = null;
+        try {
+
+            out = new PrintWriter(PlayersStorage.getServerSocketToMaster().getOutputStream(), true);
+            out.println("||||3" + dataStorage.DataStorage.getUserName() + " 's Lobby");
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(LocalChatMaster.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private static class chatHandler extends Thread {

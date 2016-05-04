@@ -36,7 +36,7 @@ public class AllChatToLocal {
 
     public AllChatToLocal() {
 
-        clientSocket = DataStorage.getClientSocket();
+        clientSocket = DataStorage.getChatClientSocket();
         saveServerInformation();
     }
 
