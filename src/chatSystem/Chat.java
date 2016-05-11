@@ -227,7 +227,7 @@ public class Chat {
 
     public void selectedServerJoin(int value) {
 
-        if (value != -1) {
+        if (value != -1 && !PlayersStorage.getMasterSocketIPList().isEmpty()) {
             System.out.println("Selected: " + value);
             System.out.println("IP/PORT: " + PlayersStorage.getMasterSocketIPList().get(value) + " " + PlayersStorage.getMasterSocketPortList().get(value));
             System.out.println(PlayersStorage.getMasterSocketIPList().size());
@@ -237,6 +237,9 @@ public class Chat {
             String portString = (String) PlayersStorage.getMasterSocketPortList().get(value);
             PlayersStorage.setMasterSocketPORTString(portString);
 
+        }else{
+        
+            System.out.println("That is no server, you cant select that");
         }
 
     }
