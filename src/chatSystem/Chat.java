@@ -5,7 +5,7 @@
  */
 package chatSystem;
 
-import controllers.FXMLDocumentSecondScene;
+import controllers.FXMLMainChatController;
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
@@ -39,7 +39,7 @@ public class Chat {
     private Socket clientSocket;
 
     public Chat() {
-
+        clientSocket = DataStorage.getChatClientSocket();
         saveServerInformation();
     }
 
@@ -47,21 +47,21 @@ public class Chat {
         return SERVER;
     }
 
-    public void clientConnect(String server, int port) {
-
-        try {
-            System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
-            clientSocket = new Socket(server, port);
-
-            System.out.println("Connecion succeed");
-            DataStorage.setChatClientSocket(clientSocket);
-            
-
-        } catch (IOException ex) {
-            System.out.println("Failed to connect to chat, is the chat server up?");
-        }
-
-    }
+//    public void connectToServer(String server, int port) {
+//
+//        try {
+//            System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
+//            clientSocket = new Socket(server, port);
+//
+//            System.out.println("Connecion succeed");
+//            DataStorage.setChatClientSocket(clientSocket);
+//            
+//
+//        } catch (IOException ex) {
+//            System.out.println("Failed to connect to chat, is the chat server up?");
+//        }
+//
+//    }
 
     public final void saveServerInformation() {
 
@@ -122,7 +122,7 @@ public class Chat {
                     @Override
                     public void run() {
                         if (test.contains("|||||")) {
-
+                            System.out.println("send a message with |||||");
                             playerNamesSplitterAndAdder();
 
                         } else if (test.contains("||||&")) {

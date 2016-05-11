@@ -161,9 +161,10 @@ public class LocalChatMaster {
     }
 
     public static void broadCastLobbys() {
-
+        
+        PrintWriter out = null;
         try {
-            PrintWriter out = null;
+            
 
             out = new PrintWriter(PlayersStorage.getServerSocketToMaster().getOutputStream(), true);
             out.println("||||&" + PlayersStorage.getPlayerNames());
@@ -267,7 +268,7 @@ public class LocalChatMaster {
             boolean lock = true;
             try {
 
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                in = new BufferedReader(new InputStreamReader(DataStorage.getLobbyClientSocket().getInputStream()));
 
                 while (true && lock == true) {
                     String test = in.readLine();

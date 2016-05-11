@@ -41,7 +41,7 @@ import javafx.stage.Stage;
  *
  * @author Swashy
  */
-public class FXMLDocumentCreateLobby implements Initializable {
+public class FXMLLobbyController implements Initializable {
 
     @FXML
     private ListView playerList;
@@ -71,7 +71,7 @@ public class FXMLDocumentCreateLobby implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText(typeToChat.getText());
-        chat.sendMessage(typeToChat.getText());
+        slaveChat.sendMessage(typeToChat.getText());
         typeToChat.clear();
     }
 
@@ -102,7 +102,7 @@ public class FXMLDocumentCreateLobby implements Initializable {
             chat = null;
             masterChat = null;
             slaveChat = null;
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentSecondScene.fxml"));
+            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
@@ -126,7 +126,7 @@ public class FXMLDocumentCreateLobby implements Initializable {
             masterChat.sendMasterIP();
         }
 
-        listenForIncommingMessages(chat);
+        listenForIncommingMessagesFromServer(chat);
         keyListener(chat, slaveChat);
         startAllChat();
         startPlayerFrames();
@@ -164,24 +164,24 @@ public class FXMLDocumentCreateLobby implements Initializable {
                 String upToNCharacters = typeToChat.getText().substring(0, Math.min(typeToChat.getText().length(), 5));
 
                 System.out.println("SUB" + upToNCharacters);
-                if (upToNCharacters.contains("/all ")) {
+                if (upToNCharacters.contains("/all")) {
 
                     chat.sendMessage(typeToChat.getText().substring(5));
                     typeToChat.clear();
-                    System.out.println("send with TCP");
+                    System.out.println("Mainchat");
 
                 } else {
 
                     chat2.sendMessage(typeToChat.getText());
                     typeToChat.clear();
-                    System.out.println("LocalChat");
+                    System.out.println("LobbyChat");
                 }
 
             }
         });
     }
 
-    public void listenForIncommingMessages(chatSystem.AllChatToLocal chat) {
+    public void listenForIncommingMessagesFromServer(chatSystem.AllChatToLocal chat) {
 
         Task task = new Task<Void>() {
             @Override
