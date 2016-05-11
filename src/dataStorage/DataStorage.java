@@ -39,6 +39,7 @@ final public class DataStorage {
     }
 
     public static void setLobbyList(ListView lobbyList) {
+        DataStorage.lobbyList = null;
         DataStorage.lobbyList = lobbyList;
     }
 

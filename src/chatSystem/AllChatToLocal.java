@@ -5,7 +5,7 @@
  */
 package chatSystem;
 
-import controllers.FXMLDocumentSecondScene;
+import controllers.FXMLMainChatController;
 import dataStorage.DataStorage;
 import dataStorage.informationStorage;
 import java.io.BufferedReader;

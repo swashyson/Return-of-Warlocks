@@ -31,7 +31,7 @@ public class FXMLPlaygroundController implements Initializable {
     private void temporaryBack(ActionEvent event){
         
         try {
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentSecondScene.fxml"));
+            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);

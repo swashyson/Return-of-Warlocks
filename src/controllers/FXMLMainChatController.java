@@ -39,7 +39,7 @@ import javafx.stage.Stage;
  *
  * @author Swashy
  */
-public class FXMLDocumentSecondScene implements Initializable {
+public class FXMLMainChatController implements Initializable {
 
     @FXML
     private ListView playerList;
@@ -94,7 +94,7 @@ public class FXMLDocumentSecondScene implements Initializable {
         try {
             informationStorage.setMasterOrNot(masterOrNot);
 
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLDocumentCreateLobby.fxml"));
+            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLLobby.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
@@ -109,18 +109,13 @@ public class FXMLDocumentSecondScene implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //DISC
-        if(dataStorage.DataStorage.getChatClientSocket() == null){
-            System.out.println("null");
-        chat.clientConnect("Localhost", 9006);
+        
+        
         chat.sendNameToServer();
         listenForIncommingMessages(chat);
-        }
-        else{
-            System.out.println("true hej ");
-            chat.requestNameList();
-            //chat.requestLobbyList();
-        }
-        
+        System.out.println("true hej ");
+        chat.requestNameList();
+        chat.requestLobbyList();
         keyListener(chat);
         startAllChat();
         startPlayerList();

@@ -31,7 +31,7 @@ final public class BroadCastSystemForMaster {
     }
 
     public BroadCastSystemForMaster() {
-
+        
     }
 
     public static ArrayList getBroadCastList() {

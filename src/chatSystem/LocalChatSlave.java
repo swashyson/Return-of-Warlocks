@@ -74,7 +74,7 @@ public class LocalChatSlave {
         BufferedReader in = null;
 
         try {
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(dataStorage.DataStorage.getLobbyClientSocket().getInputStream()));
             while (true) {
                 String test = in.readLine();
                 Platform.runLater(new Runnable() {
