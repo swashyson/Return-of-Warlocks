@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 
 /**
  *
@@ -22,6 +23,43 @@ final public class PlayersStorage {
     static ArrayList masterSocketIPList = new ArrayList();
     static Label player1;
     static Label player2;
+    static CheckBox player1ready;
+    static int playernumber;
+    static int playersInLobby;
+    
+
+    public static int getPlayersInLobby() {
+        return playersInLobby;
+    }
+
+    public static void setPlayersInLobby(int playersInLobby) {
+        PlayersStorage.playersInLobby = playersInLobby;
+    }
+
+    public static int getPlayernumber() {
+        return playernumber;
+    }
+
+    public static void setPlayernumber(int playernumber) {
+        PlayersStorage.playernumber = playernumber;
+    }
+
+    public static CheckBox getPlayer1ready() {
+        return player1ready;
+    }
+
+    public static void setPlayer1ready(CheckBox player1ready) {
+        PlayersStorage.player1ready = player1ready;
+    }
+
+    public static CheckBox getPlayer2ready() {
+        return player2ready;
+    }
+
+    public static void setPlayer2ready(CheckBox player2ready) {
+        PlayersStorage.player2ready = player2ready;
+    }
+    static CheckBox player2ready;
     static Socket serverSocketToMaster;
     static String masterSocketIP;
     static int masterSocketPORT;

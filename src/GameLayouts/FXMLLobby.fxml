@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
+<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
     <children>
       <BorderPane prefHeight="800.0" prefWidth="1196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -94,8 +94,8 @@
                                  <children>
                                     <Label fx:id="player1" text="Player1" textFill="WHITE" GridPane.rowIndex="1" />
                                     <Label fx:id="player2" text="Player2" textFill="WHITE" GridPane.rowIndex="2" />
-                                    <CheckBox mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <CheckBox mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <CheckBox fx:id="Player1Ready" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <CheckBox fx:id="Player2Ready" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>

@@ -88,7 +88,7 @@ public class LocalChatSlave {
 
                             System.out.println("Added server");
 
-                        } else {
+                        }else {
                             DataStorage.getAllChat().appendText(test + "\n");
 
                         }

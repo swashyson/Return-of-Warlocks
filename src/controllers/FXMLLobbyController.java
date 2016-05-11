@@ -29,6 +29,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -57,6 +58,18 @@ public class FXMLLobbyController implements Initializable {
     private TextArea allChat;
     @FXML
     private Button createGameButton;
+    @FXML
+    private CheckBox Player1Ready;
+
+    public CheckBox getPlayer1Ready() {
+        return Player1Ready;
+    }
+
+    public CheckBox getPlayer2Ready() {
+        return Player2Ready;
+    }
+    @FXML
+    private CheckBox Player2Ready;
 
     @FXML
     private Label player1;
@@ -94,6 +107,9 @@ public class FXMLLobbyController implements Initializable {
             changeScene(event);
         }
 
+    }
+    @FXML
+    private void handleReadyCheck(ActionEvent event){
     }
 
     private void changeScene(ActionEvent event) {

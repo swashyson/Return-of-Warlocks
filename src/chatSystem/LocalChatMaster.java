@@ -5,6 +5,7 @@
  */
 package chatSystem;
 
+import controllers.FXMLLobbyController;
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
@@ -61,7 +62,6 @@ public class LocalChatMaster {
                     try {
 
                         clientSocket = serverSocket.accept();
-                        System.out.println("asdasdasdas " + serverSocket.getLocalSocketAddress());
 
                         Platform.runLater(new Runnable() {
                             @Override
@@ -159,7 +159,23 @@ public class LocalChatMaster {
         }
 
     }
+    public static void broadCastPlayerReady(){
+        PrintWriter out = null;
 
+        try {
+            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                out = new PrintWriter(temp.getOutputStream(), true);
+
+                out.println("||||8" +PlayersStorage.getPlayer1ready() );
+                out.flush();
+
+            }
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+    }
     public void broadCastLobbys() {
 
         PrintWriter out = null;
