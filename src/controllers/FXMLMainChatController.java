@@ -116,6 +116,8 @@ public class FXMLMainChatController implements Initializable {
         System.out.println("true hej ");
         chat.requestNameList();
         chat.requestLobbyList();
+        chat.requestIPList();
+        chat.requestPORTList();
         keyListener(chat);
         startAllChat();
         startPlayerList();

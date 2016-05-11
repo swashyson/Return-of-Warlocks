@@ -60,29 +60,58 @@ public class Chat {
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println(DataStorage.getUserName() + ": " + message);
-            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    public void requestNameList(){
+
+    public void requestNameList() {
         System.out.println("request name client");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println("||||1");
-            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
-    public void requestLobbyList(){
+
+    public void requestIPList() {
+        System.out.println("request IP LIST");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||6");
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void requestPORTList() {
+        System.out.println("request PORT LIST");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||7");
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void requestLobbyList() {
         PrintWriter out = null;
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
