@@ -100,7 +100,6 @@ public class FXMLLobbyController implements Initializable {
         if (informationStorage.isMasterOrNot() == true) {
 
             masterChat.Disconnect();
-            slaveChat.disconnect();
             changeScene(event);
         }
         else{

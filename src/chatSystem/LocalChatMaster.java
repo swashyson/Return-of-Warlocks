@@ -176,6 +176,19 @@ public class LocalChatMaster {
             ex.printStackTrace();
         }
     }
+    public void broadCastRemoveNameFromMaster() {
+        PrintWriter out = null;
+        try {
+
+            out = new PrintWriter(DataStorage.getLobbyClientSocket().getOutputStream(), true);
+            out.println("||||-" + DataStorage.getUserName());
+            System.out.println("Send to chatServer with command ||||&" + DataStorage.getUserName());
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     public void broadCastLobbys() {
 
         PrintWriter out = null;

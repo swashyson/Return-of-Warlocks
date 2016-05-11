@@ -90,6 +90,12 @@ public class LocalChatSlave {
 
                             System.out.println("Added server");
 
+                        }else if (test.contains("||||-")) {
+
+                            String lastPartOfMessage = test.substring(5);
+                            playerNamesSplitterAndAdder();
+                            
+
                         }else {
                             DataStorage.getAllChat().appendText(test + "\n");
 

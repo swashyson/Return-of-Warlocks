@@ -23,6 +23,24 @@ final public class PlayersStorage {
     static ArrayList masterSocketIPList = new ArrayList();
     static Label player1;
     static Label player2;
+    static Label player3;
+
+    public static Label getPlayer3() {
+        return player3;
+    }
+
+    public static void setPlayer3(Label player3) {
+        PlayersStorage.player3 = player3;
+    }
+
+    public static Label getPlayer4() {
+        return player4;
+    }
+
+    public static void setPlayer4(Label player4) {
+        PlayersStorage.player4 = player4;
+    }
+    static Label player4;
     static CheckBox player1ready;
     static int playernumber;
     static int playersInLobby;
