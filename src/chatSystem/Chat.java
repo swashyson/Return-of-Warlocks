@@ -47,22 +47,6 @@ public class Chat {
         return SERVER;
     }
 
-//    public void connectToServer(String server, int port) {
-//
-//        try {
-//            System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
-//            clientSocket = new Socket(server, port);
-//
-//            System.out.println("Connecion succeed");
-//            DataStorage.setChatClientSocket(clientSocket);
-//            
-//
-//        } catch (IOException ex) {
-//            System.out.println("Failed to connect to chat, is the chat server up?");
-//        }
-//
-//    }
-
     public final void saveServerInformation() {
 
         informationStorage.setServerIP(SERVER);

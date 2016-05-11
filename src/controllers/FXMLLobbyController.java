@@ -122,6 +122,7 @@ public class FXMLLobbyController implements Initializable {
             masterChat = new LocalChatMaster();
             masterChat.CreateServer(9007);
             masterChat.StartServer(9007);
+            masterChat.broadCastLobbys();
             masterChat.sendMasterPort();
             masterChat.sendMasterIP();
         }
