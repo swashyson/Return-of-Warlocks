@@ -239,7 +239,6 @@ public class LocalChatMaster {
             sendRemoveRequestFromLobbyList();
             requestLobbyIpRemove();
             requestLobbyPortRemove();
-
             serverSocket.close();
             //clientSocket.close();
             BroadCastSystemForMaster.getBroadCastList().clear();
@@ -282,11 +281,13 @@ public class LocalChatMaster {
             BufferedReader in;
             String name = "";
             boolean lock = true;
+
             try {
 
-                in = new BufferedReader(new InputStreamReader(DataStorage.getLobbyClientSocket().getInputStream()));
+                //in = new BufferedReader(new InputStreamReader(DataStorage.getLobbyClientSocket().getInputStream()));
+                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                while (true && lock == true) {
+                while (true) {
                     String test = in.readLine();
                     if (test.contains("|||||")) {
                         name = test.substring(5);
@@ -294,7 +295,7 @@ public class LocalChatMaster {
                         System.out.println("Master Names recieved:" + PlayersStorage.getPlayerNames().size() + name);
                         LocalChatMaster.broadCastPlayerNames();
                     } else {
-
+                        System.out.println("Recieved message: " + test);
                         BroadCastSystemForMaster.addToList(test);
                     }
 
