@@ -7,6 +7,7 @@ package controllers;
 
 import chatSystem.Chat;
 import dataStorage.DataStorage;
+import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
 import java.io.IOException;
 import java.io.BufferedWriter;
@@ -57,7 +58,7 @@ public class FXMLMainChatController implements Initializable {
     private Button createGameButton;
 
     chatSystem.Chat chat = new Chat();
-    int x  = 0;
+    int x = 0;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -108,19 +109,21 @@ public class FXMLMainChatController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //DISC
-        
-        
-        chat.sendNameToServer();
+        if (informationStorage.getDontRetry() == 0) {
+            chat.sendNameToServer();
+        }
         listenForIncommingMessages(chat);
         System.out.println("true hej ");
         chat.requestNameList();
         chat.requestLobbyList();
+        chat.requestIPList();
+        chat.requestPORTList();
         keyListener(chat);
         startAllChat();
         startPlayerList();
         startLobbyList();
         lobbyListListener();
+        informationStorage.setDontRetry(1);
     }
 
     public void startAllChat() {

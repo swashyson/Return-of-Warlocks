@@ -60,9 +60,11 @@ public class LocalChatSlave {
         PrintWriter out = null;
 
         try {
+            System.out.println("Send Message: " + DataStorage.getUserName() + ": " + message);
             out = new PrintWriter(DataStorage.getLobbyClientSocket().getOutputStream(), true);
             out.println(DataStorage.getUserName() + ": " + message);
             out.flush();
+            System.out.println("Socket used to send lobby message: " + DataStorage.getLobbyClientSocket().toString());
 
         } catch (IOException ex) {
             ex.printStackTrace();

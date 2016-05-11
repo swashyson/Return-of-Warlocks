@@ -47,22 +47,6 @@ public class Chat {
         return SERVER;
     }
 
-//    public void connectToServer(String server, int port) {
-//
-//        try {
-//            System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
-//            clientSocket = new Socket(server, port);
-//
-//            System.out.println("Connecion succeed");
-//            DataStorage.setChatClientSocket(clientSocket);
-//            
-//
-//        } catch (IOException ex) {
-//            System.out.println("Failed to connect to chat, is the chat server up?");
-//        }
-//
-//    }
-
     public final void saveServerInformation() {
 
         informationStorage.setServerIP(SERVER);
@@ -76,29 +60,58 @@ public class Chat {
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println(DataStorage.getUserName() + ": " + message);
-            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    public void requestNameList(){
+
+    public void requestNameList() {
         System.out.println("request name client");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println("||||1");
-            System.out.println("send: " +DataStorage.getChatClientSocket().toString());
+            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
     }
-    
-    public void requestLobbyList(){
+
+    public void requestIPList() {
+        System.out.println("request IP LIST");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||6");
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void requestPORTList() {
+        System.out.println("request PORT LIST");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
+            out.println("||||7");
+            out.flush();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void requestLobbyList() {
         PrintWriter out = null;
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -214,7 +227,7 @@ public class Chat {
 
     public void selectedServerJoin(int value) {
 
-        if (value != -1) {
+        if (value != -1 && !PlayersStorage.getMasterSocketIPList().isEmpty()) {
             System.out.println("Selected: " + value);
             System.out.println("IP/PORT: " + PlayersStorage.getMasterSocketIPList().get(value) + " " + PlayersStorage.getMasterSocketPortList().get(value));
             System.out.println(PlayersStorage.getMasterSocketIPList().size());
@@ -224,6 +237,9 @@ public class Chat {
             String portString = (String) PlayersStorage.getMasterSocketPortList().get(value);
             PlayersStorage.setMasterSocketPORTString(portString);
 
+        }else{
+        
+            System.out.println("That is no server, you cant select that");
         }
 
     }
