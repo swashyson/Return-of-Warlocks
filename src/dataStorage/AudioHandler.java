@@ -5,6 +5,7 @@
  */
 package dataStorage;
 
+import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -14,17 +15,18 @@ import javafx.scene.media.MediaPlayer;
  */
 public class AudioHandler {
     
-    MediaPlayer mediaPlayer;
-    Media mediaPath = new Media(null);
+    private MediaPlayer backgroundAudio;
+    private Media backgroundAudioPath;// = new Media(getClass().getResource("audioResources/preliminary_background_music_return_of_warlocks.wav").toString());
     
-    private void play() {
+    public void playBackgroundAudio() {
         try {
-            System.out.println("sound playing");
-            mediaPlayer = new MediaPlayer(null);
-            //mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.setVolume(0.5);
+            System.out.println("background audio playing");
+            backgroundAudioPath = new Media(getClass().getResource("audioResources/preliminary_background_music_return_of_warcraft.wav").toString());
+            backgroundAudio = new MediaPlayer(backgroundAudioPath);
+            backgroundAudio.setCycleCount(MediaPlayer.INDEFINITE);
+            backgroundAudio.setVolume(0.5);
 //            backgroundSound.setAutoPlay(true);
-            mediaPlayer.play();
+            backgroundAudio.setAutoPlay(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,7 +34,7 @@ public class AudioHandler {
 
     //This method turns off the specified sound in the class it's called from, whatever sound it is that it is playing
     public void stop() {
-        System.out.println("sound stopped");
-        mediaPlayer.stop();
+        System.out.println("background audio stopped");
+        backgroundAudio.stop();
     }
 }
