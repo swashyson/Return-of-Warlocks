@@ -5,6 +5,7 @@
  */
 package dataStorage;
 
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 /**
@@ -14,6 +15,7 @@ import javafx.scene.media.MediaPlayer;
 public class AudioHandler {
     
     MediaPlayer mediaPlayer;
+    Media mediaPath = new Media(null);
     
     private void play() {
         try {
