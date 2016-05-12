@@ -366,7 +366,7 @@ public class LocalChatMaster {
                 removeIfDisconnected(name);
             } catch (Exception ex2) {
                 System.out.println("Jag har får null");
-                //ex2.printStackTrace();
+                ex2.printStackTrace();
                 lock = false;
                 slaveDisconnect(name);
             }
