@@ -227,16 +227,21 @@ public class Chat {
 
     public void selectedServerJoin(int value) {
 
-        if (value != -1) {
-            System.out.println("Selected: " + value);
-            System.out.println("IP/PORT: " + PlayersStorage.getMasterSocketIPList().get(value) + " " + PlayersStorage.getMasterSocketPortList().get(value));
-            System.out.println(PlayersStorage.getMasterSocketIPList().size());
-            System.out.println(PlayersStorage.getMasterSocketPortList().size());
+        if (value != -1 || !PlayersStorage.getMasterSocketIPList().isEmpty() || !PlayersStorage.getMasterSocketPortList().isEmpty()) {
+            if (value >= 0) {
+                System.out.println("Selected: " + value);
+                System.out.println("IP/PORT: " + PlayersStorage.getMasterSocketIPList().get(value) + " " + PlayersStorage.getMasterSocketPortList().get(value));
+                System.out.println(PlayersStorage.getMasterSocketIPList().size());
+                System.out.println(PlayersStorage.getMasterSocketPortList().size());
 
-            PlayersStorage.setMasterSocketIP(PlayersStorage.getMasterSocketIPList().get(value).toString());
-            String portString = (String) PlayersStorage.getMasterSocketPortList().get(value);
-            PlayersStorage.setMasterSocketPORTString(portString);
+                PlayersStorage.setMasterSocketIP(PlayersStorage.getMasterSocketIPList().get(value).toString());
+                String portString = (String) PlayersStorage.getMasterSocketPortList().get(value);
+                PlayersStorage.setMasterSocketPORTString(portString);
+            }
 
+        } else {
+
+            System.out.println("That is no server, you cant select that");
         }
 
     }

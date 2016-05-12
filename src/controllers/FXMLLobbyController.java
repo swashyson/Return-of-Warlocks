@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +31,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -63,6 +66,11 @@ public class FXMLLobbyController implements Initializable {
     @FXML
     private Label player2;
 
+    @FXML
+    private CheckBox readyPlayer1;
+    @FXML
+    private CheckBox readyPlayer2;
+
     chatSystem.AllChatToLocal chat;
     chatSystem.LocalChatMaster masterChat;
     chatSystem.LocalChatSlave slaveChat;
@@ -87,9 +95,9 @@ public class FXMLLobbyController implements Initializable {
         if (informationStorage.isMasterOrNot() == true) {
 
             masterChat.Disconnect();
+            slaveChat.disconnect();
             changeScene(event);
-        }
-        else{
+        } else {
             slaveChat.disconnect();
             changeScene(event);
         }
@@ -131,10 +139,13 @@ public class FXMLLobbyController implements Initializable {
         keyListener(chat, slaveChat);
         startAllChat();
         startPlayerFrames();
+        startReadyCheckFrames();
 
         slaveChat.clientConnect(PlayersStorage.getMasterSocketIP(), PlayersStorage.getMasterSocketPORT());
         listenForIncommingMessagesFromMaster(slaveChat);
         slaveChat.sendNameToServer();
+        readyCheckLsitener1();
+        readyCheckLsitener2();
 
     }
 
@@ -152,11 +163,32 @@ public class FXMLLobbyController implements Initializable {
 
     }
 
+    public void startReadyCheckFrames() {
+
+        PlayersStorage.setReadyPlayer1(readyPlayer1);
+        PlayersStorage.setReadyPlayer2(readyPlayer2);
+
+    }
+
     public void welcomeMessage() {
 
         DataStorage.getAllChat().appendText("Welcome to the chat server at ip: " + informationStorage.getServerIP() + "\n");
         DataStorage.getAllChat().appendText("Please use /all to type in all chat\n");
         DataStorage.getAllChat().appendText("Please keep the chat mature \n");
+    }
+
+    private void readyCheckLsitener1() {
+
+        readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            slaveChat.sendReadyCheckToMasterFirst(newValue);
+        });
+    }
+
+    private void readyCheckLsitener2() {
+
+        readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            slaveChat.sendReadyCheckToMasterSecond(newValue);
+        });
     }
 
     private void keyListener(chatSystem.AllChatToLocal chat, chatSystem.LocalChatSlave chat2) {

@@ -74,10 +74,17 @@ public class AllChatToLocal {
 
                             playerNamesSplitterAndAdder();
 
-                        }else if(test.contains("||||&")){
-                        
+                        } else if (test.contains("||||&")) {
+
                             LobbysSplitterAndAdder();
-                            
+
+                        } else if (test.contains("||||!")) {
+
+                            System.out.println("Unsupported Action");
+
+                        } else if (test.contains("||||%")) {
+
+                            System.out.println("Unsupported Action");
                         } else {
                             DataStorage.getAllChat().appendText(test + "\n");
 
