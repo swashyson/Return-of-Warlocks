@@ -159,23 +159,6 @@ public class LocalChatMaster {
         }
 
     }
-    public static void broadCastPlayerReady(){
-        PrintWriter out = null;
-
-        try {
-            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
-                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
-                out = new PrintWriter(temp.getOutputStream(), true);
-
-                out.println("||||8" +PlayersStorage.getPlayer1ready() );
-                out.flush();
-
-            }
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        }
-    }
     public void broadCastRemoveNameFromMaster() {
         PrintWriter out = null;
         try {

@@ -25,6 +25,21 @@ final public class PlayersStorage {
     static Label player1;
     static Label player2;
     static Label player3;
+    static Label player4;
+    static CheckBox readyPlayer1;
+    static CheckBox readyPlayer2;
+    static CheckBox readyPlayer3;
+    static CheckBox readyPlayer4;
+    static int playernumber;
+    static int playersInLobby;
+    static Socket serverSocketToMaster;
+    static String masterSocketIP;
+    static int masterSocketPORT;
+    static String masterSocketPORTString;
+    static ArrayList displayPlayerNamesFrames = new ArrayList();
+
+   
+    static String playerNameReadyCheck;
 
     public static Label getPlayer3() {
         return player3;
@@ -41,10 +56,22 @@ final public class PlayersStorage {
     public static void setPlayer4(Label player4) {
         PlayersStorage.player4 = player4;
     }
-    static Label player4;
-    static CheckBox player1ready;
-    static int playernumber;
-    static int playersInLobby;
+    
+    public static CheckBox getReadyPlayer3() {
+        return readyPlayer3;
+    }
+
+    public static void setReadyPlayer3(CheckBox readyPlayer3) {
+        PlayersStorage.readyPlayer3 = readyPlayer3;
+    }
+
+    public static CheckBox getReadyPlayer4() {
+        return readyPlayer4;
+    }
+
+    public static void setReadyPlayer4(CheckBox readyPlayer4) {
+        PlayersStorage.readyPlayer4 = readyPlayer4;
+    }
     
 
     public static int getPlayersInLobby() {
@@ -62,32 +89,6 @@ final public class PlayersStorage {
     public static void setPlayernumber(int playernumber) {
         PlayersStorage.playernumber = playernumber;
     }
-
-    public static CheckBox getPlayer1ready() {
-        return player1ready;
-    }
-
-    public static void setPlayer1ready(CheckBox player1ready) {
-        PlayersStorage.player1ready = player1ready;
-    }
-
-    public static CheckBox getPlayer2ready() {
-        return player2ready;
-    }
-
-    public static void setPlayer2ready(CheckBox player2ready) {
-        PlayersStorage.player2ready = player2ready;
-    }
-    static CheckBox player2ready;
-    static Socket serverSocketToMaster;
-    static String masterSocketIP;
-    static int masterSocketPORT;
-    static String masterSocketPORTString;
-    static ArrayList displayPlayerNamesFrames = new ArrayList();
-
-    static CheckBox readyPlayer1;
-    static CheckBox readyPlayer2;
-    static String playerNameReadyCheck;
 
     public static String getPlayerNameReadyCheck() {
         return playerNameReadyCheck;

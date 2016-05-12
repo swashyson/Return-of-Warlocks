@@ -116,8 +116,6 @@ public class LocalChatSlave {
 
                             String lastPartOfMessage = test.substring(5);
                             playerNamesSplitterAndAdder();
-                            
-
                         }else {
                             DataStorage.getAllChat().appendText(test + "\n");
 
@@ -204,9 +202,6 @@ public class LocalChatSlave {
             @Override
             public void run() {
 
-                System.out.println("NAMN: " + DataStorage.getUserName());
-                System.out.println("NAMN2: " + PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", ""));
-
                 if (DataStorage.getUserName().equals(PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", ""))) {
 
                     PlayersStorage.getReadyPlayer1().setDisable(false);
@@ -215,6 +210,14 @@ public class LocalChatSlave {
                 if (DataStorage.getUserName().equals(PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", ""))) {
 
                     PlayersStorage.getReadyPlayer2().setDisable(false);
+                }
+                if (DataStorage.getUserName().equals(PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", ""))) {
+
+                    PlayersStorage.getReadyPlayer3().setDisable(false);
+                }
+                if (DataStorage.getUserName().equals(PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", ""))) {
+
+                    PlayersStorage.getReadyPlayer4().setDisable(false);
                 }
             }
 
@@ -236,8 +239,13 @@ public class LocalChatSlave {
                 else if (PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", "").equals(name)) {
 
                     PlayersStorage.getReadyPlayer2().setSelected(true);
-                     
+                }
+                else if (PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", "").equals(name)) {
 
+                    PlayersStorage.getReadyPlayer3().setSelected(true);
+                }else if (PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", "").equals(name)) {
+
+                    PlayersStorage.getReadyPlayer4().setSelected(true);
                 }
 
             }
@@ -258,7 +266,12 @@ public class LocalChatSlave {
                 else if (PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", "").equals(name)) {
 
                     PlayersStorage.getReadyPlayer2().setSelected(false);
+                }else if (PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", "").equals(name)) {
 
+                    PlayersStorage.getReadyPlayer3().setSelected(false);
+                }else if (PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", "").equals(name)) {
+
+                    PlayersStorage.getReadyPlayer4().setSelected(false);
                 }
 
             }
