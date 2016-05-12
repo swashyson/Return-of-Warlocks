@@ -1,8 +1,8 @@
-.text {
+/*.text {
     -fx-font-family: "xenippa";
     -fx-text-fill: #FBF49C;
     -fx-font-size: 14pt;
-}
+}*/
 
 .split-pane:vertical {
     -fx-background-color: transparent;
@@ -37,7 +37,7 @@
     -fx-background-position: center center;
 }
 
-@font-face {
+/*@font-face {
     src: url('/fonts/xenippa1.ttf');
 }
-
+*/
