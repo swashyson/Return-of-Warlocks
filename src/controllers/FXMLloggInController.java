@@ -23,6 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Connections.ConnectToServer;
+import dataStorage.AudioHandler;
+
 /**
  *
  * @author Swashy
@@ -35,27 +37,30 @@ public class FXMLloggInController implements Initializable {
     private Button startButton;
     @FXML
     private TextField textfieldName;
-    
+
     private int isConnectedToServer = 0;
+
+    private final AudioHandler audio = new AudioHandler();
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        
+
         ConnectToServer cTS = new ConnectToServer();
 
         if (checkName() == true) {
 
             storeName();
-            cTS.connectToServer("Localhost",9006);
-            System.out.println("checking is connected: "+ isConnectedToServer);
-            if(DataStorage.getChatClientSocket() != null){
+            cTS.connectToServer("Localhost", 9006);
+            System.out.println("checking is connected: " + isConnectedToServer);
+            if (DataStorage.getChatClientSocket() != null) {
                 System.out.println("changeing scene");
                 changeScene(event);
-            }else{
+                //audio.stop();
+            } else {
                 label.setText("Couldent connect to server");
             }
             System.out.println("connected " + isConnectedToServer);
-            
 
         } else {
             label.setText("Skriv in ett giltigt namn");
@@ -64,7 +69,7 @@ public class FXMLloggInController implements Initializable {
     }
 
     public void changeScene(ActionEvent event) {
-        
+
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
             Scene scene = new Scene(root);
@@ -76,25 +81,33 @@ public class FXMLloggInController implements Initializable {
             ex.printStackTrace();
         }
     }
-    public void setisConnectedToServer(int b){
+
+    public void setisConnectedToServer(int b) {
         System.out.println("setting isConnectedToServer to " + b);
         isConnectedToServer = b;
     }
-            
 
     public boolean checkName() {
 
         return !textfieldName.getText().isEmpty();
     }
-    public void storeName(){
-    
+
+    public void storeName() {
+
         DataStorage.setUserName(textfieldName.getText());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
+
+        try {
+            audio.playBackgroundAudio();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
