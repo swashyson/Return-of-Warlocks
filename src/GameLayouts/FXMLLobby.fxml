@@ -94,8 +94,8 @@
                                  <children>
                                     <Label fx:id="player1" text="Player1" textFill="WHITE" GridPane.rowIndex="1" />
                                     <Label fx:id="player2" text="Player2" textFill="WHITE" GridPane.rowIndex="2" />
-                                    <CheckBox fx:id="Player1Ready" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <CheckBox fx:id="Player2Ready" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <CheckBox fx:id="readyPlayer1" disable="true" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <CheckBox fx:id="readyPlayer2" disable="true" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>

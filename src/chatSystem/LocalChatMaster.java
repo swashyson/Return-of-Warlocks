@@ -249,6 +249,8 @@ public class LocalChatMaster {
 
         System.out.println("Disconnected");
         try {
+            spamChatIfMasterDisconnected();
+
             sendRemoveRequestFromLobbyList();
             requestLobbyIpRemove();
             requestLobbyPortRemove();
@@ -265,6 +267,50 @@ public class LocalChatMaster {
             ex.printStackTrace();
         }
 
+    }
+
+    public static void broadCastReadyChecksTrue() {
+
+        PrintWriter out = null;
+
+        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+
+            try {
+                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                out = new PrintWriter(temp.getOutputStream(), true);
+
+                out.println("||||q" + PlayersStorage.getPlayerNameReadyCheck());
+                out.flush();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+    public static void broadCastReadyChecksFalse() {
+
+        PrintWriter out = null;
+
+        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+
+            try {
+                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                out = new PrintWriter(temp.getOutputStream(), true);
+
+                out.println("||||w" + PlayersStorage.getPlayerNameReadyCheck());
+                out.flush();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
+    private void spamChatIfMasterDisconnected() {
+        BroadCastSystemForMaster.addToList("Disconnected Master please disconnect from the server");
     }
 
     private void sendRemoveRequestFromLobbyList() {
@@ -307,6 +353,16 @@ public class LocalChatMaster {
                         PlayersStorage.getPlayerNames().add(name);
                         System.out.println("Master Names recieved:" + PlayersStorage.getPlayerNames().size() + name);
                         LocalChatMaster.broadCastPlayerNames();
+                        
+                    } else if (test.contains("||||q")) {
+                        
+                        PlayersStorage.setPlayerNameReadyCheck(name);
+                        broadCastReadyChecksTrue();
+
+                    } else if (test.contains("||||w")) {
+                        PlayersStorage.setPlayerNameReadyCheck(name);
+                        broadCastReadyChecksFalse();
+
                     } else {
                         System.out.println("Recieved message: " + test);
                         BroadCastSystemForMaster.addToList(test);

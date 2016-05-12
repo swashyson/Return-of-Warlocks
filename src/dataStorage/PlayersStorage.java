@@ -8,6 +8,7 @@ package dataStorage;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.CheckBox;
 
@@ -84,13 +85,42 @@ final public class PlayersStorage {
     static String masterSocketPORTString;
     static ArrayList displayPlayerNamesFrames = new ArrayList();
 
-    public static void clearAll(){
+    static CheckBox readyPlayer1;
+    static CheckBox readyPlayer2;
+    static String playerNameReadyCheck;
+
+    public static String getPlayerNameReadyCheck() {
+        return playerNameReadyCheck;
+    }
+
+    public static void setPlayerNameReadyCheck(String playerNameReadyCheck) {
+        PlayersStorage.playerNameReadyCheck = playerNameReadyCheck;
+    }
+
+    public static CheckBox getReadyPlayer1() {
+        return readyPlayer1;
+    }
+
+    public static void setReadyPlayer1(CheckBox readyPlayer1) {
+        PlayersStorage.readyPlayer1 = readyPlayer1;
+    }
+
+    public static CheckBox getReadyPlayer2() {
+        return readyPlayer2;
+    }
+
+    public static void setReadyPlayer2(CheckBox readyPlayer2) {
+        PlayersStorage.readyPlayer2 = readyPlayer2;
+    }
+
+    public static void clearAll() {
         playerNames.clear();
         lobbyList.clear();
         masterSocketIPList.clear();
         masterSocketPortList.clear();
         displayPlayerNamesFrames.clear();
     }
+
     public static ArrayList getDisplayPlayerNamesFrames() {
         return displayPlayerNamesFrames;
     }
