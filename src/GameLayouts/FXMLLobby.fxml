@@ -16,11 +16,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<<<<<<< HEAD
+
 <AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
-=======
-<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
->>>>>>> origin/master
+
     <children>
       <BorderPane prefHeight="800.0" prefWidth="1196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
