@@ -168,6 +168,8 @@ public class FXMLLobbyController implements Initializable {
         slaveChat.sendNameToServer();
         readyCheckLsitener1();
         readyCheckLsitener2();
+        readyCheckLsitener3();
+        readyCheckLsitener4();
 
     }
 
@@ -202,26 +204,34 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener1() {
 
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(PlayersStorage.getPlayernumber() == 1){
             slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
 
     private void readyCheckLsitener2() {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            slaveChat.sendReadyCheckToMasterSecond(newValue);
+            if(PlayersStorage.getPlayernumber() == 2){
+            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
     private void readyCheckLsitener3() {
 
         readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(PlayersStorage.getPlayernumber() == 3){
             slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
     private void readyCheckLsitener4() {
 
         readyPlayer4.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(PlayersStorage.getPlayernumber() == 4){
             slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
 

@@ -30,8 +30,8 @@ final public class PlayersStorage {
     static CheckBox readyPlayer2;
     static CheckBox readyPlayer3;
     static CheckBox readyPlayer4;
-    static int playernumber;
-    static int playersInLobby;
+    static int PlayersInLobby;
+    static int playerNumber;
     static Socket serverSocketToMaster;
     static String masterSocketIP;
     static int masterSocketPORT;
@@ -75,19 +75,19 @@ final public class PlayersStorage {
     
 
     public static int getPlayersInLobby() {
-        return playersInLobby;
+        return playerNumber;
     }
 
     public static void setPlayersInLobby(int playersInLobby) {
-        PlayersStorage.playersInLobby = playersInLobby;
+        PlayersStorage.playerNumber = playersInLobby;
     }
 
     public static int getPlayernumber() {
-        return playernumber;
+        return PlayersInLobby;
     }
 
     public static void setPlayernumber(int playernumber) {
-        PlayersStorage.playernumber = playernumber;
+        PlayersStorage.PlayersInLobby = playernumber;
     }
 
     public static String getPlayerNameReadyCheck() {
