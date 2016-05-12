@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 
 /**
  *
@@ -23,15 +24,71 @@ final public class PlayersStorage {
     static ArrayList masterSocketIPList = new ArrayList();
     static Label player1;
     static Label player2;
+    static Label player3;
+    static Label player4;
+    static CheckBox readyPlayer1;
+    static CheckBox readyPlayer2;
+    static CheckBox readyPlayer3;
+    static CheckBox readyPlayer4;
+    static int PlayersInLobby;
+    static int playerNumber;
     static Socket serverSocketToMaster;
     static String masterSocketIP;
     static int masterSocketPORT;
     static String masterSocketPORTString;
     static ArrayList displayPlayerNamesFrames = new ArrayList();
 
-    static CheckBox readyPlayer1;
-    static CheckBox readyPlayer2;
+   
     static String playerNameReadyCheck;
+
+    public static Label getPlayer3() {
+        return player3;
+    }
+
+    public static void setPlayer3(Label player3) {
+        PlayersStorage.player3 = player3;
+    }
+
+    public static Label getPlayer4() {
+        return player4;
+    }
+
+    public static void setPlayer4(Label player4) {
+        PlayersStorage.player4 = player4;
+    }
+    
+    public static CheckBox getReadyPlayer3() {
+        return readyPlayer3;
+    }
+
+    public static void setReadyPlayer3(CheckBox readyPlayer3) {
+        PlayersStorage.readyPlayer3 = readyPlayer3;
+    }
+
+    public static CheckBox getReadyPlayer4() {
+        return readyPlayer4;
+    }
+
+    public static void setReadyPlayer4(CheckBox readyPlayer4) {
+        PlayersStorage.readyPlayer4 = readyPlayer4;
+    }
+    
+
+    public static int getPlayersInLobby() {
+        return playerNumber;
+    }
+
+    public static void setPlayersInLobby(int playersInLobby) {
+        PlayersStorage.playerNumber = playersInLobby;
+    }
+
+    public static int getPlayernumber() {
+        return PlayersInLobby;
+    }
+
+    public static void setPlayernumber(int playernumber) {
+        PlayersStorage.PlayersInLobby = playernumber;
+    }
 
     public static String getPlayerNameReadyCheck() {
         return playerNameReadyCheck;

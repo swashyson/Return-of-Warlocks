@@ -60,16 +60,36 @@ public class FXMLLobbyController implements Initializable {
     private TextArea allChat;
     @FXML
     private Button createGameButton;
+    @FXML
+    private CheckBox Player1Ready;
+
+    public CheckBox getPlayer1Ready() {
+        return Player1Ready;
+    }
+
+    public CheckBox getPlayer2Ready() {
+        return Player2Ready;
+    }
+    @FXML
+    private CheckBox Player2Ready;
 
     @FXML
     private Label player1;
     @FXML
     private Label player2;
+    @FXML
+    private Label player3;
+    @FXML
+    private Label player4;
 
     @FXML
     private CheckBox readyPlayer1;
     @FXML
     private CheckBox readyPlayer2;
+    @FXML
+    private CheckBox readyPlayer3;
+    @FXML
+    private CheckBox readyPlayer4;
 
     chatSystem.AllChatToLocal chat;
     chatSystem.LocalChatMaster masterChat;
@@ -95,13 +115,15 @@ public class FXMLLobbyController implements Initializable {
         if (informationStorage.isMasterOrNot() == true) {
 
             masterChat.Disconnect();
-            slaveChat.disconnect();
             changeScene(event);
         } else {
             slaveChat.disconnect();
             changeScene(event);
         }
 
+    }
+    @FXML
+    private void handleReadyCheck(ActionEvent event){
     }
 
     private void changeScene(ActionEvent event) {
@@ -146,6 +168,8 @@ public class FXMLLobbyController implements Initializable {
         slaveChat.sendNameToServer();
         readyCheckLsitener1();
         readyCheckLsitener2();
+        readyCheckLsitener3();
+        readyCheckLsitener4();
 
     }
 
@@ -180,14 +204,34 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener1() {
 
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(PlayersStorage.getPlayernumber() == 1){
             slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
 
     private void readyCheckLsitener2() {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            slaveChat.sendReadyCheckToMasterSecond(newValue);
+            if(PlayersStorage.getPlayernumber() == 2){
+            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
+        });
+    }
+    private void readyCheckLsitener3() {
+
+        readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(PlayersStorage.getPlayernumber() == 3){
+            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
+        });
+    }
+    private void readyCheckLsitener4() {
+
+        readyPlayer4.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(PlayersStorage.getPlayernumber() == 4){
+            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
 
