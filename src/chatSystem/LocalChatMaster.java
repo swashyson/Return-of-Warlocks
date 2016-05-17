@@ -264,7 +264,7 @@ public class LocalChatMaster {
                 Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
                 out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("||||q" + PlayersStorage.getPlayerNameReadyCheck());
+                out.println("||||q" + PlayersStorage.getPlayernumber());
                 out.flush();
 
             } catch (IOException ex) {
@@ -284,7 +284,7 @@ public class LocalChatMaster {
                 Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
                 out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("||||w" + PlayersStorage.getPlayerNameReadyCheck());
+                out.println("||||w" + PlayersStorage.getPlayernumber());
                 out.flush();
 
             } catch (IOException ex) {

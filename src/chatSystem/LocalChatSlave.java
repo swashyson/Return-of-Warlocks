@@ -250,17 +250,18 @@ public class LocalChatSlave {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                
-                if (PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", "").equals(name)) {
-                    System.out.println("player 1: " + name + " redo");
+                System.out.println("player name redo:"+ name
+                );
+                if (name.equals("1")) {
+                    System.out.println("player" + name + " redo");
                     PlayersStorage.getReadyPlayer1().setSelected(true);
-                } else if (PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", "").equals(name)) {
+                } else if (name.equals("2")) {
                     System.out.println("player 2: " + name + " redo");
                     PlayersStorage.getReadyPlayer2().setSelected(true);
-                } else if (PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", "").equals(name)) {
+                } else if (name.equals("3")) {
                     System.out.println("player 3: "+ name+" redo");
                     PlayersStorage.getReadyPlayer3().setSelected(true);
-                } else if (PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", "").equals(name)) {
+                } else if (name.equals("4")) {
                     System.out.println("player 4: "+ name+" redo");
                     PlayersStorage.getReadyPlayer4().setSelected(true);
                 }
@@ -276,16 +277,16 @@ public class LocalChatSlave {
             @Override
             public void run() {
 
-                if (PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", "").equals(name)) {
+                if (name.equals("1")) {
 
                     PlayersStorage.getReadyPlayer1().setSelected(false);
-                } else if (PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", "").equals(name)) {
+                } else if (name.equals("2")) {
 
                     PlayersStorage.getReadyPlayer2().setSelected(false);
-                } else if (PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", "").equals(name)) {
-
+                } else if (name.equals("3")) {
+                    
                     PlayersStorage.getReadyPlayer3().setSelected(false);
-                } else if (PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", "").equals(name)) {
+                } else if (name.equals("4")) {
 
                     PlayersStorage.getReadyPlayer4().setSelected(false);
                 }
@@ -306,7 +307,8 @@ public class LocalChatSlave {
         }
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println(newValue + DataStorage.getUserName());
+            out.println(newValue + PlayersStorage.getPlayernumber());
+            System.out.println(newValue +" "+ PlayersStorage.getPlayernumber());
             out.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
