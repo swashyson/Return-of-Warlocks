@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="AnchorPanePlayerField" prefHeight="720.0" prefWidth="1043.0" style="-fx-background-color: #565042;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLPlaygroundController">
+   <children>
+      <Label layoutX="618.0" layoutY="568.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 1" />
+      <Label layoutX="706.0" layoutY="568.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 2" />
+      <Label layoutX="791.0" layoutY="568.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 3" />
+      <Label layoutX="618.0" layoutY="622.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 4" />
+      <Label layoutX="705.0" layoutY="622.0" prefHeight="41.0" prefWidth="47.0" style="-fx-background-color: #999999;" text="Abilitiy 5" />
+      <Label layoutX="201.0" layoutY="564.0" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: #999999;" text="Picture on player" />
+      <Label layoutX="317.0" layoutY="595.0" prefHeight="41.0" prefWidth="76.0" style="-fx-background-color: #999999;" text="Players Health" />
+      <Button layoutX="20.0" layoutY="21.0" mnemonicParsing="false" style="-fx-background-color: #999998;" text="Tillfällig bakåtknapp" />
+   </children>
+</AnchorPane>
