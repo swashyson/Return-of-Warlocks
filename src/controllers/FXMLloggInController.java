@@ -23,7 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Connections.ConnectToServer;
-import dataStorage.AudioHandler;
 
 /**
  *
@@ -52,13 +51,15 @@ public class FXMLloggInController implements Initializable {
 
             storeName();
             cTS.connectToServer("Localhost", 9006);
-            System.out.println("checking is connected: " + isConnectedToServer);
+            System.out.println("checking if connected: " + isConnectedToServer);
             if (DataStorage.getChatClientSocket() != null) {
-                System.out.println("changeing scene");
-                changeScene(event);
-                //audio.stop();
+                System.out.println("changing scene");
+                ChangeScene cs = new ChangeScene();
+                cs.changeScene(event, "FXMLMainChat");
+                //changeScene(event);
+                audio.stop();
             } else {
-                label.setText("Couldent connect to server");
+                label.setText("Couldn't connect to server");
             }
             System.out.println("connected " + isConnectedToServer);
 
@@ -102,6 +103,8 @@ public class FXMLloggInController implements Initializable {
 
         System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
 
+        //audio.playBackgroundAudio();
+        
         /*try {
             audio.playBackgroundAudio();
         } catch (Exception e) {

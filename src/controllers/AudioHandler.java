@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dataStorage;
+package controllers;
 
 import java.io.File;
 import java.net.URL;
@@ -25,7 +25,10 @@ public class AudioHandler {
         try {
             System.out.println("finding media file");
             System.out.println(System.getProperty("user.dir"));
-            resource = getClass().getResource("src/audioResources/preliminary_background_music_return_of_warlocks.wav");
+            
+            
+            
+            /*resource = getClass().getResource("/audioResources/preliminary_background_music_return_of_warlocks.wav");
             backgroundAudioPath = new Media(resource.toString());
             //System.out.println(System.getProperty("user.dir"));
             //backgroundAudioPath = new Media(new File("file:///" + System.getProperty("user.dir").replace('\\', '/') + "/" + "preliminary_background_music_return_of_warlocks.wav").toURI().toString());
@@ -34,7 +37,7 @@ public class AudioHandler {
             backgroundAudio.setCycleCount(MediaPlayer.INDEFINITE);
             backgroundAudio.setVolume(0.5);
 //            backgroundSound.setAutoPlay(true);
-            backgroundAudio.play();
+            backgroundAudio.play();*/
             System.out.println("media is playing");
         } catch (Exception e) {
             System.out.println("media file has not been found");

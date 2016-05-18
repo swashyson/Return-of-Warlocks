@@ -61,7 +61,7 @@
                      </GridPane.margin>
                   </Button>
                   <TextArea fx:id="allChat" editable="false" prefHeight="415.0" prefWidth="657.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button maxHeight="64.0" maxWidth="210.0" minHeight="64.0" minWidth="210.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="210.0" styleClass="startgamebutton" stylesheets="@../resources/myButtons.css" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Button fx:id="startGame" maxHeight="64.0" maxWidth="210.0" minHeight="64.0" minWidth="210.0" mnemonicParsing="false" onAction="#startGameHandler" prefHeight="64.0" prefWidth="210.0" styleClass="startgamebutton" stylesheets="@../resources/myButtons.css" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
