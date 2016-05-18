@@ -122,8 +122,9 @@ public class FXMLLobbyController implements Initializable {
         }
 
     }
+
     @FXML
-    private void handleReadyCheck(ActionEvent event){
+    private void handleReadyCheck(ActionEvent event) {
     }
 
     private void changeScene(ActionEvent event) {
@@ -204,8 +205,14 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener1() {
 
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(PlayersStorage.getPlayernumber() == 1){
-            slaveChat.sendReadyCheckToMasterFirst(newValue);
+
+            if (PlayersStorage.getPlayernumber() == 1) {
+                
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
             }
         });
     }
@@ -213,24 +220,40 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener2() {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(PlayersStorage.getPlayernumber() == 2){
-            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            if (PlayersStorage.getPlayernumber() == 2) {
+                
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
             }
         });
     }
+
     private void readyCheckLsitener3() {
 
         readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(PlayersStorage.getPlayernumber() == 3){
-            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            if (PlayersStorage.getPlayernumber() == 3) {
+                
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
             }
         });
     }
+
     private void readyCheckLsitener4() {
 
         readyPlayer4.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(PlayersStorage.getPlayernumber() == 4){
-            slaveChat.sendReadyCheckToMasterFirst(newValue);
+            if (PlayersStorage.getPlayernumber() == 4) {
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
             }
         });
     }

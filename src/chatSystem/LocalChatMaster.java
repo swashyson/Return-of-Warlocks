@@ -254,7 +254,7 @@ public class LocalChatMaster {
 
     }
 
-    public static void broadCastReadyChecksTrue() {
+    public static void broadCastReadyChecksTrue(int playernumber) {
 
         PrintWriter out = null;
 
@@ -264,7 +264,7 @@ public class LocalChatMaster {
                 Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
                 out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("||||q" + PlayersStorage.getPlayernumber());
+                out.println("||||q" + playernumber);
                 out.flush();
 
             } catch (IOException ex) {
@@ -274,7 +274,7 @@ public class LocalChatMaster {
 
     }
 
-    public static void broadCastReadyChecksFalse() {
+    public static void broadCastReadyChecksFalse(int playernumber) {
 
         PrintWriter out = null;
 
@@ -284,7 +284,7 @@ public class LocalChatMaster {
                 Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
                 out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("||||w" + PlayersStorage.getPlayernumber());
+                out.println("||||w" + playernumber);
                 out.flush();
 
             } catch (IOException ex) {
@@ -340,13 +340,14 @@ public class LocalChatMaster {
                         LocalChatMaster.broadCastPlayerNames();
                         
                     } else if (test.contains("||||q")) {
-                        
-                        PlayersStorage.setPlayerNameReadyCheck(name);
-                        broadCastReadyChecksTrue();
+                        System.out.println("reseving: "+test+" from slave");
+                        //PlayersStorage.setPlayerNameReadyCheck(name);
+                        broadCastReadyChecksTrue(Integer.parseInt(name));
 
                     } else if (test.contains("||||w")) {
-                        PlayersStorage.setPlayerNameReadyCheck(name);
-                        broadCastReadyChecksFalse();
+                        System.out.println("reseving: "+test+" from slave");
+                        //PlayersStorage.setPlayerNameReadyCheck(name);
+                        broadCastReadyChecksFalse(Integer.parseInt(name));
 
                     }else if (test.contains("||||p")) {
                         System.out.println("master getting a ||||p request");

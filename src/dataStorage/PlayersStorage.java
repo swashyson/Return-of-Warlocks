@@ -31,7 +31,7 @@ final public class PlayersStorage {
     static CheckBox readyPlayer3;
     static CheckBox readyPlayer4;
     static int PlayersInLobby;
-    static int playerNumber;
+    static int playerNumber = 0;
     static Socket serverSocketToMaster;
     static String masterSocketIP;
     static int masterSocketPORT;
@@ -56,7 +56,21 @@ final public class PlayersStorage {
     public static void setPlayer4(Label player4) {
         PlayersStorage.player4 = player4;
     }
-    
+      public static CheckBox getReadyPlayer1() {
+        return readyPlayer1;
+    }
+
+    public static void setReadyPlayer1(CheckBox readyPlayer1) {
+        PlayersStorage.readyPlayer1 = readyPlayer1;
+    }
+
+    public static CheckBox getReadyPlayer2() {
+        return readyPlayer2;
+    }
+
+    public static void setReadyPlayer2(CheckBox readyPlayer2) {
+        PlayersStorage.readyPlayer2 = readyPlayer2;
+    }
     public static CheckBox getReadyPlayer3() {
         return readyPlayer3;
     }
@@ -98,21 +112,7 @@ final public class PlayersStorage {
         PlayersStorage.playerNameReadyCheck = playerNameReadyCheck;
     }
 
-    public static CheckBox getReadyPlayer1() {
-        return readyPlayer1;
-    }
-
-    public static void setReadyPlayer1(CheckBox readyPlayer1) {
-        PlayersStorage.readyPlayer1 = readyPlayer1;
-    }
-
-    public static CheckBox getReadyPlayer2() {
-        return readyPlayer2;
-    }
-
-    public static void setReadyPlayer2(CheckBox readyPlayer2) {
-        PlayersStorage.readyPlayer2 = readyPlayer2;
-    }
+  
 
     public static void clearAll() {
         playerNames.clear();
