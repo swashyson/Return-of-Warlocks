@@ -94,6 +94,8 @@ public class FXMLLobbyController implements Initializable {
     chatSystem.AllChatToLocal chat;
     chatSystem.LocalChatMaster masterChat;
     chatSystem.LocalChatSlave slaveChat;
+    
+    //ChangeScene cs = new ChangeScene();
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -112,19 +114,39 @@ public class FXMLLobbyController implements Initializable {
     @FXML
     private void handleDisconnectFromLobby(ActionEvent event) {
 
+        ChangeScene cs = new ChangeScene();
         if (informationStorage.isMasterOrNot() == true) {
 
             masterChat.Disconnect();
-            changeScene(event);
+            chatMasterSlaveNul();
+            cs.changeScene(event, "FXMLMainChat");
+            //changeScene(event);
         } else {
             slaveChat.disconnect();
-            changeScene(event);
+            chatMasterSlaveNul();
+            cs.changeScene(event, "FXMLMainChat");
+            //changeScene(event);
         }
 
     }
 
     @FXML
     private void handleReadyCheck(ActionEvent event) {
+    }
+
+    
+    // ska öppna spelplanen härifrån?!?!?!?!? 
+    // funkar inte för tillfället
+    @FXML
+    private void startGameHandler(ActionEvent event){
+        //ChangeScene cs = new ChangeScene();
+        //cs.changeScene(event, "FXMLPlayground");
+    }
+    
+    private void chatMasterSlaveNul() {
+        chat = null;
+        masterChat = null;
+        slaveChat = null;
     }
 
     private void changeScene(ActionEvent event) {

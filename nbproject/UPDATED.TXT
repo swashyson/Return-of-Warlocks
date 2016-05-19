@@ -20,4 +20,3 @@ javafx.disable.autoupdate.notification=true
 
 Remark: Files nbproject/jfx-impl_backup*.xml and this file nbproject/UPDATED.TXT
 are not used when building the project and can be freely deleted.
-

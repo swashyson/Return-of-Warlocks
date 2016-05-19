@@ -60,6 +60,10 @@ public class FXMLMainChatController implements Initializable {
     chatSystem.Chat chat = new Chat();
     int x = 0;
 
+    ChangeScene cs = new ChangeScene();
+
+    AudioHandler ah = new AudioHandler();
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -81,13 +85,17 @@ public class FXMLMainChatController implements Initializable {
     @FXML
     private void createGame(ActionEvent event) {
 
-        changeScene(event, true);
+        informationStorage.setMasterOrNot(true);
+        cs.changeScene(event, "FXMLLobby");
+        //changeScene(event, true);
     }
 
     @FXML
     private void joinGame(ActionEvent event) {
 
-        changeScene(event, false);
+        informationStorage.setMasterOrNot(false);
+        cs.changeScene(event, "FXMLLobby");
+        //changeScene(event, false);
     }
 
     private void changeScene(ActionEvent event, boolean masterOrNot) {
@@ -124,6 +132,12 @@ public class FXMLMainChatController implements Initializable {
         startLobbyList();
         lobbyListListener();
         informationStorage.setDontRetry(1);
+
+        /*try {
+            ah.playBackgroundAudio();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 
     public void startAllChat() {

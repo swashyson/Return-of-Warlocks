@@ -6,37 +6,23 @@
 package controllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * FXML Controller class
  *
  * @author Mohini
  */
-public class FXMLPlaygroundController implements Initializable {
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
+public class ChangeScene{
     
-    private void temporaryBack(ActionEvent event){
-        
-        ChangeScene cs = new ChangeScene();
-        cs.changeScene(event, "FXMLMainChat");
-        
-        /*
+    public void changeScene(ActionEvent event,String destination){
         try {
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
-            Scene scene = new Scene(blah);
+            Parent root = FXMLLoader.load(getClass().getResource("/GameLayouts/" + destination + ".fxml"));
+            Scene scene = new Scene(root);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
             appStage.show();
@@ -44,7 +30,6 @@ public class FXMLPlaygroundController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        */
     }
     
 }
