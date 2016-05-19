@@ -25,6 +25,8 @@ public class SlaveClient {
     private Socket clientSocket;
 
     private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+    
     private boolean lockNewOutPutStream = false;
     private boolean lockNewinPutStream = false;
 
@@ -99,11 +101,11 @@ public class SlaveClient {
         try {
 
             if (lockNewinPutStream == false) {
-                ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+                ois = new ObjectInputStream(clientSocket.getInputStream());
                 lockNewinPutStream = true;
             }
-            
-            
+            allOtherPlayers.unsortedPlayers.add(ois.readObject());
+            //allOtherPlayers.unsortedPlayers2.add((Player) allOtherPlayers.unsortedPlayers.get(0));
 
         } catch (Exception ex) {
 

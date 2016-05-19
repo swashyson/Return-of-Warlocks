@@ -33,6 +33,9 @@ public class MasterServer {
     private Socket clientSocket;
     private Thread t;
 
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+
     public void CreateServer(int port) {
 
         try {
@@ -159,7 +162,7 @@ public class MasterServer {
         @Override
         public void run() {
             try {
-                boolean lock = false;
+
                 ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
                 while (true) {
 
