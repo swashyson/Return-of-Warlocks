@@ -39,7 +39,7 @@ final public class PlayersStorage {
     static ArrayList displayPlayerNamesFrames = new ArrayList();
 
    
-    
+    static String playerNameReadyCheck;
 
     public static Label getPlayer3() {
         return player3;
@@ -103,6 +103,16 @@ final public class PlayersStorage {
     public static void setPlayernumber(int playernumber) {
         PlayersStorage.PlayersInLobby = playernumber;
     }
+
+    public static String getPlayerNameReadyCheck() {
+        return playerNameReadyCheck;
+    }
+
+    public static void setPlayerNameReadyCheck(String playerNameReadyCheck) {
+        PlayersStorage.playerNameReadyCheck = playerNameReadyCheck;
+    }
+
+  
 
     public static void clearAll() {
         playerNames.clear();

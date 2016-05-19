@@ -94,9 +94,8 @@ public class FXMLLobbyController implements Initializable {
     chatSystem.AllChatToLocal chat;
     chatSystem.LocalChatMaster masterChat;
     chatSystem.LocalChatSlave slaveChat;
-    
-    //ChangeScene cs = new ChangeScene();
 
+    //ChangeScene cs = new ChangeScene();
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -134,15 +133,24 @@ public class FXMLLobbyController implements Initializable {
     private void handleReadyCheck(ActionEvent event) {
     }
 
-    
     // ska öppna spelplanen härifrån?!?!?!?!? 
     // funkar inte för tillfället
     @FXML
-    private void startGameHandler(ActionEvent event){
-        //ChangeScene cs = new ChangeScene();
-        //cs.changeScene(event, "FXMLPlayground");
+    private void startGameHandler(ActionEvent event) {
+
+        if (informationStorage.isMasterOrNot() == true) {
+
+            masterChat.Disconnect();
+            slaveChat.disconnect();
+        } else {
+
+            slaveChat.disconnect();
+        }
+        ChangeScene cs = new ChangeScene();
+        cs.changeScene(event, "FXMLPlayground");
+
     }
-    
+
     private void chatMasterSlaveNul() {
         chat = null;
         masterChat = null;
@@ -207,8 +215,6 @@ public class FXMLLobbyController implements Initializable {
 
         PlayersStorage.setPlayer1(player1);
         PlayersStorage.setPlayer2(player2);
-        PlayersStorage.setPlayer3(player3);
-        PlayersStorage.setPlayer4(player4);
 
     }
 
@@ -216,8 +222,6 @@ public class FXMLLobbyController implements Initializable {
 
         PlayersStorage.setReadyPlayer1(readyPlayer1);
         PlayersStorage.setReadyPlayer2(readyPlayer2);
-        PlayersStorage.setReadyPlayer3(readyPlayer3);
-        PlayersStorage.setReadyPlayer4(readyPlayer4);
 
     }
 
@@ -233,7 +237,7 @@ public class FXMLLobbyController implements Initializable {
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
 
             if (PlayersStorage.getPlayernumber() == 1) {
-                
+
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
                 System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
                 System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
@@ -247,7 +251,7 @@ public class FXMLLobbyController implements Initializable {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (PlayersStorage.getPlayernumber() == 2) {
-                
+
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
                 System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
                 System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
@@ -261,7 +265,7 @@ public class FXMLLobbyController implements Initializable {
 
         readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (PlayersStorage.getPlayernumber() == 3) {
-                
+
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
                 System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
                 System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());

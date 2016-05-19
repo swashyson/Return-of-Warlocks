@@ -110,6 +110,7 @@ public class AllChatToLocal {
 
                         DataStorage.newObservableList();
 
+                        System.out.println("DISPLAY NAME " + DataStorage.getPlayerListAdapter().size());
 
                         String name = test.substring(5);
 
