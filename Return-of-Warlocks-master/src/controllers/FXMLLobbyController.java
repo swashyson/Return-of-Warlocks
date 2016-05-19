@@ -60,24 +60,42 @@ public class FXMLLobbyController implements Initializable {
     private TextArea allChat;
     @FXML
     private Button createGameButton;
+    @FXML
+    private CheckBox Player1Ready;
+
+    public CheckBox getPlayer1Ready() {
+        return Player1Ready;
+    }
+
+    public CheckBox getPlayer2Ready() {
+        return Player2Ready;
+    }
+    @FXML
+    private CheckBox Player2Ready;
 
     @FXML
     private Label player1;
     @FXML
     private Label player2;
+    @FXML
+    private Label player3;
+    @FXML
+    private Label player4;
 
     @FXML
     private CheckBox readyPlayer1;
     @FXML
     private CheckBox readyPlayer2;
-
     @FXML
-    private Button startGame;
+    private CheckBox readyPlayer3;
+    @FXML
+    private CheckBox readyPlayer4;
 
     chatSystem.AllChatToLocal chat;
     chatSystem.LocalChatMaster masterChat;
     chatSystem.LocalChatSlave slaveChat;
 
+    //ChangeScene cs = new ChangeScene();
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -95,31 +113,57 @@ public class FXMLLobbyController implements Initializable {
     @FXML
     private void handleDisconnectFromLobby(ActionEvent event) {
 
+        ChangeScene cs = new ChangeScene();
+        if (informationStorage.isMasterOrNot() == true) {
+
+            masterChat.Disconnect();
+            chatMasterSlaveNul();
+            cs.changeScene(event, "FXMLMainChat");
+            //changeScene(event);
+        } else {
+            slaveChat.disconnect();
+            chatMasterSlaveNul();
+            cs.changeScene(event, "FXMLMainChat");
+            //changeScene(event);
+        }
+
+    }
+
+    @FXML
+    private void handleReadyCheck(ActionEvent event) {
+    }
+
+    // ska öppna spelplanen härifrån?!?!?!?!? 
+    // funkar inte för tillfället
+    @FXML
+    private void startGameHandler(ActionEvent event) {
+
         if (informationStorage.isMasterOrNot() == true) {
 
             masterChat.Disconnect();
             slaveChat.disconnect();
-            changeScene(event, "/GameLayouts/FXMLMainChat.fxml");
         } else {
+
             slaveChat.disconnect();
-            changeScene(event, "/GameLayouts/FXMLMainChat.fxml");
         }
+        ChangeScene cs = new ChangeScene();
+        cs.changeScene(event, "FXMLPlayground");
 
     }
-    @FXML
-    private void handleStartGame(ActionEvent event){
-        
-        changeScene(event, "/GameLayouts/FXMLPlayground.fxml");
-    
+
+    private void chatMasterSlaveNul() {
+        chat = null;
+        masterChat = null;
+        slaveChat = null;
     }
 
-    private void changeScene(ActionEvent event, String layout) {
+    private void changeScene(ActionEvent event) {
 
         try {
             chat = null;
             masterChat = null;
             slaveChat = null;
-            Parent blah = FXMLLoader.load(getClass().getResource(layout));
+            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
             Scene scene = new Scene(blah);
             Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             appStage.setScene(scene);
@@ -155,6 +199,8 @@ public class FXMLLobbyController implements Initializable {
         slaveChat.sendNameToServer();
         readyCheckLsitener1();
         readyCheckLsitener2();
+        readyCheckLsitener3();
+        readyCheckLsitener4();
 
     }
 
@@ -189,14 +235,56 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener1() {
 
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            slaveChat.sendReadyCheckToMasterFirst(newValue);
+
+            if (PlayersStorage.getPlayernumber() == 1) {
+
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+            }
         });
     }
 
     private void readyCheckLsitener2() {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            slaveChat.sendReadyCheckToMasterSecond(newValue);
+            if (PlayersStorage.getPlayernumber() == 2) {
+
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+            }
+        });
+    }
+
+    private void readyCheckLsitener3() {
+
+        readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (PlayersStorage.getPlayernumber() == 3) {
+
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+            }
+        });
+    }
+
+    private void readyCheckLsitener4() {
+
+        readyPlayer4.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (PlayersStorage.getPlayernumber() == 4) {
+                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
+                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
+                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
+                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+                slaveChat.sendReadyCheckToMasterFirst(newValue);
+            }
         });
     }
 
