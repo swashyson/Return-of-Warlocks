@@ -1,0 +1,273 @@
+
+.startbutton {          
+    -fx-background-image: url("start_button.png");
+    -fx-background-size: 194 61;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.startbutton:hover {
+    -fx-background-image: url("start_button_hover.png");
+    -fx-background-size: 194 61;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+
+}
+
+.disconnectbutton {
+	-fx-background-image: url("disconnect_button.png");
+    -fx-background-size: 108 30;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+
+}
+
+.disconnectbutton:hover {
+    -fx-background-image: url("disconnect_button_hover.png");
+    -fx-background-size: 108 30;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+
+}
+
+.startgamebutton {
+    -fx-background-image: url("start_game_button.png");
+    -fx-background-size: 210 64;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;	
+}
+
+.startgamebutton:hover {
+	-fx-background-image: url("start_game_button_hover.png");
+    -fx-background-size: 210 64;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;	
+
+}
+
+.creategamebutton {
+-fx-background-image: url("create_game_button.png");
+    -fx-background-size: 123 37;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+}
+
+.creategamebutton:hover {
+-fx-background-image: url("create_game_button_hover.png");
+    -fx-background-size: 123 37;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+}
+
+
+.joingamebutton{
+	-fx-background-image: url("join_game_button.png");
+    -fx-background-size: 97 36;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+}
+
+.joingamebutton:hover {
+	-fx-background-image: url("join_game_button_hover.png");
+    -fx-background-size: 97 36;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+}
+
+.exitbutton{
+	-fx-background-image: url("exit_button.png");
+    -fx-background-size: 52 31;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+
+}
+
+.exitbutton:hover{
+	-fx-background-image: url("exit_button_hover.png");
+    -fx-background-size: 52 31;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+
+}
+
+/*.clientsbutton {
+    -fx-background-image: url("clients_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.clientsbutton:hover{
+    -fx-background-image: url("clients_icon_hover.png");
+}
+
+.employeesbutton{
+    -fx-background-image: url("employees_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.employeesbutton:hover{
+    -fx-background-image: url("employees_icon_hover.png");
+}
+
+.settingsbutton{
+    -fx-background-image: url("settings_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.settingsbutton:hover{
+    -fx-background-image: url("settings_icon_hover.png");
+}
+
+.helpbutton{
+    -fx-background-image: url("help_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.helpbutton:hover{
+    -fx-background-image: url("help_icon_hover.png");
+}
+
+.aboutbutton{
+    -fx-background-image: url("about_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.aboutbutton:hover{
+    -fx-background-image: url("about_icon_hover.png");
+}
+
+
+.exitbutton{
+    -fx-background-image: url("exit_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.exitbutton:hover{
+    -fx-background-image: url("exit_icon_hover.png");
+}
+
+.settingsbuttonlogin{
+    -fx-background-image: url("settings_login_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.settingsbuttonlogin:hover{
+    -fx-background-image: url("settings_login_hover.png");
+}
+
+.lostpasswordbutton{
+    -fx-background-image: url("lost_password_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.lostpasswordbutton:hover{
+    -fx-background-image: url("lost_password_icon_hover.png");
+}
+
+.logoutbutton{
+    -fx-background-image: url("logout_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.logoutbutton:hover{
+    -fx-background-image: url("logout_icon_hover.png");
+}
+
+.deletebutton {
+    -fx-background-image: url("delete_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.deletebutton:target {
+    -fx-background-image: url("delete_icon_hover.png");
+}
+
+.markvisitcomplete{
+    -fx-background-image: url("assignments_visit_mark_done_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.markvisitcomplete:hover{
+    -fx-background-image: url("assignments_visit_mark_done_icon_hover.png");
+}
+
+.shownotes{
+    -fx-background-image: url("assignments_visit_show_notes_icon_blank.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;
+}
+
+.shownotes:hover{
+    -fx-background-image: url("assignments_visit_show_notes_icon_hover.png");
+}
+*/
