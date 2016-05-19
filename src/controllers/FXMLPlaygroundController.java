@@ -23,12 +23,16 @@ import javafx.stage.Stage;
  */
 public class FXMLPlaygroundController implements Initializable {
 
+    AudioHandler audioHandler = new AudioHandler();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        audioHandler.startBackgroundAudio();
     }    
     
     private void temporaryBack(ActionEvent event){
+        
+        audioHandler.stop();
         
         ChangeScene cs = new ChangeScene();
         cs.changeScene(event, "FXMLMainChat");

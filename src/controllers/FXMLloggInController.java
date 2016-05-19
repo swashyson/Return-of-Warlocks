@@ -57,7 +57,7 @@ public class FXMLloggInController implements Initializable {
                 ChangeScene cs = new ChangeScene();
                 cs.changeScene(event, "FXMLMainChat");
                 //changeScene(event);
-                audio.stop();
+                //audio.stop();
             } else {
                 label.setText("Couldn't connect to server");
             }
@@ -103,7 +103,7 @@ public class FXMLloggInController implements Initializable {
 
         System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
 
-        audio.defineAudio();
+        //audio.startBackgroundAudio();
         
         /*try {
             audio.playBackgroundAudio();
