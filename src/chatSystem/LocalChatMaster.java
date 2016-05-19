@@ -44,7 +44,6 @@ public class LocalChatMaster {
             serverSocket = new ServerSocket(port);
             PlayersStorage.setMasterSocketPORT(PORT);
             PlayersStorage.setMasterSocketIP(InetAddress.getLocalHost().getHostAddress());
-            System.out.println("Creating Master...: " + InetAddress.getLocalHost().getHostAddress());
             PlayersStorage.setPlayernumber(0);
 
         } catch (IOException e) {
@@ -73,7 +72,6 @@ public class LocalChatMaster {
                                     chath.start();
                                     BroadCastSystemForMaster.addClientSockets(clientSocket);
 
-                                    System.out.println("Jump to chatHandler");
                                     StartServer(port);
 
                                 } catch (Exception ex) {
@@ -83,7 +81,6 @@ public class LocalChatMaster {
                         });
 
                     } catch (Exception ex) {
-                        System.out.println("Server Closed");
                     }
                     return null;
                 }
@@ -134,7 +131,6 @@ public class LocalChatMaster {
                 }
             } else {
 
-                System.out.print("");
                 i = 0;
             }
         }
@@ -160,19 +156,20 @@ public class LocalChatMaster {
         }
 
     }
+
     public void broadCastRemoveNameFromMaster() {
         PrintWriter out = null;
         try {
 
             out = new PrintWriter(DataStorage.getLobbyClientSocket().getOutputStream(), true);
             out.println("||||-" + DataStorage.getUserName());
-            System.out.println("Send to chatServer with command ||||&" + DataStorage.getUserName());
             out.flush();
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+
     public void broadCastLobbys() {
 
         PrintWriter out = null;
@@ -180,7 +177,6 @@ public class LocalChatMaster {
 
             out = new PrintWriter(PlayersStorage.getServerSocketToMaster().getOutputStream(), true);
             out.println("||||&" + DataStorage.getUserName());
-            System.out.println("Send to chatServer with command ||||&" + DataStorage.getUserName());
             out.flush();
 
         } catch (IOException ex) {
@@ -231,7 +227,6 @@ public class LocalChatMaster {
 
     public void Disconnect() {
 
-        System.out.println("Disconnected");
         try {
             spamChatIfMasterDisconnected();
 
@@ -245,7 +240,6 @@ public class LocalChatMaster {
             PlayersStorage.setPlayernumber(PlayersStorage.getPlayernumber() - 1);
             PlayersStorage.clearAll();
             informationStorage.setDontRetry(1);
-            System.out.println("Done");
 
         } catch (Exception ex) {
 
@@ -328,37 +322,33 @@ public class LocalChatMaster {
 
             try {
 
-                //in = new BufferedReader(new InputStreamReader(DataStorage.getLobbyClientSocket().getInputStream()));
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 while (true) {
                     String test = in.readLine();
+                    name = test.substring(5);
                     if (test.contains("|||||")) {
-                        name = test.substring(5);
+                        System.out.println("Master getting:" + test);
                         PlayersStorage.getPlayerNames().add(name);
-                        System.out.println("Master Names recieved:" + PlayersStorage.getPlayerNames().size() + name);
                         LocalChatMaster.broadCastPlayerNames();
-                        
+
                     } else if (test.contains("||||q")) {
-                        System.out.println("reseving: "+test+" from slave");
-                        //PlayersStorage.setPlayerNameReadyCheck(name);
+                        System.out.println("Master getting:" + test);
                         broadCastReadyChecksTrue(Integer.parseInt(name));
 
                     } else if (test.contains("||||w")) {
-                        System.out.println("reseving: "+test+" from slave");
-                        //PlayersStorage.setPlayerNameReadyCheck(name);
+                        System.out.println("Master getting:" + test);
                         broadCastReadyChecksFalse(Integer.parseInt(name));
 
-                    }else if (test.contains("||||p")) {
-                        System.out.println("master getting a ||||p request");
+                    } else if (test.contains("||||p")) {
+                        System.out.println("Master getting:" + test);
                         sendPlayerNumbersOnMaster();
 
                     } else if (test.contains("|||ap")) {
-                        System.out.println("master getting a |||ap request");
+                        System.out.println("Master getting:" + test);
                         addAndSendPlayersInLobby();
 
                     } else {
-                        System.out.println("Recieved message: " + test);
                         BroadCastSystemForMaster.addToList(test);
                     }
 
@@ -366,52 +356,52 @@ public class LocalChatMaster {
             } catch (SocketException ex) {
                 removeIfDisconnected(name);
             } catch (Exception ex2) {
-                System.out.println("Jag har får null");
                 ex2.printStackTrace();
                 lock = false;
                 slaveDisconnect(name);
             }
         }
-        private void sendPlayerNumbersOnMaster(){
-        PrintWriter out = null;
 
-        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+        private void sendPlayerNumbersOnMaster() {
+            PrintWriter out = null;
 
-            try {
-                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
-                out = new PrintWriter(temp.getOutputStream(), true);
+            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
 
-                out.println("||||p" + PlayersStorage.getPlayernumber());
-                out.flush();
+                try {
+                    Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                    out = new PrintWriter(temp.getOutputStream(), true);
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                    out.println("||||p" + PlayersStorage.getPlayernumber());
+                    out.flush();
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
-        }
-        private void addAndSendPlayersInLobby(){
+
+        private void addAndSendPlayersInLobby() {
             PlayersStorage.setPlayersInLobby(PlayersStorage.getPlayersInLobby() + 1);
-         PrintWriter out = null;
+            PrintWriter out = null;
 
-        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
 
-            try {
-                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
-                out = new PrintWriter(temp.getOutputStream(), true);
+                try {
+                    Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                    out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("|||ap" +PlayersStorage.getPlayersInLobby());
-                out.flush();
+                    out.println("|||ap" + PlayersStorage.getPlayersInLobby());
+                    System.out.println("Sending:" + "|||ap" + PlayersStorage.getPlayersInLobby() + " From Master");
+                    out.flush();
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-        } 
         }
+
         private void slaveDisconnect(String name) {
             try {
-
-                System.out.println("TASDASDAS");
-
                 BroadCastSystemForMaster.getBroadCastList().remove(clientSocket);
                 BroadCastSystemForMaster.getClientSockets().remove(clientSocket);
                 PlayersStorage.getPlayerNames().remove(name);
@@ -425,8 +415,6 @@ public class LocalChatMaster {
 
         public void removeIfDisconnected(String name) {
             try {
-
-                System.out.println("TASDASDAS");
 
                 PlayersStorage.getServerSocketToMaster().close();
                 clientSocket.close();
@@ -444,12 +432,10 @@ public class LocalChatMaster {
     }
 
     public void requestLobbyIpRemove() {
-        System.out.println("request remove lobbyipclient");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println("||||4" + PlayersStorage.getMasterSocketIP());
-            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
@@ -459,12 +445,10 @@ public class LocalChatMaster {
     }
 
     public void requestLobbyPortRemove() {
-        System.out.println("request remove lobbyipclient");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println("||||5" + PlayersStorage.getMasterSocketPORT());
-            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {

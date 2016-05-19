@@ -50,17 +50,14 @@ public class Chat {
     public final void saveServerInformation() {
 
         informationStorage.setServerIP(SERVER);
-        System.out.println("Test");
     }
-
-    public void sendMessage(String message) {
+    public void sendMessage(String message){
 
         PrintWriter out = null;
 
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println(DataStorage.getUserName() + ": " + message);
-            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
@@ -69,12 +66,10 @@ public class Chat {
     }
 
     public void requestNameList() {
-        System.out.println("request name client");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
             out.println("||||1");
-            System.out.println("send: " + DataStorage.getChatClientSocket().toString());
             out.flush();
 
         } catch (IOException ex) {
@@ -84,7 +79,6 @@ public class Chat {
     }
 
     public void requestIPList() {
-        System.out.println("request IP LIST");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
@@ -98,7 +92,6 @@ public class Chat {
     }
 
     public void requestPORTList() {
-        System.out.println("request PORT LIST");
         PrintWriter out = null;
         try {
             out = new PrintWriter(DataStorage.getChatClientSocket().getOutputStream(), true);
@@ -135,7 +128,6 @@ public class Chat {
                     @Override
                     public void run() {
                         if (test.contains("|||||")) {
-                            System.out.println("send a message with |||||");
                             playerNamesSplitterAndAdder();
 
                         } else if (test.contains("||||&")) {
@@ -178,9 +170,7 @@ public class Chat {
                     private void playerNamesSplitterAndAdder() {
 
                         DataStorage.newObservableListLobbys();
-                        DataStorage.newObservableList();
-
-                        System.out.println("DISPLAY NAME " + DataStorage.getPlayerListAdapter().size());
+                        DataStorage.newObservableList();;
 
                         String name = test.substring(5);
 
@@ -229,11 +219,6 @@ public class Chat {
 
         if (value != -1 || !PlayersStorage.getMasterSocketIPList().isEmpty() || !PlayersStorage.getMasterSocketPortList().isEmpty()) {
             if (value >= 0) {
-                System.out.println("Selected: " + value);
-                System.out.println("IP/PORT: " + PlayersStorage.getMasterSocketIPList().get(value) + " " + PlayersStorage.getMasterSocketPortList().get(value));
-                System.out.println(PlayersStorage.getMasterSocketIPList().size());
-                System.out.println(PlayersStorage.getMasterSocketPortList().size());
-
                 PlayersStorage.setMasterSocketIP(PlayersStorage.getMasterSocketIPList().get(value).toString());
                 String portString = (String) PlayersStorage.getMasterSocketPortList().get(value);
                 PlayersStorage.setMasterSocketPORTString(portString);
@@ -241,7 +226,6 @@ public class Chat {
 
         } else {
 
-            System.out.println("That is no server, you cant select that");
         }
 
     }

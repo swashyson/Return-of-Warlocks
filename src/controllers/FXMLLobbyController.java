@@ -185,6 +185,8 @@ public class FXMLLobbyController implements Initializable {
 
         PlayersStorage.setPlayer1(player1);
         PlayersStorage.setPlayer2(player2);
+        PlayersStorage.setPlayer3(player3);
+        PlayersStorage.setPlayer4(player4);
 
     }
 
@@ -192,6 +194,8 @@ public class FXMLLobbyController implements Initializable {
 
         PlayersStorage.setReadyPlayer1(readyPlayer1);
         PlayersStorage.setReadyPlayer2(readyPlayer2);
+        PlayersStorage.setReadyPlayer3(readyPlayer3);
+        PlayersStorage.setReadyPlayer4(readyPlayer4);
 
     }
 

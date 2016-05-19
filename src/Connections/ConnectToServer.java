@@ -25,15 +25,11 @@ public class ConnectToServer {
    public void connectToServer(String server, int port) {
         FXMLloggInController FXMLDC = new FXMLloggInController();
         try {
-            System.out.println("Attempting to connect to " + SERVER + ":" + PORT);
             clientToServerSocket = new Socket(server, port);
-
-            System.out.println("Connection succeded");
             DataStorage.setChatClientSocket(clientToServerSocket);
 
         } catch (IOException ex) {
             
-            System.out.println("Failed to connect to chat, is the chat server up?");
         }
 
     } 
