@@ -118,15 +118,17 @@ public class LocalChatSlave {
                             System.out.println("getting message" + test.toString());
                             name = test.substring(5);
                             PlayersStorage.setPlayersInLobby(Integer.parseInt(name));
-                            System.out.println("players i master lobby " +name);
-                            PlayersStorage.setPlayernumber(Integer.parseInt(name) + 1);
-                            System.out.println("set playernumber to "+name+1);
+                            System.out.println("players i master lobby " + name);
+                            if (PlayersStorage.getPlayernumber() == 0) {
+                                PlayersStorage.setPlayernumber(Integer.parseInt(name) + 1);
+                                System.out.println("set playernumber to " + name + 1);
+                            }
                             //sendAddPlayerRequest();
                         } else if (test.contains("|||ap")) {
 
                             name = test.substring(5);
                             PlayersStorage.setPlayersInLobby(Integer.parseInt(name));
-                            System.out.println("setting playersinLobby to "+ name);
+                            System.out.println("setting playersinLobby to " + name);
                         } else {
                             DataStorage.getAllChat().appendText(test + "\n");
 
@@ -156,9 +158,7 @@ public class LocalChatSlave {
     }
 
     private void handleSlaveDisconnect() {
-
         System.out.println("Disconnected");
-
     }
 
     public void sendNameToServer() {
@@ -175,10 +175,12 @@ public class LocalChatSlave {
         }
 
     }
-    public void sendAddPlayerRequest(){
+
+    public void sendAddPlayerRequest() {
         sendMessage("|||ap");
-                
+
     }
+
     public void disconnect() {
 
         try {
@@ -200,8 +202,16 @@ public class LocalChatSlave {
         } else if (list.size() == 2) {
             PlayersStorage.getPlayer1().setText(list.get(0));
             PlayersStorage.getPlayer2().setText(list.get(1));
+        } else if (list.size() == 3) {
+            PlayersStorage.getPlayer1().setText(list.get(0));
+            PlayersStorage.getPlayer2().setText(list.get(1));
+            PlayersStorage.getPlayer3().setText(list.get(2));
+        } else if (list.size() == 4) {
+            PlayersStorage.getPlayer1().setText(list.get(0));
+            PlayersStorage.getPlayer2().setText(list.get(1));
+            PlayersStorage.getPlayer3().setText(list.get(2));
+            PlayersStorage.getPlayer4().setText(list.get(3));
         } else {
-
             System.out.println("Error: SIZE " + list.size());
             System.out.println(list.get(0) + "0");
             System.out.println(list.get(1) + "1");
@@ -215,32 +225,26 @@ public class LocalChatSlave {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
+                 System.out.println("Running: enableCheckBoxesForReadyCheck()");
                 if (DataStorage.getUserName().equals(PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", ""))) {
-
                     PlayersStorage.getReadyPlayer1().setDisable(false);
-
                 }
                 if (PlayersStorage.getPlayer2() != null) {
                     if (DataStorage.getUserName().equals(PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", ""))) {
-
                         PlayersStorage.getReadyPlayer2().setDisable(false);
                     }
                 }
                 if (PlayersStorage.getPlayer3() != null) {
                     if (DataStorage.getUserName().equals(PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", ""))) {
-
                         PlayersStorage.getReadyPlayer3().setDisable(false);
                     }
                 }
                 if (PlayersStorage.getPlayer4() != null) {
                     if (DataStorage.getUserName().equals(PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", ""))) {
-
                         PlayersStorage.getReadyPlayer4().setDisable(false);
                     }
                 }
             }
-
         });
 
     }
@@ -250,24 +254,18 @@ public class LocalChatSlave {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                
-                if (PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", "").equals(name)) {
-                    System.out.println("player 1: " + name + " redo");
+                System.out.println("Running: updateReadyCheckDisplaysTrue("+name+")");
+                if (name.equals("1")) {
                     PlayersStorage.getReadyPlayer1().setSelected(true);
-                } else if (PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", "").equals(name)) {
-                    System.out.println("player 2: " + name + " redo");
+                } else if (name.equals("2")) {
                     PlayersStorage.getReadyPlayer2().setSelected(true);
-                } else if (PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", "").equals(name)) {
-                    System.out.println("player 3: "+ name+" redo");
+                } else if (name.equals("3")) {
                     PlayersStorage.getReadyPlayer3().setSelected(true);
-                } else if (PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", "").equals(name)) {
-                    System.out.println("player 4: "+ name+" redo");
+                } else if (name.equals("4")) {
                     PlayersStorage.getReadyPlayer4().setSelected(true);
                 }
-                System.out.println("gjort alla ready check");
             }
         });
-
     }
 
     public void updateReadyCheckDisplaysFalse(String name) {
@@ -275,30 +273,25 @@ public class LocalChatSlave {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
-                if (PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", "").equals(name)) {
-
+                System.out.println("Running: updateReadyCheckDisplaysFalse("+name+")");
+                if (name.equals("1")) {
                     PlayersStorage.getReadyPlayer1().setSelected(false);
-                } else if (PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", "").equals(name)) {
-
+                } else if (name.equals("2")) {
                     PlayersStorage.getReadyPlayer2().setSelected(false);
-                } else if (PlayersStorage.getPlayer3().getText().replace("[", "").replace("]", "").equals(name)) {
-
+                } else if (name.equals("3")) {
                     PlayersStorage.getReadyPlayer3().setSelected(false);
-                } else if (PlayersStorage.getPlayer4().getText().replace("[", "").replace("]", "").equals(name)) {
-
+                } else if (name.equals("4")) {
                     PlayersStorage.getReadyPlayer4().setSelected(false);
                 }
-
             }
         });
-
     }
 
     public void sendReadyCheckToMasterFirst(Boolean value) {
 
         PrintWriter out = null;
         String newValue;
+        System.out.println("Running: sendReadyCheckToMasterFirst("+value+") " + "playernumber:" + PlayersStorage.getPlayernumber());
         if (value == true) {
             newValue = "||||q";
         } else {
@@ -306,12 +299,12 @@ public class LocalChatSlave {
         }
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println(newValue + DataStorage.getUserName());
+            out.println(newValue + PlayersStorage.getPlayernumber());
+            System.out.println("sending:"+newValue +" : "+ PlayersStorage.getPlayernumber()+" to Master");
             out.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     public void sendReadyCheckToMasterSecond(Boolean value) {
@@ -326,12 +319,10 @@ public class LocalChatSlave {
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             out.println(newValue + DataStorage.getUserName());
-            System.out.println("Your username: " + DataStorage.getUserName());
             out.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
 }
