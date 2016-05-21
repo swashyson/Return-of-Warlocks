@@ -80,8 +80,11 @@ public class FXMLPlaygroundController implements Initializable {
 
     private Ticker ticker;
 
+    AudioHandler audioHandler = new AudioHandler();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
 
         connectToMaster();
         createPlayers(BroadCastSystemForMasterIngame.getClientSockets().size());
