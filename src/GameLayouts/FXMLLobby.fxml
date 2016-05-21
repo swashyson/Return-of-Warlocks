@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -16,7 +21,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
+<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
     <children>
       <BorderPane prefHeight="800.0" prefWidth="1196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -101,7 +106,7 @@
                                     <CheckBox fx:id="readyPlayer1" disable="true" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <CheckBox fx:id="readyPlayer2" disable="true" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label fx:id="player3" text="Player3" textFill="WHITE" GridPane.rowIndex="3" />
-                                    <Label fx:id="player3" text="Player4" textFill="WHITE" GridPane.rowIndex="4" />
+                                    <Label fx:id="player4" text="Player4" textFill="WHITE" GridPane.rowIndex="4" />
                                     <CheckBox fx:id="readyPlayer3" disable="true" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <CheckBox fx:id="readyPlayer4" disable="true" mnemonicParsing="false" text="Ready" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                  </children>

@@ -5,26 +5,19 @@
  */
 package playerField;
 
-import chatSystem.BroadCastSystemForMaster;
-import chatSystem.LocalChatMaster;
 import dataStorage.PlayersStorage;
-import dataStorage.allPlayersForMasterInGame;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.shape.Circle;
 
 /**
  *
- * @author Swashy
+ * @author Johan Nilsson
  */
 public class MasterServer {
 
@@ -32,9 +25,6 @@ public class MasterServer {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private Thread t;
-
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
 
     public void CreateServer(int port) {
 
@@ -48,6 +38,25 @@ public class MasterServer {
         } catch (IOException e) {
             System.err.println("Error in creation of the server socket");
             System.exit(0);
+        }
+    }
+
+    public void broadCastPlayersPos(String message) {
+        broadCastMessageToPlayers(message);
+    }
+
+    public void broadCastMessageToPlayers(String message) {
+        PrintWriter pw = null;
+        try {
+            for (int j = 0; j < BroadCastSystemForMasterIngame.getClientSockets().size(); j++) {
+                Socket temp = (Socket) BroadCastSystemForMasterIngame.getClientSockets().get(j);
+                pw = new PrintWriter(temp.getOutputStream());
+
+                pw.print(message);
+                pw.flush();
+
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -67,7 +76,7 @@ public class MasterServer {
                             public void run() {
                                 try {
 
-                                    ObjectHandler object = new ObjectHandler(clientSocket);
+                                    MasterServer.ObjectHandler object = new MasterServer.ObjectHandler(clientSocket);
                                     object.start();
                                     BroadCastSystemForMasterIngame.getClientSockets().add(clientSocket);
 
@@ -113,8 +122,10 @@ public class MasterServer {
 
                     @Override
                     public void onTick(float deltaTime) {
-
-                        broadCastPlayers();
+                        if (allOtherPlayers.getPlayerLocations() != null) {
+                            //broadCastPlayersPos(allOtherPlayers.getPlayerLocations().get(0).toString());
+                            //allOtherPlayers.getPlayerLocations().remove(0);
+                        }
 
                     }
                 });
@@ -126,27 +137,6 @@ public class MasterServer {
             }
         });
         t.start();
-    }
-
-    public static void broadCastPlayers() {
-
-        try {
-            for (int i = 0; i < BroadCastSystemForMasterIngame.getBroadCastList().size(); i++) {
-                for (int j = 0; j < BroadCastSystemForMasterIngame.getClientSockets().size(); j++) {
-                    Socket temp = (Socket) BroadCastSystemForMasterIngame.getClientSockets().get(j);
-                    ObjectOutputStream oos = new ObjectOutputStream(temp.getOutputStream());
-
-                    oos.writeObject(BroadCastSystemForMasterIngame.getBroadCastList().get(i));
-                    oos.flush();
-
-                }
-                BroadCastSystemForMasterIngame.getBroadCastList().remove(i);
-            }
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        }
-
     }
 
     private static class ObjectHandler extends Thread {
@@ -161,14 +151,18 @@ public class MasterServer {
 
         @Override
         public void run() {
+            BufferedReader in = null;
+            String readMessage;
+            String readdata;
             try {
+                //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                readMessage = in.readLine();
+                readdata = readMessage.substring(5);
+                if (readMessage.contains("||pos")) {
+                    allOtherPlayers.getPlayerLocations().add(readdata);
 
-                ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
-                while (true) {
-
-                    BroadCastSystemForMasterIngame.getBroadCastList().add(ois.readObject());
-                    System.out.println("SIZE: " + BroadCastSystemForMasterIngame.getBroadCastList().size());
                 }
+
             } catch (Exception ex) {
 
                 ex.printStackTrace();
@@ -176,4 +170,5 @@ public class MasterServer {
 
         }
     }
+
 }

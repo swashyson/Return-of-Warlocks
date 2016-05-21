@@ -5,8 +5,7 @@
  */
 package chatSystem;
 
-import com.sun.jmx.snmp.BerDecoder;
-import controllers.FXMLLobbyController;
+
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
@@ -121,7 +120,7 @@ public class LocalChatSlave {
                             System.out.println("players i master lobby " + name);
                             if (PlayersStorage.getPlayernumber() == 0) {
                                 PlayersStorage.setPlayernumber(Integer.parseInt(name) + 1);
-                                System.out.println("set playernumber to " + name + 1);
+                                System.out.println("set playernumber to " +PlayersStorage.getPlayernumber());
                             }
                             //sendAddPlayerRequest();
                         } else if (test.contains("|||ap")) {
@@ -291,7 +290,7 @@ public class LocalChatSlave {
 
         PrintWriter out = null;
         String newValue;
-        System.out.println("Running: sendReadyCheckToMasterFirst("+value+") " + "playernumber:" + PlayersStorage.getPlayernumber());
+        System.out.println("Running: sendReadyCheckToMasterFirst("+value+")");
         if (value == true) {
             newValue = "||||q";
         } else {
@@ -300,7 +299,7 @@ public class LocalChatSlave {
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             out.println(newValue + PlayersStorage.getPlayernumber());
-            System.out.println("sending:"+newValue +" : "+ PlayersStorage.getPlayernumber()+" to Master");
+            System.out.println("sending:"+newValue + PlayersStorage.getPlayernumber()+" to Master");
             out.flush();
         } catch (IOException ex) {
             ex.printStackTrace();

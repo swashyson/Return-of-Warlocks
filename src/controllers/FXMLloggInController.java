@@ -103,7 +103,8 @@ public class FXMLloggInController implements Initializable {
 
         System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
 
-        audio.defineAudio();
+        
+        //audio.defineAudio();
         
         /*try {
             audio.playBackgroundAudio();

@@ -13,8 +13,18 @@ import java.util.ArrayList;
  */
 public class allOtherPlayers {
 
-    static ArrayList<Object> unsortedPlayers = new ArrayList();
-    static ArrayList<Player> unsortedPlayers2 = new ArrayList();
-    static ArrayList<Player> player1 = new ArrayList<>();
+    static ArrayList playerLocations = new ArrayList();
+
+    public static ArrayList getPlayerLocations() {
+        return playerLocations;
+    }
+
+    public static void setPlayerLocations(ArrayList playerLocations) {
+        allOtherPlayers.playerLocations = playerLocations;
+    }
+
+
+   
+    
 
 }

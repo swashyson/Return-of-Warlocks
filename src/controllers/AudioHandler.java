@@ -78,6 +78,8 @@ public class AudioHandler {
     public void stop() {
         System.out.println("background audio stopped");
         //backgroundAudio.stop();
-        audioClip.stop();
+        
+        //backgroundAudio.stop();
+        
     }
 }

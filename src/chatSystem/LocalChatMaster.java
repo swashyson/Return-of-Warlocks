@@ -333,20 +333,18 @@ public class LocalChatMaster {
 
                 while (true) {
                     String test = in.readLine();
+                    name = test.substring(5);
                     if (test.contains("|||||")) {
-                        name = test.substring(5);
                         PlayersStorage.getPlayerNames().add(name);
                         System.out.println("Master Names recieved:" + PlayersStorage.getPlayerNames().size() + name);
                         LocalChatMaster.broadCastPlayerNames();
                         
                     } else if (test.contains("||||q")) {
                         System.out.println("reseving: "+test+" from slave");
-                        //PlayersStorage.setPlayerNameReadyCheck(name);
                         broadCastReadyChecksTrue(Integer.parseInt(name));
 
                     } else if (test.contains("||||w")) {
                         System.out.println("reseving: "+test+" from slave");
-                        //PlayersStorage.setPlayerNameReadyCheck(name);
                         broadCastReadyChecksFalse(Integer.parseInt(name));
 
                     }else if (test.contains("||||p")) {

@@ -36,6 +36,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import playerField.BroadCastSystemForMasterIngame;
 import playerField.MasterServer;
 import playerField.PlayerStartingPoints;
 import playerField.SlaveClient;
@@ -55,6 +56,9 @@ public class FXMLPlaygroundController implements Initializable {
     private playerField.Player player;
 
     private Circle c1;
+    private Circle c2;
+    private Circle c3;
+    private Circle c4;
 
     float next_point_x;
     float next_point_y;
@@ -80,12 +84,26 @@ public class FXMLPlaygroundController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         connectToMaster();
-        player = new Player();
-        Player.setPlayer(player);
-        createPlayerStartPointDisplay();
+        createPlayers(BroadCastSystemForMasterIngame.getClientSockets().size());
         detectMovementListener();
         tickRateInit();
 
+    }
+    public void createPlayers(int players){
+        if(players == 1){
+            player = new Player();
+            Player.setPlayer(player);
+        }else if(players == 2){
+            player = new Player();
+            Player.setPlayer(player);
+        }else if(players == 3){
+            player = new Player();
+            Player.setPlayer(player);
+        }else if(players == 4){
+            player = new Player();
+            Player.setPlayer(player);
+            
+        }
     }
 
     public void detectMovementListener() {
@@ -223,6 +241,7 @@ public class FXMLPlaygroundController implements Initializable {
         c1.setFill(Color.BLACK);
         c1.setStrokeWidth(3);
         AnchorPanePlayerField.getChildren().add(c1);
+        System.out.println("hejsa circle");
     }
 
     public void connectToMaster() {
