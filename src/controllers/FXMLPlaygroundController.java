@@ -81,6 +81,7 @@ public class FXMLPlaygroundController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        audioHandler.defineAudioPath(audioHandler.backgroundAudio);
 
         connectToMaster();
         player = new Player();
@@ -249,6 +250,12 @@ public class FXMLPlaygroundController implements Initializable {
         }
 
     }
-
-  
+    
+    @FXML
+    private void quit(ActionEvent event){
+        audioHandler.stop();
+        ChangeScene cs = new ChangeScene();
+        cs.changeScene(event, "FXMLLobby");
+    }
+    
 }
