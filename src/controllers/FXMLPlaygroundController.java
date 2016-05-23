@@ -262,7 +262,7 @@ public class FXMLPlaygroundController implements Initializable {
     public void createEnemyDisplays() {
 
         System.out.println(PlayersStorage.getPlayersInLobby());
-        if (PlayersStorage.getPlayersInLobby() == 2) {
+        if (PlayersStorage.getPlayersInLobby()== 2) {
 
             c2 = new Circle(400, 400, 20);
             PlayerStartingPoints.setC1(c2);

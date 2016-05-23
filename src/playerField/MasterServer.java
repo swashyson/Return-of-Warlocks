@@ -123,10 +123,7 @@ public class MasterServer {
 
                     @Override
                     public void onTick(float deltaTime) {
-                        if (allOtherPlayers.getPlayerLocations() != null) {
-                            //broadCastPlayersPos(allOtherPlayers.getPlayerLocations().get(0).toString());
-                            //allOtherPlayers.getPlayerLocations().remove(0);
-                        }
+                        broadCastPlayers();
 
                     }
                 });
@@ -161,7 +158,6 @@ public class MasterServer {
 
                 }
                 BroadCastSystemForMasterIngame.getBroadCastList().remove(0);
-                //System.out.println(BroadCastSystemForMasterIngame.getBroadCastList().size());
             }
         } catch (Exception ex) {
 

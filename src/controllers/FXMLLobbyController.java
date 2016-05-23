@@ -84,9 +84,6 @@ public class FXMLLobbyController implements Initializable {
 
     boolean lock = false;
 
-    Thread t = new Thread();
-
-    boolean lock = false;
 
     //ChangeScene cs = new ChangeScene();
     @FXML

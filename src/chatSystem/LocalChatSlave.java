@@ -127,7 +127,6 @@ public class LocalChatSlave {
                                 PlayersStorage.setPlayernumber(Integer.parseInt(name) +1);
                                 System.out.println("set playernumber to " +PlayersStorage.getPlayernumber());
                             }
-                            //sendAddPlayerRequest();
                         } else if (test.contains("|||ap")) {
                             
                             name = test.substring(5);

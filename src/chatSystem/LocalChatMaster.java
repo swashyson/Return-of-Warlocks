@@ -374,6 +374,8 @@ public class LocalChatMaster {
                         System.out.println("master getting a ||||p request");
                         sendPlayerNumbersOnMaster();
 
+                    } else if (test.contains("|||ap")){
+                        addAndSendPlayersInLobby();
                     }else {
                         System.out.println("Recieved message: " + test);
                         BroadCastSystemForMaster.addToList(test);

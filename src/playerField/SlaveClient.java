@@ -136,6 +136,7 @@ public class SlaveClient {
                             
                                 return;
                             }
+                                    System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
 
                             if (!playerName.equals(DataStorage.getUserName())) {
 
