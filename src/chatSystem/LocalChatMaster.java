@@ -330,7 +330,6 @@ public class LocalChatMaster {
 
             try {
 
-                //in = new BufferedReader(new InputStreamReader(DataStorage.getLobbyClientSocket().getInputStream()));
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 while (true) {
@@ -375,7 +374,8 @@ public class LocalChatMaster {
 
         private void sendPlayerNumbersOnMaster() {
             PrintWriter out = null;
-            int i  = PlayersStorage.getPlayernumber()+1;
+            int i  = PlayersStorage.getLobbyList().size();
+            System.out.println("lobby size är "+i);
             for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
 
                 try {
@@ -383,6 +383,7 @@ public class LocalChatMaster {
                     out = new PrintWriter(temp.getOutputStream(), true);
 
                     out.println("||||p" + i);
+                    System.out.println("sending lobbyList size = "+i);
                     out.flush();
 
                 } catch (IOException ex) {
