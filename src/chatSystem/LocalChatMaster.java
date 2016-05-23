@@ -392,16 +392,14 @@ public class LocalChatMaster {
 
         private void sendPlayerNumbersOnMaster() {
             PrintWriter out = null;
-            int i  = PlayersStorage.getLobbyList().size();
-            System.out.println("lobby size är "+i);
+
             for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
 
                 try {
                     Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
                     out = new PrintWriter(temp.getOutputStream(), true);
 
-                    out.println("||||p" + i);
-                    System.out.println("sending lobbyList size = "+i);
+                    out.println("||||p" + PlayersStorage.getPlayernumber());
                     out.flush();
 
                 } catch (IOException ex) {

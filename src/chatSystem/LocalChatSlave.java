@@ -51,6 +51,7 @@ public class LocalChatSlave {
             DataStorage.setLobbyClientSocket(clientSocket);
             System.out.println("COnnecting to master");
             sendMessage("||||p");
+            sendAddPlayerRequest();
             
         } catch (IOException ex) {
             System.out.println("Failed to connect to chat, is the chat server up?");
@@ -126,8 +127,13 @@ public class LocalChatSlave {
                                 PlayersStorage.setPlayernumber(Integer.parseInt(name) +1);
                                 System.out.println("set playernumber to " +PlayersStorage.getPlayernumber());
                             }
+                            //sendAddPlayerRequest();
+                        } else if (test.contains("|||ap")) {
                             
-                        }  else {
+                            name = test.substring(5);
+                            PlayersStorage.setPlayersInLobby(Integer.parseInt(name));
+                            System.out.println("setting playersinLobby to " + name);
+                        } else {
                             DataStorage.getAllChat().appendText(test + "\n");
                             
                         }
