@@ -100,12 +100,12 @@ public class AudioHandler {
             System.out.println("path to audio: " + path);
 
             fireballInputStream = new FileInputStream(path);
-            fireballAudioStream = new AudioStream(backgroundAudioInputStream);
+            fireballAudioStream = new AudioStream(fireballInputStream);
 
             System.out.println("media file has been found");
             System.out.println("trying to play...");
 
-            AudioPlayer.player.start(backgroundAudioAudioStream);
+            AudioPlayer.player.start(fireballAudioStream);
 
             System.out.println("media is playing");
         } catch (NullPointerException e) {
@@ -128,6 +128,7 @@ public class AudioHandler {
     public void stop() {
         System.out.println("background audio stopped");
         AudioPlayer.player.stop(backgroundAudioAudioStream);
+        AudioPlayer.player.stop(fireballAudioStream);
     }
 
     //defines the audio redirects to accurate method
