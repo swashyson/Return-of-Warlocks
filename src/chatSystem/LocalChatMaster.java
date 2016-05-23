@@ -160,6 +160,7 @@ public class LocalChatMaster {
         }
 
     }
+
     public void broadCastRemoveNameFromMaster() {
         PrintWriter out = null;
         try {
@@ -173,6 +174,7 @@ public class LocalChatMaster {
             ex.printStackTrace();
         }
     }
+
     public void broadCastLobbys() {
 
         PrintWriter out = null;
@@ -338,16 +340,16 @@ public class LocalChatMaster {
                         PlayersStorage.getPlayerNames().add(name);
                         System.out.println("Master Names recieved:" + PlayersStorage.getPlayerNames().size() + name);
                         LocalChatMaster.broadCastPlayerNames();
-                        
+
                     } else if (test.contains("||||q")) {
-                        System.out.println("reseving: "+test+" from slave");
+                        System.out.println("reseving: " + test + " from slave");
                         broadCastReadyChecksTrue(Integer.parseInt(name));
 
                     } else if (test.contains("||||w")) {
-                        System.out.println("reseving: "+test+" from slave");
+                        System.out.println("reseving: " + test + " from slave");
                         broadCastReadyChecksFalse(Integer.parseInt(name));
 
-                    }else if (test.contains("||||p")) {
+                    } else if (test.contains("||||p")) {
                         System.out.println("master getting a ||||p request");
                         sendPlayerNumbersOnMaster();
 
@@ -370,41 +372,46 @@ public class LocalChatMaster {
                 slaveDisconnect(name);
             }
         }
-        private void sendPlayerNumbersOnMaster(){
-        PrintWriter out = null;
 
-        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+        private void sendPlayerNumbersOnMaster() {
+            PrintWriter out = null;
+            int i  = PlayersStorage.getPlayernumber()+1;
+            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
 
-            try {
-                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
-                out = new PrintWriter(temp.getOutputStream(), true);
+                try {
+                    Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                    out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("||||p" + PlayersStorage.getPlayernumber());
-                out.flush();
+                    out.println("||||p" + i);
+                    out.flush();
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
-        }
-        private void addAndSendPlayersInLobby(){
+
+        private void addAndSendPlayersInLobby() {
+            System.out.println("players Before add: "+PlayersStorage.getPlayersInLobby());
             PlayersStorage.setPlayersInLobby(PlayersStorage.getPlayersInLobby() + 1);
-         PrintWriter out = null;
+            System.out.println("players After add: "+PlayersStorage.getPlayersInLobby());
+            PrintWriter out = null;
 
-        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
 
-            try {
-                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
-                out = new PrintWriter(temp.getOutputStream(), true);
+                try {
+                    Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                    out = new PrintWriter(temp.getOutputStream(), true);
 
-                out.println("|||ap" +PlayersStorage.getPlayersInLobby());
-                out.flush();
+                    out.println("|||ap" + PlayersStorage.getPlayersInLobby());
+                    out.flush();
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-        } 
         }
+
         private void slaveDisconnect(String name) {
             try {
 

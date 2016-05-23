@@ -119,7 +119,7 @@ public class LocalChatSlave {
                             PlayersStorage.setPlayersInLobby(Integer.parseInt(name));
                             System.out.println("players i master lobby " + name);
                             if (PlayersStorage.getPlayernumber() == 0) {
-                                PlayersStorage.setPlayernumber(Integer.parseInt(name) + 1);
+                                PlayersStorage.setPlayernumber(Integer.parseInt(name));
                                 System.out.println("set playernumber to " +PlayersStorage.getPlayernumber());
                             }
                             //sendAddPlayerRequest();

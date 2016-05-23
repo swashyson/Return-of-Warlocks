@@ -219,10 +219,11 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener1() {
 
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-
+            System.out.println("ReadyCheckListener1");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 1) {
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                System.out.println("ReadyCheckListener1");
+                
             }
         });
     }
@@ -230,9 +231,12 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener2() {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            System.out.println("ReadyCheckListener2");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 2) {
+                
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                System.out.println("ReadyCheckListener2");
+                
             }
         });
     }
@@ -240,9 +244,11 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener3() {
 
         readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            System.out.println("ReadyCheckListener3");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 3) {
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                System.out.println("ReadyCheckListener3");
+                
             }
         });
     }
@@ -250,6 +256,8 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener4() {
 
         readyPlayer4.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            System.out.println("ReadyCheckListener4");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 4) {
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
                 System.out.println("ReadyCheckListener4");
