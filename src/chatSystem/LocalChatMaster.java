@@ -296,6 +296,26 @@ public class LocalChatMaster {
 
     }
 
+    public static void broadCastStartGame() {
+
+        PrintWriter out = null;
+
+        for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+
+            try {
+                Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                out = new PrintWriter(temp.getOutputStream(), true);
+
+                out.println("||||s");
+                out.flush();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }
+
     private void spamChatIfMasterDisconnected() {
         BroadCastSystemForMaster.addToList("Disconnected Master please disconnect from the server");
     }
@@ -342,10 +362,12 @@ public class LocalChatMaster {
 
                     } else if (test.contains("||||q")) {
                         System.out.println("reseving: " + test + " from slave");
+                        //PlayersStorage.setPlayerNameReadyCheck(name);
                         broadCastReadyChecksTrue(Integer.parseInt(name));
 
                     } else if (test.contains("||||w")) {
                         System.out.println("reseving: " + test + " from slave");
+                        //PlayersStorage.setPlayerNameReadyCheck(name);
                         broadCastReadyChecksFalse(Integer.parseInt(name));
 
                     } else if (test.contains("||||p")) {
@@ -388,7 +410,24 @@ public class LocalChatMaster {
             }
         }
 
-        
+        private void addAndSendPlayersInLobby() {
+            PlayersStorage.setPlayersInLobby(PlayersStorage.getPlayersInLobby() + 1);
+            PrintWriter out = null;
+
+            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
+
+                try {
+                    Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
+                    out = new PrintWriter(temp.getOutputStream(), true);
+
+                    out.println("|||ap" + PlayersStorage.getPlayersInLobby());
+                    out.flush();
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
 
         private void slaveDisconnect(String name) {
             try {

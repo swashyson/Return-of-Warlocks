@@ -8,6 +8,7 @@ package playerField;
 import dataStorage.PlayersStorage;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -132,11 +133,41 @@ public class MasterServer {
 
                 while (true) {
                     ticker.update();
+                    try {
+                        t.sleep(1);
+                    } catch (Exception ex) {
+
+                        ex.printStackTrace();
+                    }
                 }
 
             }
         });
         t.start();
+    }
+
+    public static void broadCastPlayers() {
+
+        PrintWriter out = null;
+
+        try {
+            for (int i = 0; i < BroadCastSystemForMasterIngame.getBroadCastList().size(); i++) {
+                for (int j = 0; j < BroadCastSystemForMasterIngame.getClientSockets().size(); j++) {
+                    Socket temp = (Socket) BroadCastSystemForMasterIngame.getClientSockets().get(j);
+
+                    out = new PrintWriter(temp.getOutputStream(), true);
+                    out.println("||||." + BroadCastSystemForMasterIngame.getBroadCastList().get(0));
+                    out.flush();
+
+                }
+                BroadCastSystemForMasterIngame.getBroadCastList().remove(0);
+                //System.out.println(BroadCastSystemForMasterIngame.getBroadCastList().size());
+            }
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
     }
 
     private static class ObjectHandler extends Thread {
@@ -151,16 +182,19 @@ public class MasterServer {
 
         @Override
         public void run() {
-            BufferedReader in = null;
-            String readMessage;
-            String readdata;
-            try {
-                //in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                readMessage = in.readLine();
-                readdata = readMessage.substring(5);
-                if (readMessage.contains("||pos")) {
-                    allOtherPlayers.getPlayerLocations().add(readdata);
+            BufferedReader in;
+            String syntax = "";
 
+            try {
+                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                while (true) {
+                    String test = in.readLine();
+
+                    if (test.contains("||||.")) {
+                        syntax = test.substring(5);
+                        BroadCastSystemForMasterIngame.getBroadCastList().add(syntax);
+
+                    }
                 }
 
             } catch (Exception ex) {

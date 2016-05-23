@@ -12,9 +12,14 @@ import chatSystem.LocalChatSlave;
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static javafx.beans.property.BooleanProperty.booleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -75,6 +80,10 @@ public class FXMLLobbyController implements Initializable {
     chatSystem.LocalChatMaster masterChat;
     chatSystem.LocalChatSlave slaveChat;
 
+    Thread t = new Thread();
+
+    boolean lock = false;
+
     //ChangeScene cs = new ChangeScene();
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -119,15 +128,41 @@ public class FXMLLobbyController implements Initializable {
     private void startGameHandler(ActionEvent event) {
 
         if (informationStorage.isMasterOrNot() == true) {
+            sendStartGameRequest();
 
-            masterChat.Disconnect();
-            slaveChat.disconnect();
-        } else {
-
-            slaveChat.disconnect();
         }
-        ChangeScene cs = new ChangeScene();
-        cs.changeScene(event, "FXMLPlayground");
+
+    }
+
+    public void IfMasterHasStartedTheGameListener() {
+
+        DataStorage.getStartTheGame().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("changed " + oldValue + "->" + newValue);
+                ChangeSceneWithouActionEvent();
+            }
+        });
+    }
+
+    private void ChangeSceneWithouActionEvent() {
+
+        Stage stage;
+        Parent root;
+        try {
+
+            stage = (Stage) sendButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLPlayground.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+        //ChangeScene cs = new ChangeScene();
+        //cs.changeScene(event, "FXMLPlayground");
 
     }
 
@@ -168,6 +203,7 @@ public class FXMLLobbyController implements Initializable {
             masterChat.sendMasterIP();
         }
 
+        IfMasterHasStartedTheGameListener();
         listenForIncommingMessagesFromServer(chat);
         keyListener(chat, slaveChat);
         startAllChat();
@@ -310,6 +346,19 @@ public class FXMLLobbyController implements Initializable {
             }
         };
         new Thread(task).start();
+    }
+
+    public void sendStartGameRequest() {
+
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
+                LocalChatMaster.broadCastStartGame();
+                return null;
+            }
+        };
+        new Thread(task).start();
+
     }
 
 }
