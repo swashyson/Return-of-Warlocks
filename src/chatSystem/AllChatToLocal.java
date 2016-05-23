@@ -5,11 +5,10 @@
  */
 package chatSystem;
 
-import controllers.FXMLMainChatController;
+
 import dataStorage.DataStorage;
 import dataStorage.informationStorage;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -18,11 +17,6 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
 
 /**
  *

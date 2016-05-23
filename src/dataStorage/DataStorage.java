@@ -6,6 +6,8 @@
 package dataStorage;
 
 import java.net.Socket;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -25,6 +27,17 @@ final public class DataStorage {
     static ObservableList lobbyListAdapter = FXCollections.observableArrayList();
     static Socket chatClientSocket;
     static Socket lobbyClientSocket; 
+    
+    static BooleanProperty startTheGame = new SimpleBooleanProperty(false);
+
+    public static BooleanProperty getStartTheGame() {
+        return startTheGame;
+    }
+
+    public static void setStartTheGame(BooleanProperty startTheGame) {
+        DataStorage.startTheGame = startTheGame;
+    }
+
 
     public static void setLobbyClientSocket(Socket lobbyClientSocket) {
         DataStorage.lobbyClientSocket = lobbyClientSocket;

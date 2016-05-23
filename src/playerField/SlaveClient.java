@@ -7,11 +7,17 @@ package playerField;
 
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
+import dataStorage.allPlayersForMasterInGame;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Level;
+import javafx.application.Platform;
 import java.util.logging.Logger;
 
 /**
@@ -26,7 +32,7 @@ public class SlaveClient {
 
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
-    
+
     private boolean lockNewOutPutStream = false;
     private boolean lockNewinPutStream = false;
 
@@ -64,13 +70,17 @@ public class SlaveClient {
                     @Override
                     public void onTick(float deltaTime) {
                         sendPlayerObject();
-                        recievePlayerObject();
 
                     }
                 });
 
                 while (true) {
                     ticker.update();
+                    try {
+                        t.sleep(1);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(SlaveClient.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }
@@ -80,36 +90,86 @@ public class SlaveClient {
 
     private void sendPlayerObject() {
 
-        try {
-            if (lockNewOutPutStream == false) {
-                oos = new ObjectOutputStream(clientSocket.getOutputStream());
-                lockNewOutPutStream = true;
-            }
-            oos.writeObject(player);
-            oos.flush();
+        PrintWriter out = null;
 
-            System.out.println("SendPlayerObject");
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber());
+            //System.out.println("send: " + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY());
+            out.flush();
 
         } catch (Exception ex) {
 
             ex.printStackTrace();
         }
     }
+    
 
-    private void recievePlayerObject() {
+    public void checkForIncommingMessage() {
+        BufferedReader in;
 
         try {
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            System.out.println("RECIEVE");
+            while (true) {
+                String test = in.readLine();
 
-            if (lockNewinPutStream == false) {
-                ois = new ObjectInputStream(clientSocket.getInputStream());
-                lockNewinPutStream = true;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        String name = "";
+                        if (test.contains("||||.")) {
+
+                            name = test.substring(5);
+                            String[] namesList = name.split(",");
+
+                            String playerName = null;
+                            String playerX = null;
+                            String playerY = null;
+                            String playerID = null;
+                            if (namesList.length > 3) {
+                                playerName = namesList[0];
+                                playerX = namesList[1];
+                                playerY = namesList[2];
+                                playerID = namesList[3];
+                            }else{
+                            
+                                return;
+                            }
+                                    System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
+
+                            if (!playerName.equals(DataStorage.getUserName())) {
+
+                                if (playerID.equals("2")) {
+
+                                    allPlayersForMasterInGame.setNamePlayer1(playerName);
+                                    allPlayersForMasterInGame.setXposPlayer1(playerX);
+                                    allPlayersForMasterInGame.setYposPlayer1(playerY);
+                                    allPlayersForMasterInGame.setId(playerID);
+                                    //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
+
+                                } else if (playerID.equals("0")) {
+
+                                    allPlayersForMasterInGame.setNamePlayer1(playerName);
+                                    allPlayersForMasterInGame.setXposPlayer1(playerX);
+                                    allPlayersForMasterInGame.setYposPlayer1(playerY);
+                                    allPlayersForMasterInGame.setId(playerID);
+                                    //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
             }
-            allOtherPlayers.unsortedPlayers.add(ois.readObject());
-            //allOtherPlayers.unsortedPlayers2.add((Player) allOtherPlayers.unsortedPlayers.get(0));
-
         } catch (Exception ex) {
 
             ex.printStackTrace();
         }
     }
+
 }

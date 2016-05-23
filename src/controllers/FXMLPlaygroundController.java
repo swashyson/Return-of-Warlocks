@@ -1,4 +1,4 @@
-/*
+                          /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,6 +6,8 @@
 package controllers;
 
 import dataStorage.PlayersStorage;
+import dataStorage.allPlayersForMasterInGame;
+import dataStorage.informationStorage;
 import playerField.Player;
 import java.io.IOException;
 import java.net.URL;
@@ -55,6 +57,7 @@ public class FXMLPlaygroundController implements Initializable {
     private playerField.Player player;
 
     private Circle c1;
+    private Circle c2;
 
     float next_point_x;
     float next_point_y;
@@ -77,7 +80,7 @@ public class FXMLPlaygroundController implements Initializable {
     private Ticker ticker;
 
     AudioHandler audioHandler = new AudioHandler();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -89,6 +92,7 @@ public class FXMLPlaygroundController implements Initializable {
         createPlayerStartPointDisplay();
         detectMovementListener();
         tickRateInit();
+        createEnemyDisplays();
 
     }
 
@@ -169,6 +173,23 @@ public class FXMLPlaygroundController implements Initializable {
 
     }
 
+    public void updateEnemyDisplays() {
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                if (allPlayersForMasterInGame.getNamePlayer1() != null || allPlayersForMasterInGame.getXposPlayer1() != null) {
+                    double xForPlayer1 = Double.parseDouble(allPlayersForMasterInGame.getXposPlayer1());
+                    double yForPlayer1 = Double.parseDouble(allPlayersForMasterInGame.getYposPlayer1());;
+                    c2.setCenterX(xForPlayer1);
+                    c2.setCenterY(yForPlayer1);
+                }
+            }
+        });
+
+    }
+
     public void tickRateInit() {
 
         t2 = new Thread(new Runnable() {
@@ -188,6 +209,7 @@ public class FXMLPlaygroundController implements Initializable {
                             ypos.remove(0);
                             realTimeUpdate();
                         }
+                        updateEnemyDisplays();
 
                     }
 
@@ -196,6 +218,11 @@ public class FXMLPlaygroundController implements Initializable {
                 while (true) {
 
                     ticker.update();
+                    try {
+                        t2.sleep(1);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLPlaygroundController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }
@@ -207,16 +234,20 @@ public class FXMLPlaygroundController implements Initializable {
 
         int x = 0;
         int y = 0;
-        if (Player.getPlayerNumber() == 1) {
+        if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) { //varför blir denna 0? johan //mattias
             x = 200;
             y = 200;
-        } else if (Player.getPlayerNumber() == 2) {
+
+        }
+        if (Player.getPlayerNumber() == 2) {
             x = 400;
             y = 400;
-        } else if (Player.getPlayerNumber() == 3) {
+        }
+        if (Player.getPlayerNumber() == 3) {
             x = 600;
             y = 600;
-        } else {
+        }
+        if (Player.getPlayerNumber() == 4) {
             x = 800;
             y = 800;
         }
@@ -227,6 +258,21 @@ public class FXMLPlaygroundController implements Initializable {
         c1.setFill(Color.BLACK);
         c1.setStrokeWidth(3);
         AnchorPanePlayerField.getChildren().add(c1);
+
+    }
+
+    public void createEnemyDisplays() {
+
+        System.out.println(PlayersStorage.getPlayersInLobby());
+        if (PlayersStorage.getPlayersInLobby()== 2) {
+
+            c2 = new Circle(400, 400, 20);
+            PlayerStartingPoints.setC1(c2);
+            c2.setStroke(Color.BLACK);
+            c2.setFill(Color.BLACK);
+            c2.setStrokeWidth(3);
+            AnchorPanePlayerField.getChildren().add(c2);
+        }
     }
 
     public void connectToMaster() {
@@ -240,13 +286,15 @@ public class FXMLPlaygroundController implements Initializable {
             masterServer.StartServer(9008);
 
             slaveClient.clientConnect(PlayersStorage.getMasterSocketIP(), 9008);
-            slaveClient.tickRate(2);
-            masterServer.tickRate(2);
+            slaveClient.tickRate(64);
+            masterServer.tickRate(64);
+            listenForIncommingMessagesFromMaster();
         } else {
 
             slaveClient = new SlaveClient();
             slaveClient.clientConnect(PlayersStorage.getMasterSocketIP(), 9008);
-            slaveClient.tickRate(2);
+            slaveClient.tickRate(64);
+            listenForIncommingMessagesFromMaster();
         }
 
     }
@@ -258,4 +306,17 @@ public class FXMLPlaygroundController implements Initializable {
         cs.changeScene(event, "FXMLLobby");
     }
     
+
+    public void listenForIncommingMessagesFromMaster() {
+
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
+                slaveClient.checkForIncommingMessage();
+                return null;
+            }
+        };
+        new Thread(task).start();
+    }
+
 }

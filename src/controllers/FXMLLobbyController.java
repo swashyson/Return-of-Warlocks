@@ -5,25 +5,24 @@
  */
 package controllers;
 
-import chatSystem.Chat;
+
 import chatSystem.AllChatToLocal;
 import chatSystem.LocalChatMaster;
 import chatSystem.LocalChatSlave;
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.beans.property.BooleanProperty.booleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -61,19 +60,6 @@ public class FXMLLobbyController implements Initializable {
     @FXML
     private Button createGameButton;
     @FXML
-    private CheckBox Player1Ready;
-
-    public CheckBox getPlayer1Ready() {
-        return Player1Ready;
-    }
-
-    public CheckBox getPlayer2Ready() {
-        return Player2Ready;
-    }
-    @FXML
-    private CheckBox Player2Ready;
-
-    @FXML
     private Label player1;
     @FXML
     private Label player2;
@@ -81,7 +67,6 @@ public class FXMLLobbyController implements Initializable {
     private Label player3;
     @FXML
     private Label player4;
-
     @FXML
     private CheckBox readyPlayer1;
     @FXML
@@ -94,6 +79,11 @@ public class FXMLLobbyController implements Initializable {
     chatSystem.AllChatToLocal chat;
     chatSystem.LocalChatMaster masterChat;
     chatSystem.LocalChatSlave slaveChat;
+
+    Thread t = new Thread();
+
+    boolean lock = false;
+
 
     //ChangeScene cs = new ChangeScene();
     @FXML
@@ -139,15 +129,41 @@ public class FXMLLobbyController implements Initializable {
     private void startGameHandler(ActionEvent event) {
 
         if (informationStorage.isMasterOrNot() == true) {
+            sendStartGameRequest();
 
-            masterChat.Disconnect();
-            slaveChat.disconnect();
-        } else {
-
-            slaveChat.disconnect();
         }
-        ChangeScene cs = new ChangeScene();
-        cs.changeScene(event, "FXMLPlayground");
+
+    }
+
+    public void IfMasterHasStartedTheGameListener() {
+
+        DataStorage.getStartTheGame().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("changed " + oldValue + "->" + newValue);
+                ChangeSceneWithouActionEvent();
+            }
+        });
+    }
+
+    private void ChangeSceneWithouActionEvent() {
+
+        Stage stage;
+        Parent root;
+        try {
+
+            stage = (Stage) sendButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLPlayground.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+        //ChangeScene cs = new ChangeScene();
+        //cs.changeScene(event, "FXMLPlayground");
 
     }
 
@@ -171,6 +187,7 @@ public class FXMLLobbyController implements Initializable {
             masterChat.sendMasterIP();
         }
 
+        IfMasterHasStartedTheGameListener();
         listenForIncommingMessagesFromServer(chat);
         keyListener(chat, slaveChat);
         startAllChat();
@@ -198,6 +215,8 @@ public class FXMLLobbyController implements Initializable {
 
         PlayersStorage.setPlayer1(player1);
         PlayersStorage.setPlayer2(player2);
+        PlayersStorage.setPlayer3(player3);
+        PlayersStorage.setPlayer4(player4);
 
     }
 
@@ -205,6 +224,8 @@ public class FXMLLobbyController implements Initializable {
 
         PlayersStorage.setReadyPlayer1(readyPlayer1);
         PlayersStorage.setReadyPlayer2(readyPlayer2);
+        PlayersStorage.setReadyPlayer3(readyPlayer3);
+        PlayersStorage.setReadyPlayer4(readyPlayer4);
 
     }
 
@@ -218,14 +239,11 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener1() {
 
         readyPlayer1.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-
+            System.out.println("ReadyCheckListener1");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 1) {
-
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
-                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
-                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
-                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+                
             }
         });
     }
@@ -233,13 +251,12 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener2() {
 
         readyPlayer2.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            System.out.println("ReadyCheckListener2");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 2) {
-
+                
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
-                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
-                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
-                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+                
             }
         });
     }
@@ -247,13 +264,11 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener3() {
 
         readyPlayer3.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            System.out.println("ReadyCheckListener3");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 3) {
-
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
-                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
-                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
-                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
+                
             }
         });
     }
@@ -261,12 +276,11 @@ public class FXMLLobbyController implements Initializable {
     private void readyCheckLsitener4() {
 
         readyPlayer4.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            System.out.println("ReadyCheckListener4");
+            System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 4) {
-                System.out.println("playernumber = 1 is ready: " + readyPlayer1.isSelected());
-                System.out.println("playernumber = 2 is ready: " + readyPlayer2.isSelected());
-                System.out.println("playernumber = 3 is ready: " + readyPlayer3.isSelected());
-                System.out.println("playernumber = 4 is ready: " + readyPlayer4.isSelected());
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
+                System.out.println("ReadyCheckListener4");
             }
         });
     }
@@ -316,6 +330,19 @@ public class FXMLLobbyController implements Initializable {
             }
         };
         new Thread(task).start();
+    }
+
+    public void sendStartGameRequest() {
+
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
+                LocalChatMaster.broadCastStartGame();
+                return null;
+            }
+        };
+        new Thread(task).start();
+
     }
 
 }
