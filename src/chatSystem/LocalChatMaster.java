@@ -352,11 +352,7 @@ public class LocalChatMaster {
                         System.out.println("master getting a ||||p request");
                         sendPlayerNumbersOnMaster();
 
-                    } else if (test.contains("|||ap")) {
-                        System.out.println("master getting a |||ap request");
-                        addAndSendPlayersInLobby();
-
-                    } else {
+                    }else {
                         System.out.println("Recieved message: " + test);
                         BroadCastSystemForMaster.addToList(test);
                     }
@@ -392,26 +388,7 @@ public class LocalChatMaster {
             }
         }
 
-        private void addAndSendPlayersInLobby() {
-            System.out.println("players Before add: "+PlayersStorage.getPlayersInLobby());
-            PlayersStorage.setPlayersInLobby(PlayersStorage.getPlayersInLobby() + 1);
-            System.out.println("players After add: "+PlayersStorage.getPlayersInLobby());
-            PrintWriter out = null;
-
-            for (int j = 0; j < BroadCastSystemForMaster.getClientSockets().size(); j++) {
-
-                try {
-                    Socket temp = (Socket) BroadCastSystemForMaster.getClientSockets().get(j);
-                    out = new PrintWriter(temp.getOutputStream(), true);
-
-                    out.println("|||ap" + PlayersStorage.getPlayersInLobby());
-                    out.flush();
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
+        
 
         private void slaveDisconnect(String name) {
             try {
