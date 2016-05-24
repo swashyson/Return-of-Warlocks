@@ -522,10 +522,10 @@ public class FXMLPlaygroundController implements Initializable {
     }
 
     @FXML
-    private void quit(ActionEvent event) {
+    private void exit(ActionEvent event) {
         audioHandler.stop();
         ChangeScene cs = new ChangeScene();
-        cs.changeScene(event, "FXMLLobby");
+        cs.changeScene(event, "FXMLMainChat");
     }
 
     public void listenForIncommingMessagesFromMaster() {
