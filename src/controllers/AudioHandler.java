@@ -47,6 +47,8 @@ public class AudioHandler {
     public String fireball_throw = "fireball_throw.wav";
     public String fireball_hit = "fireball_hard_hit.wav";
     
+    Thread t = new Thread();
+    
     //plays the background audio, supposed to loop but plays only once for now
     private void startBackgroundAudio() {
         try {
@@ -70,10 +72,15 @@ public class AudioHandler {
             
             // den här biten strular till det ganska rejält i local chat master med "error in creation of the server socket"
             do{
-                
+                try {
+                    t.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } while(backgroundAudioAudioStream.available() > 0 && playback);
             if (playback) {
                 startBackgroundAudio();
+                
             }
             
         } catch (NullPointerException e) {

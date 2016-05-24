@@ -5,7 +5,6 @@
  */
 package controllers;
 
-
 import chatSystem.AllChatToLocal;
 import chatSystem.LocalChatMaster;
 import chatSystem.LocalChatSlave;
@@ -84,7 +83,6 @@ public class FXMLLobbyController implements Initializable {
 
     boolean lock = false;
 
-
     //ChangeScene cs = new ChangeScene();
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -152,6 +150,15 @@ public class FXMLLobbyController implements Initializable {
         Stage stage;
         Parent root;
         try {
+
+            if (informationStorage.isMasterOrNot() == true) {
+
+                masterChat.Disconnect();
+                slaveChat.disconnect();
+            } else {
+
+                slaveChat.disconnect();
+            }
 
             stage = (Stage) sendButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLPlayground.fxml"));
@@ -243,7 +250,7 @@ public class FXMLLobbyController implements Initializable {
             System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 1) {
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                
+
             }
         });
     }
@@ -254,9 +261,9 @@ public class FXMLLobbyController implements Initializable {
             System.out.println("ReadyCheckListener2");
             System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 2) {
-                
+
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                
+
             }
         });
     }
@@ -268,7 +275,7 @@ public class FXMLLobbyController implements Initializable {
             System.out.println(PlayersStorage.getPlayernumber());
             if (PlayersStorage.getPlayernumber() == 3) {
                 slaveChat.sendReadyCheckToMasterFirst(newValue);
-                
+
             }
         });
     }
