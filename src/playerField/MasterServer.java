@@ -124,6 +124,7 @@ public class MasterServer {
                     @Override
                     public void onTick(float deltaTime) {
                         broadCastPlayers();
+                        broadCastFireBalls();
 
                     }
                 });
@@ -166,6 +167,29 @@ public class MasterServer {
 
     }
 
+    public static void broadCastFireBalls() {
+
+        PrintWriter out = null;
+
+        try {
+            for (int i = 0; i < BroadCastSystemForMasterIngame.getBroadCastListFireball().size(); i++) {
+                for (int j = 0; j < BroadCastSystemForMasterIngame.getClientSockets().size(); j++) {
+                    Socket temp = (Socket) BroadCastSystemForMasterIngame.getClientSockets().get(j);
+
+                    out = new PrintWriter(temp.getOutputStream(), true);
+                    out.println("||||f" + BroadCastSystemForMasterIngame.getBroadCastListFireball().get(0));
+                    out.flush();
+
+                }
+                BroadCastSystemForMasterIngame.getBroadCastListFireball().remove(0);
+            }
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+    }
+
     private static class ObjectHandler extends Thread {
 
         private Socket clientSocket;
@@ -189,6 +213,11 @@ public class MasterServer {
                     if (test.contains("||||.")) {
                         syntax = test.substring(5);
                         BroadCastSystemForMasterIngame.getBroadCastList().add(syntax);
+
+                    }
+                    if (test.contains("||||f")) {
+                        syntax = test.substring(5);
+                        BroadCastSystemForMasterIngame.getBroadCastListFireball().add(syntax);
 
                     }
                 }

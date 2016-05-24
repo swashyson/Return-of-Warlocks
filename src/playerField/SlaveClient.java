@@ -70,6 +70,7 @@ public class SlaveClient {
                     @Override
                     public void onTick(float deltaTime) {
                         sendPlayerObject();
+                        sendFireBallObject();
 
                     }
                 });
@@ -103,7 +104,21 @@ public class SlaveClient {
             ex.printStackTrace();
         }
     }
-    
+
+    private void sendFireBallObject() {
+
+        PrintWriter out = null;
+
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println("||||f" + DataStorage.getUserName() + "," + Fireball.getCurrentPosX() + "," + Fireball.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() +  "," + Fireball.getAngle());
+            out.flush();
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+    }
 
     public void checkForIncommingMessage() {
         BufferedReader in;
@@ -132,11 +147,10 @@ public class SlaveClient {
                                 playerX = namesList[1];
                                 playerY = namesList[2];
                                 playerID = namesList[3];
-                            }else{
-                            
+                            } else {
+
                                 return;
                             }
-                                    System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
 
                             if (!playerName.equals(DataStorage.getUserName())) {
 
@@ -154,6 +168,51 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setXposPlayer1(playerX);
                                     allPlayersForMasterInGame.setYposPlayer1(playerY);
                                     allPlayersForMasterInGame.setId(playerID);
+                                    //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
+                                }
+
+                            }
+
+                        } if (test.contains("||||f")) {
+                            
+
+                            name = test.substring(5);
+                            String[] namesList = name.split(",");
+
+                            String playerNameFireBall = null;
+                            String fireBallX = null;
+                            String fireBallY = null;
+                            String playerIDFireball = null;
+                            String fireBallAngle = null;
+
+                            if (namesList.length > 4) {
+                                playerNameFireBall = namesList[0];
+                                fireBallX = namesList[1];
+                                fireBallY = namesList[2];
+                                playerIDFireball = namesList[3];
+                                fireBallAngle = namesList[4];
+                            } else {
+
+                                return;
+                            }
+                            if (!playerNameFireBall.equals(DataStorage.getUserName())) {
+
+                                if (playerIDFireball.equals("2")) {
+
+                                    allPlayersForMasterInGame.setNamePlayer1FireBall(playerNameFireBall);
+                                    allPlayersForMasterInGame.setXposPlayer1FireBall(fireBallX);
+                                    allPlayersForMasterInGame.setYposPlayer1FireBall(fireBallY);
+                                    allPlayersForMasterInGame.setIdFireBall(playerIDFireball);
+                                    allPlayersForMasterInGame.setAngleFireball(fireBallAngle);
+                                    //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
+
+                                } else if (playerIDFireball.equals("0")) {
+
+                                    allPlayersForMasterInGame.setNamePlayer1FireBall(playerNameFireBall);
+                                    allPlayersForMasterInGame.setXposPlayer1FireBall(fireBallX);
+                                    allPlayersForMasterInGame.setYposPlayer1FireBall(fireBallY);
+                                    allPlayersForMasterInGame.setIdFireBall(playerIDFireball);
+                                    allPlayersForMasterInGame.setAngleFireball(fireBallAngle);
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
                                 }
 

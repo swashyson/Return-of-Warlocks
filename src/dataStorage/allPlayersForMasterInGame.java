@@ -5,9 +5,6 @@
  */
 package dataStorage;
 
-import java.util.ArrayList;
-import playerField.Player;
-
 /**
  *
  * @author Swashy
@@ -19,9 +16,55 @@ public class allPlayersForMasterInGame {
     static String YposPlayer1;
     static String id;
 
+    static String idFireBall;
+    static String namePlayer1FireBall;
+    static String XposPlayer1FireBall;
+    static String YposPlayer1FireBall;
+    static String angleFireball;
     static String namePlayer2;
     static String XposPlayer2;
     static String YposPlayer2;
+    static String id2;
+
+    public static String getAngleFireball() {
+        return angleFireball;
+    }
+
+    public static void setAngleFireball(String angleFireball) {
+        allPlayersForMasterInGame.angleFireball = angleFireball;
+    }
+
+    public static String getNamePlayer1FireBall() {
+        return namePlayer1FireBall;
+    }
+
+    public static void setNamePlayer1FireBall(String namePlayer1FireBall) {
+        allPlayersForMasterInGame.namePlayer1FireBall = namePlayer1FireBall;
+    }
+
+    public static String getXposPlayer1FireBall() {
+        return XposPlayer1FireBall;
+    }
+
+    public static void setXposPlayer1FireBall(String XposPlayer1FireBall) {
+        allPlayersForMasterInGame.XposPlayer1FireBall = XposPlayer1FireBall;
+    }
+
+    public static String getYposPlayer1FireBall() {
+        return YposPlayer1FireBall;
+    }
+
+    public static void setYposPlayer1FireBall(String YposPlayer1FireBall) {
+        allPlayersForMasterInGame.YposPlayer1FireBall = YposPlayer1FireBall;
+    }
+
+    public static String getIdFireBall() {
+        return idFireBall;
+    }
+
+    public static void setIdFireBall(String idFireBall) {
+        allPlayersForMasterInGame.idFireBall = idFireBall;
+    }
 
     public static String getId() {
         return id;
@@ -62,7 +105,6 @@ public class allPlayersForMasterInGame {
     public static void setId2(String id2) {
         allPlayersForMasterInGame.id2 = id2;
     }
-    static String id2;
 
     public static String getNamePlayer1() {
         return namePlayer1;

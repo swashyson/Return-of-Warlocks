@@ -15,6 +15,15 @@ import java.util.ArrayList;
 public class BroadCastSystemForMasterIngame {
 
     static ArrayList broadCastList = new ArrayList();
+    static ArrayList broadCastListFireball = new ArrayList();
+
+    public static ArrayList getBroadCastListFireball() {
+        return broadCastListFireball;
+    }
+
+    public static void setBroadCastListFireball(ArrayList broadCastListFireball) {
+        BroadCastSystemForMasterIngame.broadCastListFireball = broadCastListFireball;
+    }
     static ArrayList<Socket> clientSockets = new ArrayList<>();
 
     public static ArrayList getBroadCastList() {
