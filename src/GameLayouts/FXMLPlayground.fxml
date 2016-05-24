@@ -9,14 +9,9 @@
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPanePlayerField" prefHeight="800.0" prefWidth="1196.0" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLPlaygroundController">
    <children>
-      <Label layoutX="718.0" layoutY="683.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 1" />
-      <Label layoutX="806.0" layoutY="683.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 2" />
-      <Label layoutX="891.0" layoutY="683.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 3" />
-      <Label layoutX="718.0" layoutY="737.0" prefHeight="41.0" prefWidth="44.0" style="-fx-background-color: #999999;" text="Ability 4" />
-      <Label layoutX="805.0" layoutY="737.0" prefHeight="41.0" prefWidth="47.0" style="-fx-background-color: #999999;" text="Abilitiy 5" />
-      <Label layoutX="301.0" layoutY="683.0" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: #999999;" text="Picture of player" />
-      <Label layoutX="416.0" layoutY="714.0" prefHeight="41.0" prefWidth="76.0" style="-fx-background-color: #999999;" text="Players Health" />
-      <Button layoutX="1086.0" layoutY="726.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="62.0" style="-fx-background-color: #999998;" styleClass="exitbutton" stylesheets="@../resources/myButtons.css" />
+      <Label layoutX="328.0" layoutY="683.0" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: #999999;" text="Picture of player" />
+      <Label layoutX="463.0" layoutY="714.0" prefHeight="41.0" prefWidth="76.0" style="-fx-background-color: #999999;" text="Players Health" />
+      <Button layoutX="1088.0" layoutY="696.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="62.0" style="-fx-background-color: #999998;" styleClass="exitbutton" stylesheets="@../resources/myButtons.css" />
       <ImageView fitHeight="630.0" fitWidth="1196.0" layoutY="39.0" preserveRatio="true">
          <image>
             <Image url="@../resources/playground.png" />
@@ -29,6 +24,11 @@
          <effect>
             <DropShadow height="23.97" radius="9.9925" width="18.0" />
          </effect>
+      </ImageView>
+      <ImageView fitHeight="103.0" fitWidth="113.0" layoutX="709.0" layoutY="698.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/warlocks_logo_splash2.png" />
+         </image>
       </ImageView>
    </children>
 </AnchorPane>
