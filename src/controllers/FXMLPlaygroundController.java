@@ -80,11 +80,11 @@ public class FXMLPlaygroundController implements Initializable {
     private Ticker ticker;
 
     AudioHandler audioHandler = new AudioHandler();
+    
+    Thread thread;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        audioHandler.defineAudioPath(audioHandler.backgroundAudio);
 
         connectToMaster();
         player = new Player();
@@ -93,6 +93,18 @@ public class FXMLPlaygroundController implements Initializable {
         detectMovementListener();
         tickRateInit();
         createEnemyDisplays();
+
+        
+        thread = new Thread() {
+            public void run() {
+
+                audioHandler.playback = true;
+                audioHandler.defineAudioPath(audioHandler.background_audio);
+            }
+        };
+        
+        thread.start();
+        
 
     }
 
@@ -264,7 +276,7 @@ public class FXMLPlaygroundController implements Initializable {
     public void createEnemyDisplays() {
 
         System.out.println(PlayersStorage.getPlayersInLobby());
-        if (PlayersStorage.getPlayersInLobby()== 2) {
+        if (PlayersStorage.getPlayersInLobby() == 2) {
 
             c2 = new Circle(400, 400, 20);
             PlayerStartingPoints.setC1(c2);
@@ -298,14 +310,13 @@ public class FXMLPlaygroundController implements Initializable {
         }
 
     }
-    
+
     @FXML
-    private void quit(ActionEvent event){
+    private void quit(ActionEvent event) {
         audioHandler.stop();
         ChangeScene cs = new ChangeScene();
         cs.changeScene(event, "FXMLLobby");
     }
-    
 
     public void listenForIncommingMessagesFromMaster() {
 
