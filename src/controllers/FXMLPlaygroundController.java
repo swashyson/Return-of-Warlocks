@@ -111,13 +111,25 @@ public class FXMLPlaygroundController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        audioHandler.defineAudioPath(audioHandler.backgroundAudio);
-
         connectToMaster();
         player = new Player();
         Player.setPlayer(player);
         createPlayerStartPointDisplay();
         detectMovementListener();
+        tickRateInit();
+        createEnemyDisplays();
+
+        
+        thread = new Thread() {
+            public void run() {
+
+                audioHandler.playback = true;
+                audioHandler.defineAudioPath(audioHandler.background_audio);
+            }
+        };
+        
+        thread.start();
+        
 
         tickRateInit();
         createItems();

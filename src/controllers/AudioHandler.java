@@ -31,12 +31,6 @@ import sun.audio.ContinuousAudioDataStream;
  */
 public class AudioHandler {
 
-//    String audioName;
-//
-//    private URL resource;
-//    private MediaPlayer backgroundAudio;
-//    private Media backgroundAudioPath;
-
     private String path;
 
     private InputStream backgroundAudioInputStream;
@@ -44,23 +38,19 @@ public class AudioHandler {
     private AudioStream backgroundAudioAudioStream;
     private AudioStream fireballAudioStream;
 
+    public boolean playback;
+    
     private AudioData audioData;
     private ContinuousAudioDataStream loop = null;
 
-    public String backgroundAudio = "preliminary_background_music_return_of_warcraft.wav";
-    public String fireballAudio = "fireball_throw.wav";
+    public String background_audio = "preliminary_background_music_return_of_warcraft.wav";
+    public String fireball_throw = "fireball_throw.wav";
+    public String fireball_hit = "fireball_hard_hit.wav";
     
     //plays the background audio, supposed to loop but plays only once for now
     private void startBackgroundAudio() {
         try {
             System.out.println("finding media file");
-
-//            System.out.println(System.getProperty("user.dir"));
-//            resource = getClass().getResource("C:\\Users\\Mohini\\Documents\\NetBeansProjects\\Return-of-Warlocks\\src\\resources\\preliminary_background_music_return_of_warcraft.wav");
-//            System.out.println(resource.toString());
-//            backgroundAudioPath = new Media(resource.toString());
-//            backgroundAudio = new MediaPlayer(backgroundAudioPath);
-//            backgroundAudio.play();
             
             System.out.println("path to audio: " + path);
 
@@ -74,9 +64,18 @@ public class AudioHandler {
             System.out.println("trying to play...");
 
             AudioPlayer.player.start(backgroundAudioAudioStream);
-//            AudioPlayer.player.start(loop);
             
             System.out.println("media is playing");
+            
+            
+            // den här biten strular till det ganska rejält i local chat master med "error in creation of the server socket"
+            do{
+                
+            } while(backgroundAudioAudioStream.available() > 0 && playback);
+            if (playback) {
+                startBackgroundAudio();
+            }
+            
         } catch (NullPointerException e) {
             System.out.println("could not load audio file");
             e.printStackTrace();
@@ -126,6 +125,7 @@ public class AudioHandler {
 
     //stops the playing audio
     public void stop() {
+        playback = false;
         System.out.println("background audio stopped");
         AudioPlayer.player.stop(backgroundAudioAudioStream);
         AudioPlayer.player.stop(fireballAudioStream);
@@ -135,9 +135,11 @@ public class AudioHandler {
     public void defineAudioPath(String audioName) {
         path = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
 
-        if (audioName == backgroundAudio) {
+        if (audioName == background_audio) {
             startBackgroundAudio();
-        } else if (audioName == fireballAudio) {
+        } else if (audioName == fireball_throw) {
+            playSoundEffect();
+        } else if (audioName == fireball_hit){
             playSoundEffect();
         }
 

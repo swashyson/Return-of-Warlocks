@@ -1,7 +1,7 @@
 
 .startbutton {          
-    -fx-background-image: url("start_button.png");
-    -fx-background-size: 194 61;
+    -fx-background-image: url("start_button118x58.png");
+    -fx-background-size: 118 58;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -9,8 +9,8 @@
 }
 
 .startbutton:hover {
-    -fx-background-image: url("start_button_hover.png");
-    -fx-background-size: 194 61;
+    -fx-background-image: url("start_button118x58_hov.png");
+    -fx-background-size: 118 58;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -19,8 +19,8 @@
 }
 
 .disconnectbutton {
-	-fx-background-image: url("disconnect_button.png");
-    -fx-background-size: 108 30;
+    -fx-background-image: url("disconnect_button130x96.png");
+    -fx-background-size: 130 96;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -29,8 +29,8 @@
 }
 
 .disconnectbutton:hover {
-    -fx-background-image: url("disconnect_button_hover.png");
-    -fx-background-size: 108 30;
+    -fx-background-image: url("disconnect_button130x96_hov.png");
+    -fx-background-size: 130 96;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -39,8 +39,8 @@
 }
 
 .startgamebutton {
-    -fx-background-image: url("start_game_button.png");
-    -fx-background-size: 210 64;
+    -fx-background-image: url("start_game_button224x141.png");
+    -fx-background-size: 224 141;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -48,8 +48,8 @@
 }
 
 .startgamebutton:hover {
-	-fx-background-image: url("start_game_button_hover.png");
-    -fx-background-size: 210 64;
+	-fx-background-image: url("start_game_button224x141_hov.png");
+    -fx-background-size: 224 141;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -58,17 +58,17 @@
 }
 
 .creategamebutton {
--fx-background-image: url("create_game_button.png");
-    -fx-background-size: 123 37;
+-fx-background-image: url("create_game_button139x105.png");
+    -fx-background-size: 139 105;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
     -fx-background-color: transparent;		
 }
 
-.creategamebutton:hover {
--fx-background-image: url("create_game_button_hover.png");
-    -fx-background-size: 123 37;
+.creategamebutton:hover { 
+    -fx-background-image: url("create_game_button139x105_hov.png");
+    -fx-background-size: 139 105;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -77,8 +77,8 @@
 
 
 .joingamebutton{
-	-fx-background-image: url("join_game_button.png");
-    -fx-background-size: 97 36;
+    -fx-background-image: url("join_game_button115x104.png");
+    -fx-background-size: 115 104;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -86,8 +86,8 @@
 }
 
 .joingamebutton:hover {
-	-fx-background-image: url("join_game_button_hover.png");
-    -fx-background-size: 97 36;
+    -fx-background-image: url("join_game_button115x104_hov.png");
+    -fx-background-size: 115 104;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -95,8 +95,8 @@
 }
 
 .exitbutton{
-	-fx-background-image: url("exit_button.png");
-    -fx-background-size: 52 31;
+    -fx-background-image: url("exit_button73x95.png");
+    -fx-background-size: 73 95;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
@@ -105,14 +105,34 @@
 }
 
 .exitbutton:hover{
-	-fx-background-image: url("exit_button_hover.png");
-    -fx-background-size: 52 31;
+    -fx-background-image: url("exit_button73x95_hov.png");
+    -fx-background-size: 73 95;
     -fx-background-repeat: no-repeat;
     -fx-background-position:left;
     -fx-background-size: 100% 100%;
     -fx-background-color: transparent;		
 
 }
+
+.sendbutton {
+    -fx-background-image: url("send_button80x49.png");
+    -fx-background-size: 80 49;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+    
+}
+
+.sendbutton:hover {
+    -fx-background-image: url("send_button80x49_hov.png");
+    -fx-background-size: 80 49;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:left;
+    -fx-background-size: 100% 100%;
+    -fx-background-color: transparent;		
+}
+
 
 /*.clientsbutton {
     -fx-background-image: url("clients_icon_blank.png");
