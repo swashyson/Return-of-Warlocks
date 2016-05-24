@@ -63,8 +63,6 @@ public class FXMLloggInController implements Initializable {
                 System.out.println("changing scene");
                 ChangeScene cs = new ChangeScene();
                 cs.changeScene(event, "FXMLMainChat");
-                //changeScene(event);
-                //audio.stop();
             } else {
                 label.setText("Couldn't connect to server");
             }
@@ -73,19 +71,6 @@ public class FXMLloggInController implements Initializable {
         } else {
             label.setText("Skriv in ett giltigt namn");
             System.out.println("Skriv in ett giltigt namn");
-        }
-    }
-    public void changeScene(ActionEvent event) {
-
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
-            Scene scene = new Scene(root);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.show();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -108,15 +93,6 @@ public class FXMLloggInController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
-        
-
-        //audio.startBackgroundAudio();
-        
-        /*try {
-            audio.playBackgroundAudio();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
     }
 

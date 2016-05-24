@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -21,7 +22,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
+<AnchorPane maxHeight="800.0" maxWidth="1196.0" minHeight="800.0" minWidth="1196.0" prefHeight="800.0" prefWidth="1196.0" style="-fx-background-image: ;" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLLobbyController">
     <children>
       <BorderPane prefHeight="800.0" prefWidth="1196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -53,10 +54,10 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="564.0" minHeight="10.0" prefHeight="487.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="96.0" minHeight="40.0" prefHeight="96.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="180.0" minHeight="124.0" prefHeight="124.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="564.0" minHeight="10.0" prefHeight="396.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="96.0" minHeight="39.0" prefHeight="66.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="180.0" minHeight="105.0" prefHeight="132.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="44.0" minHeight="9.0" prefHeight="9.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <TextField fx:id="typeToChat" prefHeight="25.0" prefWidth="544.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -66,7 +67,7 @@
                      </GridPane.margin>
                   </Button>
                   <TextArea fx:id="allChat" editable="false" prefHeight="415.0" prefWidth="657.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="startGame" maxHeight="64.0" maxWidth="210.0" minHeight="64.0" minWidth="210.0" mnemonicParsing="false" onAction="#startGameHandler" prefHeight="64.0" prefWidth="210.0" styleClass="startgamebutton" stylesheets="@../resources/myButtons.css" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Button fx:id="startGame" maxHeight="141.0" maxWidth="224.0" minHeight="141.0" minWidth="224.0" mnemonicParsing="false" onAction="#startGameHandler" prefHeight="141.0" prefWidth="224.0" styleClass="startgamebutton" stylesheets="@../resources/myButtons.css" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="15.0" />
                      </GridPane.margin>
@@ -118,7 +119,7 @@
                         <Insets left="15.0" />
                      </GridPane.margin>
                   </SplitPane>
-                  <Button fx:id="disconnect" maxHeight="30.0" maxWidth="108.0" minHeight="30.0" minWidth="108.0" mnemonicParsing="false" onAction="#handleDisconnectFromLobby" prefHeight="30.0" prefWidth="108.0" styleClass="disconnectbutton" stylesheets="@../resources/myButtons.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Button fx:id="disconnect" maxHeight="96.0" maxWidth="130.0" minHeight="96.0" minWidth="130.0" mnemonicParsing="false" onAction="#handleDisconnectFromLobby" prefHeight="96.0" prefWidth="130.0" styleClass="disconnectbutton" stylesheets="@../resources/myButtons.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -128,5 +129,10 @@
          </center>
       </BorderPane>
         <Label fx:id="label" layoutX="86.0" layoutY="-220.0" minHeight="16" minWidth="69" />
+      <ImageView fitHeight="47.0" fitWidth="179.0" layoutX="174.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/game_lobby_text179x47.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

@@ -20,45 +20,91 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javax.sound.sampled.AudioInputStream;
+import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 /**
  *
  * @author Mohini
  */
 public class AudioHandler {
-    
-    String audioName;
 
-    private URL resource;
-    private MediaPlayer backgroundAudio;
-    private Media backgroundAudioPath;
+    private String path;
+
+    private InputStream backgroundAudioInputStream;
+    private InputStream fireballInputStream;
+    private AudioStream backgroundAudioAudioStream;
+    private AudioStream fireballAudioStream;
+
+    public boolean playback;
     
-    InputStream is;
-    AudioStream as;
+    private AudioData audioData;
+    private ContinuousAudioDataStream loop = null;
+
+    public String background_audio = "preliminary_background_music_return_of_warcraft.wav";
+    public String fireball_throw = "fireball_throw.wav";
+    public String fireball_hit = "fireball_hard_hit.wav";
     
-    public void startBackgroundAudio() {
+    //plays the background audio, supposed to loop but plays only once for now
+    private void startBackgroundAudio() {
         try {
             System.out.println("finding media file");
-            System.out.println(System.getProperty("user.dir"));
             
+            System.out.println("path to audio: " + path);
+
+            backgroundAudioInputStream = new FileInputStream(path);
+            backgroundAudioAudioStream = new AudioStream(backgroundAudioInputStream);
             
-//            resource = getClass().getResource("C:\\Users\\Mohini\\Documents\\NetBeansProjects\\Return-of-Warlocks\\src\\resources\\preliminary_background_music_return_of_warcraft.wav");
-//            System.out.println(resource.toString());
-//            backgroundAudioPath = new Media(resource.toString());
-//            backgroundAudio = new MediaPlayer(backgroundAudioPath);
-//            backgroundAudio.play();
-            
-            System.out.println(System.getProperty("user.dir") + "\\Return-of-Warlocks\\src\\resources\\preliminary_background_music_return_of_warcraft.wav");
-            
-            is = new FileInputStream(System.getProperty("user.dir") + "\\Return-of-Warlocks\\src\\resources\\preliminary_background_music_return_of_warcraft.wav");
-            as = new AudioStream(is);
-            
+//            audioData = backgroundAudioAudioStream.getData();
+//            loop = new ContinuousAudioDataStream(audioData);
+
             System.out.println("media file has been found");
             System.out.println("trying to play...");
+
+            AudioPlayer.player.start(backgroundAudioAudioStream);
             
-            AudioPlayer.player.start(as);
+            System.out.println("media is playing");
+            
+            
+            // den här biten strular till det ganska rejält i local chat master med "error in creation of the server socket"
+            do{
+                
+            } while(backgroundAudioAudioStream.available() > 0 && playback);
+            if (playback) {
+                startBackgroundAudio();
+            }
+            
+        } catch (NullPointerException e) {
+            System.out.println("could not load audio file");
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.out.println("audio parameter is wrong");
+            e.printStackTrace();
+        } catch (MediaException e) {
+            System.out.println("other kind of problem with audio");
+            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //plays soundeffects, no need for looping the audio
+    private void playSoundEffect() {
+        try {
+            System.out.println("finding media file");
+            System.out.println("path to audio: " + path);
+
+            fireballInputStream = new FileInputStream(path);
+            fireballAudioStream = new AudioStream(fireballInputStream);
+
+            System.out.println("media file has been found");
+            System.out.println("trying to play...");
+
+            AudioPlayer.player.start(fireballAudioStream);
 
             System.out.println("media is playing");
         } catch (NullPointerException e) {
@@ -77,9 +123,25 @@ public class AudioHandler {
         }
     }
 
-    //This method turns off the specified sound in the class it's called from, whatever sound it is that it is playing
+    //stops the playing audio
     public void stop() {
+        playback = false;
         System.out.println("background audio stopped");
-        AudioPlayer.player.stop(is);
+        AudioPlayer.player.stop(backgroundAudioAudioStream);
+        AudioPlayer.player.stop(fireballAudioStream);
+    }
+
+    //defines the audio redirects to accurate method
+    public void defineAudioPath(String audioName) {
+        path = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
+
+        if (audioName == background_audio) {
+            startBackgroundAudio();
+        } else if (audioName == fireball_throw) {
+            playSoundEffect();
+        } else if (audioName == fireball_hit){
+            playSoundEffect();
+        }
+
     }
 }

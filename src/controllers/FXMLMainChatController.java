@@ -87,7 +87,6 @@ public class FXMLMainChatController implements Initializable {
 
         informationStorage.setMasterOrNot(true);
         cs.changeScene(event, "FXMLLobby");
-        //changeScene(event, true);
     }
 
     @FXML
@@ -95,23 +94,6 @@ public class FXMLMainChatController implements Initializable {
 
         informationStorage.setMasterOrNot(false);
         cs.changeScene(event, "FXMLLobby");
-        //changeScene(event, false);
-    }
-
-    private void changeScene(ActionEvent event, boolean masterOrNot) {
-
-        try {
-            informationStorage.setMasterOrNot(masterOrNot);
-
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLLobby.fxml"));
-            Scene scene = new Scene(blah);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.show();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     @Override
@@ -133,11 +115,6 @@ public class FXMLMainChatController implements Initializable {
         lobbyListListener();
         informationStorage.setDontRetry(1);
 
-        /*try {
-            ah.playBackgroundAudio();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void startAllChat() {

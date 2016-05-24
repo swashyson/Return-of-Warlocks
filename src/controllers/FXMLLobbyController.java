@@ -173,23 +173,6 @@ public class FXMLLobbyController implements Initializable {
         slaveChat = null;
     }
 
-    private void changeScene(ActionEvent event) {
-
-        try {
-            chat = null;
-            masterChat = null;
-            slaveChat = null;
-            Parent blah = FXMLLoader.load(getClass().getResource("/GameLayouts/FXMLMainChat.fxml"));
-            Scene scene = new Scene(blah);
-            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            appStage.setScene(scene);
-            appStage.show();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
