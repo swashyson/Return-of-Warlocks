@@ -23,6 +23,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Connections.ConnectToServer;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  *
@@ -40,9 +42,14 @@ public class FXMLloggInController implements Initializable {
     private int isConnectedToServer = 0;
 
     private final AudioHandler audio = new AudioHandler();
-
+    ActionEvent event;
     @FXML
     private void handleButtonAction(ActionEvent event) {
+        this.event = event;
+        connectToServer();
+    }
+    
+    private void connectToServer(){
         System.out.println("You clicked me!");
 
         ConnectToServer cTS = new ConnectToServer();
@@ -68,7 +75,6 @@ public class FXMLloggInController implements Initializable {
             System.out.println("Skriv in ett giltigt namn");
         }
     }
-
     public void changeScene(ActionEvent event) {
 
         try {
@@ -102,6 +108,7 @@ public class FXMLloggInController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         System.out.println(com.sun.javafx.runtime.VersionInfo.getRuntimeVersion());
+        
 
         //audio.startBackgroundAudio();
         
