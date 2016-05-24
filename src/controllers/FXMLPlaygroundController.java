@@ -96,6 +96,7 @@ public class FXMLPlaygroundController implements Initializable {
     private SlaveClient slaveClient;
 
     private Ticker ticker;
+    private Thread thread;
 
     AudioHandler audioHandler = new AudioHandler();
 
@@ -116,8 +117,6 @@ public class FXMLPlaygroundController implements Initializable {
         Player.setPlayer(player);
         createPlayerStartPointDisplay();
         detectMovementListener();
-        tickRateInit();
-        createEnemyDisplays();
 
         
         thread = new Thread() {
