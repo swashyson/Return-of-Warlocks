@@ -30,6 +30,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +40,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -71,7 +74,8 @@ public class FXMLPlaygroundController implements Initializable {
     private playerField.Player player;
 
     private ImageView ImageViewPlayer1;
-    private AnchorPane AnchorPanePlayer1;
+    private AnchorPane AnchorPanePlayer1 = new AnchorPane();
+    private StackPane stackPanePlayer1 = new StackPane();
 
     private Circle c1;
     private Circle c2;
@@ -185,11 +189,12 @@ public class FXMLPlaygroundController implements Initializable {
                         xpos.clear();
                         ypos.clear();
 
-                        player.setCursorPosX((float) me.getX());
-                        player.setCursorPoxY((float) me.getY());
+                        player.setCursorPosX((float) me.getX() - 25); //center
+                        player.setCursorPoxY((float) me.getY() - 25);
 
-                        player.setCurrentPosX((float) c1.getCenterX());
-                        player.setCurrentPoxY((float) c1.getCenterY());
+                        player.setCurrentPosX((float) stackPanePlayer1.getLayoutX());
+                        player.setCurrentPoxY((float) stackPanePlayer1.getLayoutY());
+  
 
                         asignFireBallToMouse = false;
 
@@ -206,8 +211,8 @@ public class FXMLPlaygroundController implements Initializable {
                     fireball.setCursorPosX((float) me.getX());
                     fireball.setCursorPoxY((float) me.getY());
 
-                    fireball.setCurrentPosX((float) c1.getCenterX());
-                    fireball.setCurrentPoxY((float) c1.getCenterY());
+                    fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX()+25); //center
+                    fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY()+25);
 
                     asignFireBallToMouse = false;
                     fireBallCooldown = Integer.parseInt(AllDataBaseInformation.getFireBallCD());
@@ -234,13 +239,13 @@ public class FXMLPlaygroundController implements Initializable {
             xpos.clear();
             ypos.clear();
 
-            int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
+            int x1 = (int) player.getCurrentPosX() , y1 = (int) player.getCurrentPoxY();
             int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
 
             double angle = Math.atan2(y2 - y1, x2 - x1);
 
             player.setAngle(angle);
-            double x = x1, y = y1;
+            double x = x1 , y = y1;
 
             while ((x != x2 && y != y2)) {
                 x += SPEED * Math.cos(angle);
@@ -313,10 +318,13 @@ public class FXMLPlaygroundController implements Initializable {
                         Double x = new Double(xpos.get(0).toString());
                         Double y = new Double(ypos.get(0).toString());
 
-                        AnchorPanePlayerField.getChildren().get(7).setLayoutX(x - 200);
-                        AnchorPanePlayerField.getChildren().get(7).setLayoutY(y - 200);
+                        //AnchorPanePlayerField.getChildren().get(7).setLayoutX(x - 200);
+                        //AnchorPanePlayerField.getChildren().get(7).setLayoutY(y - 200);
                         //c1.setCenterX(x);
                         //c1.setCenterY(y);
+                        stackPanePlayer1.setLayoutX(x);
+                        stackPanePlayer1.setLayoutY(y);
+                        
                         player.setCurrentPosX((float) xpos.get(0));
                         player.setCurrentPoxY((float) ypos.get(0));
 
@@ -341,6 +349,8 @@ public class FXMLPlaygroundController implements Initializable {
                         Double y = new Double(yposFireBall.get(0).toString());
                         fireBallCircle.setCenterX(x);
                         fireBallCircle.setCenterY(y);
+                        
+                        
                         fireball.setCurrentPosX((float) xposFireBall.get(0));
                         fireball.setCurrentPoxY((float) yposFireBall.get(0));
 
@@ -520,8 +530,10 @@ public class FXMLPlaygroundController implements Initializable {
             y = 800;
         }
 
-        c1 = new Circle(x, y, 25);
+        stackPanePlayer1.setLayoutX(x);
+        stackPanePlayer1.setLayoutY(y);
 
+        c1 = new Circle(x, y, 25);
         PlayerStartingPoints.setC1(c1);
         c1.setStroke(Color.BLACK);
         c1.setFill(Color.BLACK);
@@ -531,15 +543,13 @@ public class FXMLPlaygroundController implements Initializable {
         ImageViewPlayer1.setLayoutX(x - 13);
         ImageViewPlayer1.setLayoutY(y - 22);
 
-        AnchorPanePlayer1 = new AnchorPane();
-        AnchorPanePlayer1.getChildren().add(ImageViewPlayer1);
-        AnchorPanePlayer1.getChildren().add(c1);
-        AnchorPanePlayer1.getChildren().get(0).toFront();
+        stackPanePlayer1.getChildren().add(ImageViewPlayer1);
+        stackPanePlayer1.getChildren().add(c1);
+        stackPanePlayer1.getChildren().get(0).toFront();
 
-        AnchorPanePlayerField.getChildren().add(AnchorPanePlayer1);
+        AnchorPanePlayerField.getChildren().add(stackPanePlayer1);
 
         nodes.add(c1);
-        //fireballNodes.add(c1);
 
     }
 
@@ -866,6 +876,7 @@ public class FXMLPlaygroundController implements Initializable {
             player.setPlayerDead(true);
             slaveClient.sendDeath();
             lockPlayerDeath = true;
+            System.out.println("Dead");
         }
     }
 
