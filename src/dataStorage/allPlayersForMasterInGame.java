@@ -17,6 +17,9 @@ public class allPlayersForMasterInGame {
     static String id;
     static String playerAngle;
 
+   
+    static String hpplayer1;
+
     static String idFireBall;
     static String namePlayer1FireBall;
     static String XposPlayer1FireBall;
@@ -27,6 +30,13 @@ public class allPlayersForMasterInGame {
     static String XposPlayer2;
     static String YposPlayer2;
     static String id2;
+     public static String getHpplayer1() {
+        return hpplayer1;
+    }
+
+    public static void setHpplayer1(String hpplayer1) {
+        allPlayersForMasterInGame.hpplayer1 = hpplayer1;
+    }
 
     public static String getPlayerAngle() {
         return playerAngle;

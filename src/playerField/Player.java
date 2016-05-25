@@ -18,6 +18,24 @@ final public class Player {
     static Player player;
     static int playerNumber = dataStorage.PlayersStorage.getPlayernumber();
     static double angle;
+    static int hp = Integer.parseInt(dataStorage.AllDataBaseInformation.getPlayerHP());
+    static boolean playerDead = false;
+
+    public static boolean isPlayerDead() {
+        return playerDead;
+    }
+
+    public static void setPlayerDead(boolean playerDead) {
+        Player.playerDead = playerDead;
+    }
+
+    public static int getHp() {
+        return hp;
+    }
+
+    public static void setHp(int hp) {
+        Player.hp = hp;
+    }
 
     public static double getAngle() {
         return angle;
