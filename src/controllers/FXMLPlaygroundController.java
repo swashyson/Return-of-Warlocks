@@ -32,6 +32,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -61,6 +63,9 @@ public class FXMLPlaygroundController implements Initializable {
     private AnchorPane AnchorPanePlayerField;
 
     private playerField.Player player;
+
+    private ImageView ImageViewPlayer1;
+    private AnchorPane AnchorPanePlayer1;
 
     private Circle c1;
     private Circle c2;
@@ -118,7 +123,6 @@ public class FXMLPlaygroundController implements Initializable {
         createPlayerStartPointDisplay();
         detectMovementListener();
 
-        
         thread = new Thread() {
             public void run() {
 
@@ -126,15 +130,20 @@ public class FXMLPlaygroundController implements Initializable {
                 audioHandler.defineAudioPath(audioHandler.background_audio);
             }
         };
-        
+
         thread.start();
-        
 
         tickRateInit();
         createItems();
         createFireBallDisplay();
 
         setStartingDisplayPos();
+
+        //displaying the children of AnchorPanePlayerField
+        for (int i = 0; i < AnchorPanePlayerField.getChildren().size(); i++) {
+
+            System.out.println("Child no. " + i + " is " + AnchorPanePlayerField.getChildren().get(i).toString());
+        }
 
     }
 
@@ -278,8 +287,11 @@ public class FXMLPlaygroundController implements Initializable {
                     try {
                         Double x = new Double(xpos.get(0).toString());
                         Double y = new Double(ypos.get(0).toString());
-                        c1.setCenterX(x);
-                        c1.setCenterY(y);
+
+                        AnchorPanePlayerField.getChildren().get(7).setLayoutX(x - 200);
+                        AnchorPanePlayerField.getChildren().get(7).setLayoutY(y - 200);
+                        //c1.setCenterX(x);
+                        //c1.setCenterY(y);
                         player.setCurrentPosX((float) xpos.get(0));
                         player.setCurrentPoxY((float) ypos.get(0));
 
@@ -443,7 +455,6 @@ public class FXMLPlaygroundController implements Initializable {
         if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) { //varför blir denna 0? johan //mattias
             x = 200;
             y = 200;
-
         }
         if (Player.getPlayerNumber() == 2) {
             x = 400;
@@ -458,14 +469,26 @@ public class FXMLPlaygroundController implements Initializable {
             y = 800;
         }
 
-        c1 = new Circle(x, y, 20);
+        c1 = new Circle(x, y, 25);
+
         PlayerStartingPoints.setC1(c1);
         c1.setStroke(Color.BLACK);
         c1.setFill(Color.BLACK);
         c1.setStrokeWidth(3);
-        AnchorPanePlayerField.getChildren().add(c1);
+
+        ImageViewPlayer1 = new ImageView("resources/p1_standing.png");
+        ImageViewPlayer1.setLayoutX(x - 13);
+        ImageViewPlayer1.setLayoutY(y - 22);
+
+        AnchorPanePlayer1 = new AnchorPane();
+        AnchorPanePlayer1.getChildren().add(ImageViewPlayer1);
+        AnchorPanePlayer1.getChildren().add(c1);
+        AnchorPanePlayer1.getChildren().get(0).toFront();
+
+        AnchorPanePlayerField.getChildren().add(AnchorPanePlayer1);
 
         nodes.add(c1);
+
         fireballNodes.add(c1);
 
     }
@@ -475,7 +498,7 @@ public class FXMLPlaygroundController implements Initializable {
         System.out.println(PlayersStorage.getPlayersInLobby());
         if (PlayersStorage.getPlayersInLobby() == 2) {
 
-            c2 = new Circle(400, 400, 20);
+            c2 = new Circle(400, 400, 25);
             PlayerStartingPoints.setC1(c2);
             c2.setStroke(Color.BLACK);
             c2.setFill(Color.BLACK);
