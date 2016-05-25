@@ -31,7 +31,8 @@ import sun.audio.ContinuousAudioDataStream;
  */
 public class AudioHandler {
 
-    private String path;
+    private String backgroundAudioPath;
+    private String soundEffectPath;
 
     private InputStream backgroundAudioInputStream;
     private InputStream fireballInputStream;
@@ -44,8 +45,8 @@ public class AudioHandler {
     private ContinuousAudioDataStream loop = null;
 
     public String background_audio = "preliminary_background_music_return_of_warcraft.wav";
-    public String fireball_throw = "fireball_throw.wav";
-    public String fireball_hit = "fireball_hard_hit.wav";
+    public String fireball_throw = "fireball_throw_v2.wav";
+    public String fireball_hit = "fireball_hard_hit_v2.wav";
     
     Thread t = new Thread();
     
@@ -54,9 +55,9 @@ public class AudioHandler {
         try {
             System.out.println("finding media file");
             
-            System.out.println("path to audio: " + path);
+            System.out.println("path to background audio: " + backgroundAudioPath);
 
-            backgroundAudioInputStream = new FileInputStream(path);
+            backgroundAudioInputStream = new FileInputStream(backgroundAudioPath);
             backgroundAudioAudioStream = new AudioStream(backgroundAudioInputStream);
             
 //            audioData = backgroundAudioAudioStream.getData();
@@ -67,10 +68,8 @@ public class AudioHandler {
 
             AudioPlayer.player.start(backgroundAudioAudioStream);
             
-            System.out.println("media is playing");
+            System.out.println("background media is playing");
             
-            
-            // den här biten strular till det ganska rejält i local chat master med "error in creation of the server socket"
             do{
                 try {
                     t.sleep(1);
@@ -103,17 +102,17 @@ public class AudioHandler {
     private void playSoundEffect() {
         try {
             System.out.println("finding media file");
-            System.out.println("path to audio: " + path);
+            System.out.println("path to sound effect: " + soundEffectPath);
 
-            fireballInputStream = new FileInputStream(path);
+            fireballInputStream = new FileInputStream(soundEffectPath);
             fireballAudioStream = new AudioStream(fireballInputStream);
 
             System.out.println("media file has been found");
-            System.out.println("trying to play...");
+            System.out.println("trying to play sound effect...");
 
             AudioPlayer.player.start(fireballAudioStream);
 
-            System.out.println("media is playing");
+            System.out.println("sound effect is playing");
         } catch (NullPointerException e) {
             System.out.println("could not load audio file");
             e.printStackTrace();
@@ -140,13 +139,16 @@ public class AudioHandler {
 
     //defines the audio redirects to accurate method
     public void defineAudioPath(String audioName) {
-        path = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
+//        backgroundAudioPath = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
 
         if (audioName == background_audio) {
+            backgroundAudioPath = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
             startBackgroundAudio();
         } else if (audioName == fireball_throw) {
+            soundEffectPath = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
             playSoundEffect();
         } else if (audioName == fireball_hit){
+            soundEffectPath = System.getProperty("user.dir") + "\\src\\resources\\" + audioName;
             playSoundEffect();
         }
 

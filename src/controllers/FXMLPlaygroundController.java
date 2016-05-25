@@ -96,7 +96,9 @@ public class FXMLPlaygroundController implements Initializable {
     private SlaveClient slaveClient;
 
     private Ticker ticker;
-    private Thread thread;
+
+    private Thread bAudioThread;
+    private Thread seAudioThread;
 
     AudioHandler audioHandler = new AudioHandler();
 
@@ -118,17 +120,15 @@ public class FXMLPlaygroundController implements Initializable {
         createPlayerStartPointDisplay();
         detectMovementListener();
 
-        
-        thread = new Thread() {
+        bAudioThread = new Thread() {
             public void run() {
 
                 audioHandler.playback = true;
                 audioHandler.defineAudioPath(audioHandler.background_audio);
             }
         };
-        
-        thread.start();
-        
+
+        bAudioThread.start();
 
         tickRateInit();
         createItems();
@@ -414,6 +414,15 @@ public class FXMLPlaygroundController implements Initializable {
                         if (!xposFireBall.isEmpty() && !yposFireBall.isEmpty()) {
                             xposFireBall.remove(0);
                             yposFireBall.remove(0);
+                            
+                            bAudioThread = new Thread() {
+                                public void run() {
+
+                                    System.out.println("sound effect");
+                                    audioHandler.defineAudioPath(audioHandler.fireball_throw);
+                                }
+                            };
+                            
                             fireBallMove();
                         }
 
@@ -703,6 +712,14 @@ public class FXMLPlaygroundController implements Initializable {
             System.out.print("");
         }
         lockMovement = false;
+
+        bAudioThread = new Thread() {
+            public void run() {
+
+                System.out.println("sound effect");
+                audioHandler.defineAudioPath(audioHandler.fireball_hit);
+            }
+        };
 
     }
 
