@@ -95,7 +95,7 @@ public class SlaveClient {
 
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber());
+            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() +","+Player.getPlayerHp());
             //System.out.println("send: " + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY());
             out.flush();
 
@@ -142,11 +142,13 @@ public class SlaveClient {
                             String playerX = null;
                             String playerY = null;
                             String playerID = null;
+                            String playerHP = null;
                             if (namesList.length > 3) {
                                 playerName = namesList[0];
                                 playerX = namesList[1];
                                 playerY = namesList[2];
                                 playerID = namesList[3];
+                                playerHP = namesList[4];
                             } else {
 
                                 return;
@@ -160,6 +162,7 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setXposPlayer1(playerX);
                                     allPlayersForMasterInGame.setYposPlayer1(playerY);
                                     allPlayersForMasterInGame.setId(playerID);
+                                    allPlayersForMasterInGame.setPlayer1Hp(playerHP);
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
 
                                 } else if (playerID.equals("0")) {
@@ -168,6 +171,8 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setXposPlayer1(playerX);
                                     allPlayersForMasterInGame.setYposPlayer1(playerY);
                                     allPlayersForMasterInGame.setId(playerID);
+                                    allPlayersForMasterInGame.setPlayer1Hp(playerHP);
+                                    
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
                                 }
 

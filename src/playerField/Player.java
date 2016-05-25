@@ -17,6 +17,15 @@ final public class Player {
     static float currentPoxY;
     static Player player;
     static int playerNumber = dataStorage.PlayersStorage.getPlayernumber();
+    static int playerHp;
+
+    public static int getPlayerHp() {
+        return playerHp;
+    }
+
+    public static void setPlayerHp(int playerHp) {
+        Player.playerHp = playerHp;
+    }
 
     public static int getPlayerNumber() {
         return playerNumber;

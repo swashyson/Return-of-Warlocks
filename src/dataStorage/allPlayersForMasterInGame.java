@@ -14,6 +14,7 @@ public class allPlayersForMasterInGame {
     static String namePlayer1;
     static String XposPlayer1;
     static String YposPlayer1;
+    static String Player1Hp; 
     static String id;
 
     static String idFireBall;
@@ -24,6 +25,23 @@ public class allPlayersForMasterInGame {
     static String namePlayer2;
     static String XposPlayer2;
     static String YposPlayer2;
+    static String Player2HP;
+
+    public static String getPlayer1Hp() {
+        return Player1Hp;
+    }
+
+    public static void setPlayer1Hp(String Player1Hp) {
+        allPlayersForMasterInGame.Player1Hp = Player1Hp;
+    }
+
+    public static String getPlayer2HP() {
+        return Player2HP;
+    }
+
+    public static void setPlayer2HP(String Player2HP) {
+        allPlayersForMasterInGame.Player2HP = Player2HP;
+    }
     static String id2;
 
     public static String getAngleFireball() {

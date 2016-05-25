@@ -117,6 +117,7 @@ public class FXMLPlaygroundController implements Initializable {
         Player.setPlayer(player);
         createPlayerStartPointDisplay();
         detectMovementListener();
+        playerField.Player.setPlayerHp(100);
 
         
         thread = new Thread() {
