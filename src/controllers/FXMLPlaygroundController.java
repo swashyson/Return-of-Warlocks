@@ -643,7 +643,7 @@ public class FXMLPlaygroundController implements Initializable {
         AnchorPanePlayerField.getChildren().add(stackPanePlayer1);
 
         nodes.add(c1);
-
+        
     }
 
     public void createItems() {
