@@ -162,4 +162,10 @@ public class FXMLMainChatController implements Initializable {
         new Thread(task).start();
     }
 
+    
+    @FXML
+    private void exit(ActionEvent event){
+//        cs.changeScene(event, "FXMLloggIn");
+        System.exit(0);
+    }
 }

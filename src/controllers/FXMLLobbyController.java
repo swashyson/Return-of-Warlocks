@@ -352,4 +352,10 @@ public class FXMLLobbyController implements Initializable {
 
     }
 
+    @FXML
+    private void exit(ActionEvent event){
+        ChangeScene cs = new ChangeScene();
+        cs.changeScene(event, "FXMLMainChat");
+    }
+    
 }
