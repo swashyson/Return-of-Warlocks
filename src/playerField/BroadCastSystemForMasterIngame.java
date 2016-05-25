@@ -16,6 +16,15 @@ public class BroadCastSystemForMasterIngame {
 
     static ArrayList broadCastList = new ArrayList();
     static ArrayList broadCastListFireball = new ArrayList();
+    static ArrayList deathList = new ArrayList();
+
+    public static ArrayList getDeathList() {
+        return deathList;
+    }
+
+    public static void setDeathList(ArrayList deathList) {
+        BroadCastSystemForMasterIngame.deathList = deathList;
+    }
 
     public static ArrayList getBroadCastListFireball() {
         return broadCastListFireball;

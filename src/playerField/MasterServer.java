@@ -5,6 +5,7 @@
  */
 package playerField;
 
+import chatSystem.BroadCastSystemForMaster;
 import dataStorage.PlayersStorage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -26,6 +28,9 @@ public class MasterServer {
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private Thread t;
+
+    private boolean gameOverLockMasterServer = false;
+    private int delay = 0;
 
     public void CreateServer(int port) {
 
@@ -125,6 +130,8 @@ public class MasterServer {
                     public void onTick(float deltaTime) {
                         broadCastPlayers();
                         broadCastFireBalls();
+                        checkForGameOver();
+                        delay = delay + 1;
 
                     }
                 });
@@ -190,6 +197,40 @@ public class MasterServer {
 
     }
 
+    public void checkForGameOver() {
+
+        //System.out.println("Antal Döda: " + BroadCastSystemForMasterIngame.getDeathList().size());
+        //System.out.println("Antal spelare ingame: " + BroadCastSystemForMasterIngame.getClientSockets().size());
+        if (BroadCastSystemForMasterIngame.getDeathList().size() == BroadCastSystemForMasterIngame.getClientSockets().size() && gameOverLockMasterServer == false && delay > 1000) {
+
+            System.out.println("gameOver");
+            broadCastGameOver();
+
+        }
+
+    }
+
+    public void broadCastGameOver() {
+
+        PrintWriter out = null;
+
+        try {
+            for (int j = 0; j < BroadCastSystemForMasterIngame.getClientSockets().size(); j++) {
+                Socket temp = (Socket) BroadCastSystemForMasterIngame.getClientSockets().get(j);
+
+                out = new PrintWriter(temp.getOutputStream(), true);
+                out.println("||||d" + BroadCastSystemForMasterIngame.getDeathList().get(BroadCastSystemForMasterIngame.getDeathList().size() - 1));
+                out.flush();
+
+            }
+            gameOverLockMasterServer = true;
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+    }
+
     private static class ObjectHandler extends Thread {
 
         private Socket clientSocket;
@@ -218,6 +259,12 @@ public class MasterServer {
                     if (test.contains("||||f")) {
                         syntax = test.substring(5);
                         BroadCastSystemForMasterIngame.getBroadCastListFireball().add(syntax);
+
+                    }
+                    if (test.contains("||||d")) {
+
+                        syntax = test.substring(5);
+                        BroadCastSystemForMasterIngame.getDeathList().add(syntax);
 
                     }
                 }
