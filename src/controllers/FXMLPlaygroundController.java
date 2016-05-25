@@ -13,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
 import playerField.Player;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -35,6 +36,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -74,6 +76,7 @@ public class FXMLPlaygroundController implements Initializable {
     private playerField.Player player;
 
     private ImageView ImageViewPlayer1;
+    private ImageView ImageViewPlayer2;
     private AnchorPane AnchorPanePlayer1 = new AnchorPane();
     private StackPane stackPanePlayer1 = new StackPane();
 
@@ -103,7 +106,7 @@ public class FXMLPlaygroundController implements Initializable {
 
     private static final double SPEED = Double.parseDouble(AllDataBaseInformation.getPlayerSpeed());
     private static final double knockBackSPEED = Double.parseDouble(AllDataBaseInformation.getPlayerKnockBackSpeed());
-    ;
+
     private static final double fireBallSpeed = Double.parseDouble(AllDataBaseInformation.getFireBallSpeed());
 
     private boolean tick = false;
@@ -194,7 +197,6 @@ public class FXMLPlaygroundController implements Initializable {
 
                         player.setCurrentPosX((float) stackPanePlayer1.getLayoutX());
                         player.setCurrentPoxY((float) stackPanePlayer1.getLayoutY());
-  
 
                         asignFireBallToMouse = false;
 
@@ -211,8 +213,8 @@ public class FXMLPlaygroundController implements Initializable {
                     fireball.setCursorPosX((float) me.getX());
                     fireball.setCursorPoxY((float) me.getY());
 
-                    fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX()+25); //center
-                    fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY()+25);
+                    fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX() + 25); //center
+                    fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY() + 25);
 
                     asignFireBallToMouse = false;
                     fireBallCooldown = Integer.parseInt(AllDataBaseInformation.getFireBallCD());
@@ -239,13 +241,27 @@ public class FXMLPlaygroundController implements Initializable {
             xpos.clear();
             ypos.clear();
 
-            int x1 = (int) player.getCurrentPosX() , y1 = (int) player.getCurrentPoxY();
+            int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
             int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
 
             double angle = Math.atan2(y2 - y1, x2 - x1);
 
+            //converting radians to degrees
+            double degrees = Math.toDegrees(angle);
+
+            if (degrees < 0.0) {
+                degrees += 360.0;
+            }
+
+            degrees = Math.round(degrees);
+
+            System.out.println("The value of degrees is: " + degrees);
+
+            setPlayerDirection(degrees);
+
             player.setAngle(angle);
-            double x = x1 , y = y1;
+
+            double x = x1, y = y1;
 
             while ((x != x2 && y != y2)) {
                 x += SPEED * Math.cos(angle);
@@ -269,6 +285,84 @@ public class FXMLPlaygroundController implements Initializable {
             }
             t.interrupt();
         }
+    }
+
+    private void setPlayerDirection(double degrees) {
+
+        if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+
+            if (degrees >= 338 || degrees < 23) {
+                Image image = new Image("resources/p1_e.png");
+                ImageViewPlayer1.setImage(image);
+
+            } else if (degrees >= 23 && degrees < 68) {
+                Image image = new Image("resources/p1_se.png");
+                ImageViewPlayer1.setImage(image);
+
+            } else if (degrees >= 68 && degrees < 113) {
+                Image image = new Image("resources/p1_s.png");
+                ImageViewPlayer1.setImage(image);
+                
+            } else if (degrees >= 113 && degrees < 158) {
+                Image image = new Image("resources/p1_sw.png");
+                ImageViewPlayer1.setImage(image);
+                
+            } else if (degrees >= 158 && degrees < 203) {
+                Image image = new Image("resources/p1_w.png");
+                ImageViewPlayer1.setImage(image);
+                
+            } else if (degrees >= 203 && degrees < 248) {
+                Image image = new Image("resources/p1_nw.png");
+                ImageViewPlayer1.setImage(image);
+                
+            } else if (degrees >= 248 && degrees < 293) {
+                Image image = new Image("resources/p1_n.png");
+                ImageViewPlayer1.setImage(image);
+
+            } else if (degrees >= 293 && degrees < 338) {
+                Image image = new Image("resources/p1_ne.png");
+                ImageViewPlayer1.setImage(image);
+
+            }
+
+        } else if (Player.getPlayerNumber() == 2) {
+
+//            if (degrees >= 338 || degrees < 23) {
+//                Image image = new Image("resources/p2_e.png");
+//                ImageViewPlayer2.setImage(image);
+//
+//            } else if (degrees >= 23 && degrees < 68) {
+//                Image image = new Image("resources/p2_se.png");
+//                ImageViewPlayer2.setImage(image);
+//
+//            } else if (degrees >= 68 && degrees < 113) {
+//                Image image = new Image("resources/p2_s.png");
+//                ImageViewPlayer2.setImage(image);
+//                
+//            } else if (degrees >= 113 && degrees < 158) {
+//                Image image = new Image("resources/p2_sw.png");
+//                ImageViewPlayer2.setImage(image);
+//                
+//            } else if (degrees >= 158 && degrees < 203) {
+//                Image image = new Image("resources/p2_w.png");
+//                ImageViewPlayer2.setImage(image);
+//                
+//            } else if (degrees >= 203 && degrees < 248) {
+//                Image image = new Image("resources/p2_nw.png");
+//                ImageViewPlayer2.setImage(image);
+//                
+//            } else if (degrees >= 248 && degrees < 293) {
+//                Image image = new Image("resources/p2_n.png");
+//                ImageViewPlayer2.setImage(image);
+//
+//            } else if (degrees >= 293 && degrees < 338) {
+//                Image image = new Image("resources/p2_ne.png");
+//                ImageViewPlayer2.setImage(image);
+//
+//            }
+            
+        }
+
     }
 
     public void moveCalcFireBall() {
@@ -324,7 +418,7 @@ public class FXMLPlaygroundController implements Initializable {
                         //c1.setCenterY(y);
                         stackPanePlayer1.setLayoutX(x);
                         stackPanePlayer1.setLayoutY(y);
-                        
+
                         player.setCurrentPosX((float) xpos.get(0));
                         player.setCurrentPoxY((float) ypos.get(0));
 
@@ -349,8 +443,7 @@ public class FXMLPlaygroundController implements Initializable {
                         Double y = new Double(yposFireBall.get(0).toString());
                         fireBallCircle.setCenterX(x);
                         fireBallCircle.setCenterY(y);
-                        
-                        
+
                         fireball.setCurrentPosX((float) xposFireBall.get(0));
                         fireball.setCurrentPoxY((float) yposFireBall.get(0));
 
