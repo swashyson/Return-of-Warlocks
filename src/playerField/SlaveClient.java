@@ -51,7 +51,7 @@ public class SlaveClient {
             System.out.println("Connecting to master while ingame");
 
         } catch (IOException ex) {
-            System.out.println("Failed to connect to chat, is the chat server up?");
+            System.out.println("Failed to connect to chat, is the chat server up? @" + PlayersStorage.getMasterSocketIP().replace("[", "").replace("]", "") + PORT);
             ex.printStackTrace();
         }
 
@@ -95,7 +95,7 @@ public class SlaveClient {
 
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber());
+            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() + "," + Player.getAngle() + "," + Player.getHp());
             //System.out.println("send: " + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY());
             out.flush();
 
@@ -111,7 +111,22 @@ public class SlaveClient {
 
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println("||||f" + DataStorage.getUserName() + "," + Fireball.getCurrentPosX() + "," + Fireball.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() +  "," + Fireball.getAngle());
+            out.println("||||f" + DataStorage.getUserName() + "," + Fireball.getCurrentPosX() + "," + Fireball.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() + "," + Fireball.getAngle());
+            out.flush();
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+    }
+
+    public void sendDeath() {
+
+        PrintWriter out = null;
+
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println("||||d" + DataStorage.getUserName());
             out.flush();
 
         } catch (Exception ex) {
@@ -142,11 +157,15 @@ public class SlaveClient {
                             String playerX = null;
                             String playerY = null;
                             String playerID = null;
-                            if (namesList.length > 3) {
+                            String angle = null;
+                            String hp = null;
+                            if (namesList.length > 5) {
                                 playerName = namesList[0];
                                 playerX = namesList[1];
                                 playerY = namesList[2];
                                 playerID = namesList[3];
+                                angle = namesList[4];
+                                hp = namesList[5];
                             } else {
 
                                 return;
@@ -160,6 +179,9 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setXposPlayer1(playerX);
                                     allPlayersForMasterInGame.setYposPlayer1(playerY);
                                     allPlayersForMasterInGame.setId(playerID);
+                                    allPlayersForMasterInGame.setPlayerAngle(angle);
+                                    allPlayersForMasterInGame.setHpplayer1(hp);
+                                    //System.out.println("ANGLE of the other player:" + angle );
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
 
                                 } else if (playerID.equals("0")) {
@@ -168,13 +190,16 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setXposPlayer1(playerX);
                                     allPlayersForMasterInGame.setYposPlayer1(playerY);
                                     allPlayersForMasterInGame.setId(playerID);
+                                    allPlayersForMasterInGame.setPlayerAngle(angle);
+                                    allPlayersForMasterInGame.setHpplayer1(hp);
+                                    //System.out.println("ANGLE of the other player:" + angle );
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
                                 }
 
                             }
 
-                        } if (test.contains("||||f")) {
-                            
+                        }
+                        if (test.contains("||||f")) {
 
                             name = test.substring(5);
                             String[] namesList = name.split(",");
@@ -217,6 +242,11 @@ public class SlaveClient {
                                 }
 
                             }
+
+                        }
+                        if (test.contains("||||d")) {
+                            name = test.substring(5);
+                            System.out.println("The winner is: " + name);
 
                         }
 

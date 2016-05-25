@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import dataStorage.AllDataBaseInformation;
 import dataStorage.PlayersStorage;
 import dataStorage.allPlayersForMasterInGame;
 import dataStorage.informationStorage;
@@ -32,7 +33,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -61,6 +61,12 @@ public class FXMLPlaygroundController implements Initializable {
 
     @FXML
     private AnchorPane AnchorPanePlayerField;
+
+    @FXML
+    private ImageView standingGround;
+
+    @FXML
+    private Rectangle hitboxPlayingField;
 
     private playerField.Player player;
 
@@ -91,9 +97,10 @@ public class FXMLPlaygroundController implements Initializable {
     private ArrayList xposFireBall = new ArrayList();
     private ArrayList yposFireBall = new ArrayList();
 
-    private static final double SPEED = 0.75;
-    private static final double knockBackSPEED = 2;
-    private static final double fireBallSpeed = 2.5;
+    private static final double SPEED = Double.parseDouble(AllDataBaseInformation.getPlayerSpeed());
+    private static final double knockBackSPEED = Double.parseDouble(AllDataBaseInformation.getPlayerKnockBackSpeed());
+    ;
+    private static final double fireBallSpeed = Double.parseDouble(AllDataBaseInformation.getFireBallSpeed());
 
     private boolean tick = false;
 
@@ -106,13 +113,21 @@ public class FXMLPlaygroundController implements Initializable {
     AudioHandler audioHandler = new AudioHandler();
 
     private ArrayList<Shape> nodes = new ArrayList();
+    private ArrayList<Shape> lavaNodes = new ArrayList();
     private ArrayList<Shape> fireballNodes = new ArrayList<>();
 
     private boolean asignFireBallToMouse = false;
     private Fireball fireball = new Fireball();
     private int fireBallCooldown = 0; //5 sekunder = 640
+    private int shrinkTimer = 1280; // 10 sekunder = 1280
+    private double shrinkSpeed = 0.10;
+
+    private int lavaTickRate = 8;
 
     private boolean lockMovement = false;
+    private boolean lockPlayerDeath = false;
+
+    private int delay = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -120,6 +135,7 @@ public class FXMLPlaygroundController implements Initializable {
         connectToMaster();
         player = new Player();
         Player.setPlayer(player);
+
         createPlayerStartPointDisplay();
         detectMovementListener();
 
@@ -139,6 +155,7 @@ public class FXMLPlaygroundController implements Initializable {
 
         setStartingDisplayPos();
 
+        addNodesForLava();
         //displaying the children of AnchorPanePlayerField
         for (int i = 0; i < AnchorPanePlayerField.getChildren().size(); i++) {
 
@@ -159,49 +176,51 @@ public class FXMLPlaygroundController implements Initializable {
     }
 
     public void detectMovementListener() {
-        AnchorPanePlayerField.setOnMouseClicked((MouseEvent me) -> {
+        if (player.isPlayerDead() == false) {
+            AnchorPanePlayerField.setOnMouseClicked((MouseEvent me) -> {
 
-            if (asignFireBallToMouse == false || fireBallCooldown > 0) {
-                if (lockMovement == false) {
+                if (asignFireBallToMouse == false || fireBallCooldown > 0) {
+                    if (lockMovement == false) {
 
-                    xpos.clear();
-                    ypos.clear();
+                        xpos.clear();
+                        ypos.clear();
 
-                    player.setCursorPosX((float) me.getX());
-                    player.setCursorPoxY((float) me.getY());
+                        player.setCursorPosX((float) me.getX());
+                        player.setCursorPoxY((float) me.getY());
 
-                    player.setCurrentPosX((float) c1.getCenterX());
-                    player.setCurrentPoxY((float) c1.getCenterY());
+                        player.setCurrentPosX((float) c1.getCenterX());
+                        player.setCurrentPoxY((float) c1.getCenterY());
+
+                        asignFireBallToMouse = false;
+
+                        t = new Thread(() -> {
+                            moveCalc();
+                        });
+                        t.start();
+                    }
+                } else if (asignFireBallToMouse == true && fireBallCooldown == 0) {
+
+                    xposFireBall.clear();
+                    yposFireBall.clear();
+
+                    fireball.setCursorPosX((float) me.getX());
+                    fireball.setCursorPoxY((float) me.getY());
+
+                    fireball.setCurrentPosX((float) c1.getCenterX());
+                    fireball.setCurrentPoxY((float) c1.getCenterY());
 
                     asignFireBallToMouse = false;
+                    fireBallCooldown = Integer.parseInt(AllDataBaseInformation.getFireBallCD());
 
-                    t = new Thread(() -> {
-                        moveCalc();
+                    t5 = new Thread(() -> {
+                        moveCalcFireBall();
                     });
-                    t.start();
+                    t5.start();
+
                 }
-            } else if (asignFireBallToMouse == true && fireBallCooldown == 0) {
+            });
 
-                xposFireBall.clear();
-                yposFireBall.clear();
-
-                fireball.setCursorPosX((float) me.getX());
-                fireball.setCursorPoxY((float) me.getY());
-
-                fireball.setCurrentPosX((float) c1.getCenterX());
-                fireball.setCurrentPoxY((float) c1.getCenterY());
-
-                asignFireBallToMouse = false;
-                fireBallCooldown = 640;
-
-                t5 = new Thread(() -> {
-                    moveCalcFireBall();
-                });
-                t5.start();
-
-            }
-        });
-
+        }
     }
 
     public void realTimeUpdate() {
@@ -211,70 +230,76 @@ public class FXMLPlaygroundController implements Initializable {
 
     public void moveCalc() {
 
-        xpos.clear();
-        ypos.clear();
+        if (player.isPlayerDead() == false) {
+            xpos.clear();
+            ypos.clear();
 
-        int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
-        int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
+            int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
+            int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
 
-        double angle = Math.atan2(y2 - y1, x2 - x1);
-        double x = x1, y = y1;
+            double angle = Math.atan2(y2 - y1, x2 - x1);
 
-        while ((x != x2 && y != y2)) {
-            x += SPEED * Math.cos(angle);
-            y += SPEED * Math.sin(angle);
-            int Xint = (int) Math.round(x);
-            int Yint = (int) Math.round(y);
-            next_point_x = (float) x;
-            next_point_y = (float) y;
-            int XNextPointInt = Math.round(next_point_x);
-            int YNextPointInt = Math.round(next_point_y);
-            xpos.add(next_point_x);
-            ypos.add(next_point_y);
-            System.out.print("");
+            player.setAngle(angle);
+            double x = x1, y = y1;
 
-            if (XNextPointInt == x2) {
+            while ((x != x2 && y != y2)) {
+                x += SPEED * Math.cos(angle);
+                y += SPEED * Math.sin(angle);
+                int Xint = (int) Math.round(x);
+                int Yint = (int) Math.round(y);
+                next_point_x = (float) x;
+                next_point_y = (float) y;
+                int XNextPointInt = Math.round(next_point_x);
+                int YNextPointInt = Math.round(next_point_y);
+                xpos.add(next_point_x);
+                ypos.add(next_point_y);
+                System.out.print("");
 
-                System.out.println("test");
-                break;
+                if (XNextPointInt == x2) {
+
+                    System.out.println("test");
+                    break;
+                }
+
             }
-
+            t.interrupt();
         }
-        t.interrupt();
     }
 
     public void moveCalcFireBall() {
 
-        xposFireBall.clear();
-        yposFireBall.clear();
+        if (player.isPlayerDead() == false) {
+            xposFireBall.clear();
+            yposFireBall.clear();
 
-        int x1 = (int) fireball.getCurrentPosX(), y1 = (int) fireball.getCurrentPoxY();
-        int x2 = (int) fireball.getCursorPosX(), y2 = (int) fireball.getCursorPoxY();
+            int x1 = (int) fireball.getCurrentPosX(), y1 = (int) fireball.getCurrentPoxY();
+            int x2 = (int) fireball.getCursorPosX(), y2 = (int) fireball.getCursorPoxY();
 
-        double angle = Math.atan2(y2 - y1, x2 - x1);
-        fireball.setAngle(angle);
-        double x = x1, y = y1;
+            double angle = Math.atan2(y2 - y1, x2 - x1);
+            fireball.setAngle(angle);
+            double x = x1, y = y1;
 
-        for (int i = 0; i < 1000; i++) {
-            x += fireBallSpeed * Math.cos(angle);
-            y += fireBallSpeed * Math.sin(angle);
-            int Xint = (int) Math.round(x);
-            int Yint = (int) Math.round(y);
-            next_point_x_fireball = (float) x;
-            next_point_y_fireball = (float) y;
-            int XNextPointInt = Math.round(next_point_x_fireball);
-            int YNextPointInt = Math.round(next_point_y_fireball);
-            xposFireBall.add(next_point_x_fireball);
-            yposFireBall.add(next_point_y_fireball);
+            for (int i = 0; i < 1000; i++) {
+                x += fireBallSpeed * Math.cos(angle);
+                y += fireBallSpeed * Math.sin(angle);
+                int Xint = (int) Math.round(x);
+                int Yint = (int) Math.round(y);
+                next_point_x_fireball = (float) x;
+                next_point_y_fireball = (float) y;
+                int XNextPointInt = Math.round(next_point_x_fireball);
+                int YNextPointInt = Math.round(next_point_y_fireball);
+                xposFireBall.add(next_point_x_fireball);
+                yposFireBall.add(next_point_y_fireball);
 
+            }
+            for (int i = 0; i < 15; i++) {
+
+                xposFireBall.remove(0);
+                yposFireBall.remove(0);
+            }
+
+            t5.interrupt();
         }
-        for (int i = 0; i < 15; i++) {
-
-            xposFireBall.remove(0);
-            yposFireBall.remove(0);
-        }
-
-        t5.interrupt();
     }
 
     private void playerMove() {
@@ -342,7 +367,7 @@ public class FXMLPlaygroundController implements Initializable {
                         c2.setCenterY(yForPlayer1);
                     } catch (Exception ex) {
 
-                        System.out.println("Skip");
+                        System.out.println("Skip1");
                     }
                 }
             }
@@ -363,7 +388,7 @@ public class FXMLPlaygroundController implements Initializable {
                         fireballCircle2.setCenterY(yForPlayer1FireBall);
                     } catch (Exception ex) {
 
-                        System.out.println("Skip");
+                        System.out.println("Skip2");
 
                     }
                 }
@@ -406,16 +431,37 @@ public class FXMLPlaygroundController implements Initializable {
 
                         if (nodes != null) {
                             checkShapeIntersection(c1);
+
                         }
                         if (fireballNodes != null) {
-                            checkShapeIntersectionForFireballsCollisionControll(c2);
+                            if (PlayersStorage.getPlayersInLobby() == 2) {
+                                checkShapeIntersectionForFireballsCollisionControll(c2);
+                            }
                             checkShapeIntersectionForFireballs(c1);
 
                         }
+
                         updateEnemyDisplays();
                         updateFireBallDisplay();
                         if (fireBallCooldown > 0) {
                             fireBallCooldown = fireBallCooldown - 1;
+                        }
+                        if (shrinkTimer > 0) {
+                            shrinkTimer = shrinkTimer - 1;
+                        } else {
+
+                            shrinkTimer = 1280;
+                            shrinkPlayerField();
+                        }
+                        if (lavaTickRate > 0) {
+
+                            lavaTickRate = lavaTickRate - 1;
+                        } else {
+
+                            lavaTickRate = 8;
+                            if (player.getHp() > -1) {
+                                checkShapeIntersectionForLava(c1);
+                            }
                         }
 
                         if (!xpos.isEmpty() && !ypos.isEmpty()) {
@@ -427,6 +473,11 @@ public class FXMLPlaygroundController implements Initializable {
                             xposFireBall.remove(0);
                             yposFireBall.remove(0);
                             fireBallMove();
+                        }
+
+                        if (player.getHp() == 0) {
+
+                            playerDeath();
                         }
 
                     }
@@ -488,8 +539,7 @@ public class FXMLPlaygroundController implements Initializable {
         AnchorPanePlayerField.getChildren().add(AnchorPanePlayer1);
 
         nodes.add(c1);
-
-        fireballNodes.add(c1);
+        //fireballNodes.add(c1);
 
     }
 
@@ -506,9 +556,9 @@ public class FXMLPlaygroundController implements Initializable {
             AnchorPanePlayerField.getChildren().add(c2);
 
             nodes.add(c2); // collision nodes
-            fireballNodes.add(c2);
+            //fireballNodes.add(c2);
 
-            fireballCircle2 = new Circle(400, 400, 10);
+            fireballCircle2 = new Circle(600, 600, 10);
             PlayerStartingPoints.setC1(fireballCircle2);
             fireballCircle2.setStroke(Color.BLACK);
             fireballCircle2.setFill(Color.BLACK);
@@ -536,10 +586,17 @@ public class FXMLPlaygroundController implements Initializable {
             listenForIncommingMessagesFromMaster();
         } else {
 
-            slaveClient = new SlaveClient();
-            slaveClient.clientConnect(PlayersStorage.getMasterSocketIP(), 9008);
-            slaveClient.tickRate(128);
-            listenForIncommingMessagesFromMaster();
+            try {
+                Thread.sleep(1000);
+                slaveClient = new SlaveClient();
+                slaveClient.clientConnect(PlayersStorage.getMasterSocketIP(), 9008);
+                slaveClient.tickRate(128);
+                listenForIncommingMessagesFromMaster();
+            } catch (Exception ex) {
+
+                connectToMaster();
+
+            }
         }
 
     }
@@ -579,7 +636,8 @@ public class FXMLPlaygroundController implements Initializable {
                             }
                         } catch (Exception ex) {
 
-                            System.out.println("Load");
+                            System.out.println("Load1");
+                            ex.printStackTrace();
                         }
                     }
 
@@ -611,7 +669,7 @@ public class FXMLPlaygroundController implements Initializable {
                             }
                         } catch (Exception ex) {
 
-                            System.out.println("Load");
+                            System.out.println("Load2");
                         }
                     }
                 }
@@ -668,31 +726,63 @@ public class FXMLPlaygroundController implements Initializable {
 
     }
 
+    private void checkShapeIntersectionForLava(Shape block) {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                boolean collisionDetected = false;
+                for (Shape static_bloc : lavaNodes) {
+                    if (static_bloc != block) {
+
+                        try {
+                            Shape intersect = Shape.intersect(block, static_bloc);
+                            if (intersect.getBoundsInLocal().getWidth() != -1) {
+                                collisionDetected = true;
+                            }
+
+                        } catch (Exception ex) {
+
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+
+                if (!collisionDetected) {
+                    standingInLava();
+                }
+            }
+        });
+
+    }
+
     public void smallKnockBack() {
 
         xpos.clear();
         ypos.clear();
 
-        int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
-        int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
+        if (player.isPlayerDead() == false && allPlayersForMasterInGame.getPlayerAngle() != null) {
+            int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
+            int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
 
-        double angle = Math.atan2(y2 - y1, x2 - x1);
-        angle = angle + 180;
+            double angle = Double.parseDouble(allPlayersForMasterInGame.getPlayerAngle() + 180);
+            System.out.println("Angle:" + angle);
 
-        double x = x1, y = y1;
+            double x = x1, y = y1;
 
-        for (int i = 0; i < 25; i++) {
-            x += knockBackSPEED * Math.cos(angle);
-            y += knockBackSPEED * Math.sin(angle);
-            int Xint = (int) Math.round(x);
-            int Yint = (int) Math.round(y);
-            next_point_x = (float) x;
-            next_point_y = (float) y;
-            int XNextPointInt = Math.round(next_point_x);
-            int YNextPointInt = Math.round(next_point_y);
-            xpos.add(next_point_x);
-            ypos.add(next_point_y);
-            System.out.print("");
+            for (int i = 0; i < 25; i++) {
+                x += knockBackSPEED * Math.cos(angle);
+                y += knockBackSPEED * Math.sin(angle);
+                int Xint = (int) Math.round(x);
+                int Yint = (int) Math.round(y);
+                next_point_x = (float) x;
+                next_point_y = (float) y;
+                int XNextPointInt = Math.round(next_point_x);
+                int YNextPointInt = Math.round(next_point_y);
+                xpos.add(next_point_x);
+                ypos.add(next_point_y);
+                System.out.print("");
+            }
         }
     }
 
@@ -711,7 +801,8 @@ public class FXMLPlaygroundController implements Initializable {
         double angle = Double.parseDouble(allPlayersForMasterInGame.getAngleFireball());
 
         double x = x1, y = y1;
-
+        playerField.Player.setHp(playerField.Player.getHp() - Integer.parseInt(AllDataBaseInformation.getFireBallDamage()));
+        System.out.println("you have bin hit, your hp are now " + playerField.Player.getHp());
         for (int i = 0; i < 50; i++) {
             x += knockBackSPEED * Math.cos(angle);
             y += knockBackSPEED * Math.sin(angle);
@@ -725,8 +816,57 @@ public class FXMLPlaygroundController implements Initializable {
             ypos.add(next_point_y);
             System.out.print("");
         }
+
         lockMovement = false;
 
+    }
+
+    public void shrinkPlayerField() {
+
+        System.out.println("MINKA PLAYER FIELDEN");
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                standingGround.setScaleX(1 - shrinkSpeed);
+                standingGround.setScaleY(1 - shrinkSpeed);
+                hitboxPlayingField.setScaleX(1 - shrinkSpeed);
+                hitboxPlayingField.setScaleY(1 - shrinkSpeed);
+                if (shrinkSpeed != 0.7) {
+                    shrinkSpeed = shrinkSpeed + 0.10;
+                }
+            }
+        });
+
+    }
+
+    public void addNodesForLava() {
+
+        hitboxPlayingField.setVisible(false);
+        lavaNodes.add(hitboxPlayingField);
+
+    }
+
+    public void standingInLava() {
+
+        playerField.Player.setHp(playerField.Player.getHp() - Integer.parseInt(AllDataBaseInformation.getLavaDamage()));
+        System.out.println("you are standing in lava, your hp are now " + playerField.Player.getHp());
+
+    }
+
+    public void playerDeath() {
+
+        if (lockPlayerDeath == false) {
+            xpos.clear();
+            ypos.clear();
+            c1.setCenterX(-500);
+            c1.setCenterY(-500);
+            player.setCurrentPosX(-500);
+            player.setCurrentPoxY(-500);
+            player.setPlayerDead(true);
+            slaveClient.sendDeath();
+            lockPlayerDeath = true;
+        }
     }
 
     @FXML
