@@ -5,7 +5,10 @@
  */
 package controllers;
 
+import com.sun.javafx.tk.FontLoader;
+import com.sun.javafx.tk.Toolkit;
 import dataStorage.AllDataBaseInformation;
+import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.allPlayersForMasterInGame;
 import dataStorage.informationStorage;
@@ -36,12 +39,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -49,6 +54,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import playerField.Fireball;
@@ -57,6 +63,7 @@ import playerField.PlayerStartingPoints;
 import playerField.SlaveClient;
 import playerField.TickListener;
 import playerField.Ticker;
+import sun.java2d.loops.FillSpans;
 
 public class FXMLPlaygroundController implements Initializable {
 
@@ -139,6 +146,16 @@ public class FXMLPlaygroundController implements Initializable {
     private int delay = 0;
     private int immunProtectionForFireball = 0;
 
+    private StackPane player1InformationPan = new StackPane();
+    private StackPane player2InformationPan = new StackPane();
+    private Label player1HealthDisplay;
+    private Label player1NameDisplay;
+    private Label player2HealthDisplay;
+    private Label player2NameDisplay;
+
+    double calc;
+    double calc2;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -182,6 +199,7 @@ public class FXMLPlaygroundController implements Initializable {
         } else if (PlayersStorage.getPlayernumber() == 2) {
             player.setCurrentPosX(400);
             player.setCurrentPoxY(400);
+
         }
     }
 
@@ -428,6 +446,12 @@ public class FXMLPlaygroundController implements Initializable {
                         player.setCurrentPosX((float) xpos.get(0));
                         player.setCurrentPoxY((float) ypos.get(0));
 
+                        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+                        calc = fontLoader.computeStringWidth(player1NameDisplay.getText(), player1NameDisplay.getFont());
+
+                        player1InformationPan.setLayoutX(stackPanePlayer1.getLayoutX() + 25 - calc / 2);
+                        player1InformationPan.setLayoutY(stackPanePlayer1.getLayoutY() - 25);
+
                     } catch (Exception ex) {
 
                         System.out.println("SkipFrame");
@@ -476,10 +500,17 @@ public class FXMLPlaygroundController implements Initializable {
                     double xForPlayer1 = Double.parseDouble(allPlayersForMasterInGame.getXposPlayer1());
                     double yForPlayer1 = Double.parseDouble(allPlayersForMasterInGame.getYposPlayer1());
                     try {
+//                        player2NameDisplay.setText(allPlayersForMasterInGame.getNamePlayer1());
+//                        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+//                        calc2 = fontLoader.computeStringWidth(player2NameDisplay.getText(), player2NameDisplay.getFont());
+                        //player2NameDisplay.setMinWidth(calc2);
+
                         stackPanePlayer2.setLayoutX(xForPlayer1);
                         stackPanePlayer2.setLayoutY(yForPlayer1);
                         Double degrees = Double.parseDouble(allPlayersForMasterInGame.getDegress());
                         setPlayerDirection(degrees, ImageViewPlayer2, "2", "1");
+                        player2InformationPan.setLayoutX(xForPlayer1 + 25 - calc2 / 2);
+                        player2InformationPan.setLayoutY(yForPlayer1 - 25);
                     } catch (Exception ex) {
 
                         System.out.println("Skip1");
@@ -608,6 +639,7 @@ public class FXMLPlaygroundController implements Initializable {
 
                             immunProtectionForFireball = immunProtectionForFireball - 1;
                         }
+                        updatePlayerHealth();
 
                     }
 
@@ -626,6 +658,26 @@ public class FXMLPlaygroundController implements Initializable {
             }
         });
         t2.start();
+    }
+
+    public void updatePlayerHealth() {
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                Double currentHP = Double.parseDouble(Integer.toString(player.getHp()));
+                player1HealthDisplay.setMinWidth(currentHP / 100 * calc);
+
+                if (PlayersStorage.getPlayersInLobby() == 2 && allPlayersForMasterInGame.getHpplayer1() != null) {
+
+                    Double currentHPPlayer2 = Double.parseDouble(allPlayersForMasterInGame.getHpplayer1());
+                    player2HealthDisplay.setMinWidth(currentHPPlayer2 / 100 * calc);
+
+                }
+
+            }
+        });
     }
 
     public void createPlayerStartPointDisplay() {
@@ -695,6 +747,57 @@ public class FXMLPlaygroundController implements Initializable {
 
         nodes.add(c1);
 
+        createHealthAndNameBarDisplays();
+
+    }
+
+    public void createHealthAndNameBarDisplays() {
+
+        player1NameDisplay = new Label();
+        player1NameDisplay.setText(DataStorage.getUserName());
+        player1NameDisplay.setTextFill(Color.BLACK);
+        player1NameDisplay.setFont(player1NameDisplay.getFont().font("Verdana", FontWeight.BOLD, 20));
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        calc = fontLoader.computeStringWidth(player1NameDisplay.getText(), player1NameDisplay.getFont());
+
+        player1InformationPan.setLayoutX(stackPanePlayer1.getLayoutX() + 25 - calc / 2);
+        player1InformationPan.setLayoutY(stackPanePlayer1.getLayoutY() - 25);
+
+        player1HealthDisplay = new Label();
+        player1HealthDisplay.setMinWidth(calc + 6);
+        player1HealthDisplay.setStyle("-fx-border-color:blue; -fx-background-color: red;");
+
+        player1InformationPan.getChildren().add(player1HealthDisplay);
+        player1InformationPan.getChildren().add(player1NameDisplay);
+
+        AnchorPanePlayerField.getChildren().add(player1InformationPan);
+    }
+
+    public void createHealthAndNameBarDisplaysForEnemys() {
+
+        player2NameDisplay = new Label();
+        player2NameDisplay.setTextFill(Color.BLACK);
+        if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+            player2NameDisplay.setText(PlayersStorage.getPlayer2().getText().replace("[", "").replace("]", ""));
+        } else if (Player.getPlayerNumber() == 2) {
+            player2NameDisplay.setText(PlayersStorage.getPlayer1().getText().replace("[", "").replace("]", ""));
+        }
+        player2NameDisplay.setFont(player2NameDisplay.getFont().font("Verdana", FontWeight.BOLD, 20));
+        FontLoader fontLoader = Toolkit.getToolkit().getFontLoader();
+        calc2 = fontLoader.computeStringWidth(player2NameDisplay.getText(), player2NameDisplay.getFont());
+
+        player2InformationPan.setLayoutX(stackPanePlayer2.getLayoutX() + 25 - calc2 / 2);
+        player2InformationPan.setLayoutY(stackPanePlayer2.getLayoutY() - 25);
+
+        player2HealthDisplay = new Label();
+        player2HealthDisplay.setMinWidth(calc2 + 6);
+        player2HealthDisplay.setStyle("-fx-border-color:blue; -fx-background-color: red;");
+
+        player2InformationPan.getChildren().add(player2HealthDisplay);
+        player2InformationPan.getChildren().add(player2NameDisplay);
+
+        AnchorPanePlayerField.getChildren().add(player2InformationPan);
+
     }
 
     public void createItems() {
@@ -707,6 +810,7 @@ public class FXMLPlaygroundController implements Initializable {
             c2.setStroke(Color.BLACK);
             c2.setFill(Color.BLACK);
             c2.setStrokeWidth(3);
+            c2.setVisible(false);
 
             if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
                 ImageViewPlayer2 = new ImageView("resources/p2_standing.png");
@@ -732,6 +836,8 @@ public class FXMLPlaygroundController implements Initializable {
             AnchorPanePlayerField.getChildren().add(fireballCircle2);
 
             fireballNodes.add(fireballCircle2);
+
+            createHealthAndNameBarDisplaysForEnemys();
 
         }
     }
@@ -1028,16 +1134,33 @@ public class FXMLPlaygroundController implements Initializable {
     public void playerDeath() {
 
         if (lockPlayerDeath == false) {
-            xpos.clear();
-            ypos.clear();
-            stackPanePlayer1.setLayoutX(-500);
-            stackPanePlayer1.setLayoutY(-500);
-            player.setCurrentPosX(-500);
-            player.setCurrentPoxY(-500);
-            player.setPlayerDead(true);
-            slaveClient.sendDeath();
-            lockPlayerDeath = true;
-            System.out.println("Dead");
+            if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+                xpos.clear();
+                ypos.clear();
+                stackPanePlayer1.setLayoutX(-500);
+                stackPanePlayer1.setLayoutY(-500);
+                player1InformationPan.setLayoutX(-500);
+                player1InformationPan.setLayoutY(-500);
+                player.setCurrentPosX(-500);
+                player.setCurrentPoxY(-500);
+                player.setPlayerDead(true);
+                slaveClient.sendDeath();
+                lockPlayerDeath = true;
+                System.out.println("Dead");
+            } else if (Player.getPlayerNumber() == 2) {
+                xpos.clear();
+                ypos.clear();
+                stackPanePlayer2.setLayoutX(-500);
+                stackPanePlayer2.setLayoutY(-500);
+                player2InformationPan.setLayoutX(-500);
+                player2InformationPan.setLayoutY(-500);
+                player.setCurrentPosX(-500);
+                player.setCurrentPoxY(-500);
+                player.setPlayerDead(true);
+                slaveClient.sendDeath();
+                lockPlayerDeath = true;
+                System.out.println("Dead");
+            }
         }
     }
 
