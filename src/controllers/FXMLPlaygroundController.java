@@ -44,6 +44,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -57,11 +58,6 @@ import playerField.SlaveClient;
 import playerField.TickListener;
 import playerField.Ticker;
 
-/**
- * FXML Controller class
- *
- * @author Mohini
- */
 public class FXMLPlaygroundController implements Initializable {
 
     @FXML
@@ -73,8 +69,11 @@ public class FXMLPlaygroundController implements Initializable {
     @FXML
     private Rectangle hitboxPlayingField;
 
+    @FXML
     private playerField.Player player;
 
+    @FXML
+    private ImageView ImageViewCharacter;
     private ImageView ImageViewPlayer1;
     private ImageView ImageViewPlayer2;
     private AnchorPane AnchorPanePlayer1 = new AnchorPane();
@@ -86,6 +85,8 @@ public class FXMLPlaygroundController implements Initializable {
 
     private Circle fireBallCircle;
     private Circle fireballCircle2;
+    private ImageView ImageViewFireball;
+    private StackPane stackPaneFireball = new StackPane();
 
     float next_point_x;
     float next_point_y;
@@ -296,35 +297,35 @@ public class FXMLPlaygroundController implements Initializable {
         if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
 
             if (degrees >= 338 || degrees < 23) {
-                Image image = new Image("resources/p"+ number +"_e.png");
+                Image image = new Image("resources/p" + number + "_e.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 23 && degrees < 68) {
-                Image image = new Image("resources/p"+ number +"_se.png");
+                Image image = new Image("resources/p" + number + "_se.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 68 && degrees < 113) {
-                Image image = new Image("resources/p"+ number +"_s.png");
+                Image image = new Image("resources/p" + number + "_s.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 113 && degrees < 158) {
-                Image image = new Image("resources/p"+ number +"_sw.png");
+                Image image = new Image("resources/p" + number + "_sw.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 158 && degrees < 203) {
-                Image image = new Image("resources/p"+ number +"_w.png");
+                Image image = new Image("resources/p" + number + "_w.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 203 && degrees < 248) {
-                Image image = new Image("resources/p"+ number +"_nw.png");
+                Image image = new Image("resources/p" + number + "_nw.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 248 && degrees < 293) {
-                Image image = new Image("resources/p"+ number +"_n.png");
+                Image image = new Image("resources/p" + number + "_n.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 293 && degrees < 338) {
-                Image image = new Image("resources/p"+ number +"_ne.png");
+                Image image = new Image("resources/p" + number + "_ne.png");
                 playerNumber.setImage(image);
 
             }
@@ -332,35 +333,35 @@ public class FXMLPlaygroundController implements Initializable {
         } else if (Player.getPlayerNumber() == 2) {
 
             if (degrees >= 338 || degrees < 23) {
-                Image image = new Image("resources/p"+ number2 +"_e.png");
+                Image image = new Image("resources/p" + number2 + "_e.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 23 && degrees < 68) {
-                Image image = new Image("resources/p"+ number2 +"_se.png");
+                Image image = new Image("resources/p" + number2 + "_se.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 68 && degrees < 113) {
-                Image image = new Image("resources/p"+ number2 +"_s.png");
+                Image image = new Image("resources/p" + number2 + "_s.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 113 && degrees < 158) {
-                Image image = new Image("resources/p"+ number2 +"_sw.png");
+                Image image = new Image("resources/p" + number2 + "_sw.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 158 && degrees < 203) {
-                Image image = new Image("resources/p"+ number2 +"_w.png");
+                Image image = new Image("resources/p" + number2 + "_w.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 203 && degrees < 248) {
-                Image image = new Image("resources/p"+ number2 +"_nw.png");
+                Image image = new Image("resources/p" + number2 + "_nw.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 248 && degrees < 293) {
-                Image image = new Image("resources/p"+ number2 +"_n.png");
+                Image image = new Image("resources/p" + number2 + "_n.png");
                 playerNumber.setImage(image);
 
             } else if (degrees >= 293 && degrees < 338) {
-                Image image = new Image("resources/p"+ number2 +"_ne.png");
+                Image image = new Image("resources/p" + number2 + "_ne.png");
                 playerNumber.setImage(image);
 
             }
@@ -369,6 +370,8 @@ public class FXMLPlaygroundController implements Initializable {
     }
 
     public void moveCalcFireBall() {
+
+        ImageViewFireball.setVisible(true);
 
         if (player.isPlayerDead() == false) {
             xposFireBall.clear();
@@ -444,6 +447,10 @@ public class FXMLPlaygroundController implements Initializable {
                     try {
                         Double x = new Double(xposFireBall.get(0).toString());
                         Double y = new Double(yposFireBall.get(0).toString());
+
+                        stackPaneFireball.setLayoutX(x);
+                        stackPaneFireball.setLayoutY(y);
+
                         fireBallCircle.setCenterX(x);
                         fireBallCircle.setCenterY(y);
 
@@ -514,7 +521,17 @@ public class FXMLPlaygroundController implements Initializable {
                 fireBallCircle.setStroke(Color.BLACK);
                 fireBallCircle.setFill(Color.BLACK);
                 fireBallCircle.setStrokeWidth(3);
-                AnchorPanePlayerField.getChildren().add(fireBallCircle);
+
+                stackPaneFireball.getChildren().add(fireBallCircle);
+
+                Image ImageFireball = new Image("resources/fireball.png");
+
+                ImageViewFireball = new ImageView(ImageFireball);
+                ImageViewFireball.setVisible(false);
+
+                stackPaneFireball.getChildren().add(ImageViewFireball);
+
+                AnchorPanePlayerField.getChildren().add(stackPaneFireball);
 
                 fireballNodes.add(fireBallCircle);
             }
@@ -643,6 +660,28 @@ public class FXMLPlaygroundController implements Initializable {
         c1.setStroke(Color.BLACK);
         c1.setFill(Color.BLACK);
         c1.setStrokeWidth(3);
+
+        //setting character images
+        ImageViewCharacter = new ImageView();
+        ImageViewCharacter.setLayoutX(220);
+        ImageViewCharacter.setLayoutY(580);
+        ImageViewCharacter.setX(100);
+        ImageViewCharacter.setY(100);
+
+        if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+
+            Image ImageCharacter = new Image("resources/p1_characterview.png");
+
+            ImageViewCharacter.setImage(ImageCharacter);
+
+        } else if (Player.getPlayerNumber() == 2) {
+
+            Image ImageCharacter = new Image("resources/p2_characterview.png");
+            ImageViewCharacter = new ImageView();
+            ImageViewCharacter.setImage(ImageCharacter);
+        }
+        
+        AnchorPanePlayerField.getChildren().add(ImageViewCharacter);
 
         ImageViewPlayer1 = new ImageView(imageView);
         ImageViewPlayer1.setLayoutX(x - 13);
@@ -842,6 +881,8 @@ public class FXMLPlaygroundController implements Initializable {
                             fireBallCircle.setCenterX(-200);
                             fireBallCircle.setCenterY(-200);
 
+                            ImageViewFireball.setVisible(false);
+
                             fireball.setCurrentPosX(-200);
                             fireball.setCurrentPoxY(-200);
 
@@ -932,7 +973,7 @@ public class FXMLPlaygroundController implements Initializable {
 
         double x = x1, y = y1;
         playerField.Player.setHp(playerField.Player.getHp() - Integer.parseInt(AllDataBaseInformation.getFireBallDamage()));
-        System.out.println("you have bin hit, your hp are now " + playerField.Player.getHp());
+        System.out.println("you have been hit, your hp is now " + playerField.Player.getHp());
         for (int i = 0; i < 50; i++) {
             x += knockBackSPEED * Math.cos(angle);
             y += knockBackSPEED * Math.sin(angle);
@@ -953,7 +994,7 @@ public class FXMLPlaygroundController implements Initializable {
 
     public void shrinkPlayerField() {
 
-        System.out.println("MINKA PLAYER FIELDEN");
+        System.out.println("MINSKA PLAYER FIELDEN");
         Platform.runLater(new Runnable() {
 
             @Override
