@@ -39,8 +39,6 @@ public class FXMLloggInController implements Initializable {
 
     private int isConnectedToServer = 0;
 
-    private final AudioHandler audio = new AudioHandler();
-
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");

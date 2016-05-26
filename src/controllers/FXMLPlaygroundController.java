@@ -196,7 +196,6 @@ public class FXMLPlaygroundController implements Initializable {
 
                         player.setCurrentPosX((float) stackPanePlayer1.getLayoutX());
                         player.setCurrentPoxY((float) stackPanePlayer1.getLayoutY());
-  
 
                         asignFireBallToMouse = false;
 
@@ -213,8 +212,8 @@ public class FXMLPlaygroundController implements Initializable {
                     fireball.setCursorPosX((float) me.getX());
                     fireball.setCursorPoxY((float) me.getY());
 
-                    fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX()+25); //center
-                    fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY()+25);
+                    fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX() + 25); //center
+                    fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY() + 25);
 
                     asignFireBallToMouse = false;
                     fireBallCooldown = Integer.parseInt(AllDataBaseInformation.getFireBallCD());
@@ -241,13 +240,13 @@ public class FXMLPlaygroundController implements Initializable {
             xpos.clear();
             ypos.clear();
 
-            int x1 = (int) player.getCurrentPosX() , y1 = (int) player.getCurrentPoxY();
+            int x1 = (int) player.getCurrentPosX(), y1 = (int) player.getCurrentPoxY();
             int x2 = (int) player.getCursorPosX(), y2 = (int) player.getCursorPoxY();
 
             double angle = Math.atan2(y2 - y1, x2 - x1);
 
             player.setAngle(angle);
-            double x = x1 , y = y1;
+            double x = x1, y = y1;
 
             while ((x != x2 && y != y2)) {
                 x += SPEED * Math.cos(angle);
@@ -326,7 +325,7 @@ public class FXMLPlaygroundController implements Initializable {
                         //c1.setCenterY(y);
                         stackPanePlayer1.setLayoutX(x);
                         stackPanePlayer1.setLayoutY(y);
-                        
+
                         player.setCurrentPosX((float) xpos.get(0));
                         player.setCurrentPoxY((float) ypos.get(0));
 
@@ -351,8 +350,7 @@ public class FXMLPlaygroundController implements Initializable {
                         Double y = new Double(yposFireBall.get(0).toString());
                         fireBallCircle.setCenterX(x);
                         fireBallCircle.setCenterY(y);
-                        
-                        
+
                         fireball.setCurrentPosX((float) xposFireBall.get(0));
                         fireball.setCurrentPoxY((float) yposFireBall.get(0));
 
@@ -484,15 +482,7 @@ public class FXMLPlaygroundController implements Initializable {
                         if (!xposFireBall.isEmpty() && !yposFireBall.isEmpty()) {
                             xposFireBall.remove(0);
                             yposFireBall.remove(0);
-                            
-                            bAudioThread = new Thread() {
-                                public void run() {
 
-                                    System.out.println("sound effect");
-                                    audioHandler.defineAudioPath(audioHandler.fireball_throw);
-                                }
-                            };
-                            
                             fireBallMove();
                         }
 
@@ -697,6 +687,14 @@ public class FXMLPlaygroundController implements Initializable {
 
                 if (collisionDetected) {
                     fireballHit();
+
+                    seAudioThread = new Thread() {
+                        public void run() {
+                            AudioHandler ah = new AudioHandler();
+                            ah.defineAudioPath(ah.fireball_hit);
+                        }
+                    };
+
                 }
             }
         });
@@ -839,14 +837,6 @@ public class FXMLPlaygroundController implements Initializable {
         }
 
         lockMovement = false;
-
-        bAudioThread = new Thread() {
-            public void run() {
-
-                System.out.println("sound effect");
-                audioHandler.defineAudioPath(audioHandler.fireball_hit);
-            }
-        };
 
     }
 
