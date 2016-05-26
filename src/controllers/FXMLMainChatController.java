@@ -5,7 +5,9 @@
  */
 package controllers;
 
+import Connections.dataBaseConnect;
 import chatSystem.Chat;
+import dataStorage.AllDataBaseInformation;
 import dataStorage.DataStorage;
 import dataStorage.PlayersStorage;
 import dataStorage.informationStorage;
@@ -84,16 +86,28 @@ public class FXMLMainChatController implements Initializable {
 
     @FXML
     private void createGame(ActionEvent event) {
+        handleDataBase();
 
-        informationStorage.setMasterOrNot(true);
-        cs.changeScene(event, "FXMLLobby");
+        if (AllDataBaseInformation.isIsConnected()) {
+            informationStorage.setMasterOrNot(true);
+            cs.changeScene(event, "FXMLLobby");
+        } else {
+
+            errorMessageInChat();
+        }
     }
 
     @FXML
     private void joinGame(ActionEvent event) {
+        handleDataBase();
 
-        informationStorage.setMasterOrNot(false);
-        cs.changeScene(event, "FXMLLobby");
+        if (AllDataBaseInformation.isIsConnected()) {
+            informationStorage.setMasterOrNot(false);
+            cs.changeScene(event, "FXMLLobby");
+        } else {
+
+            errorMessageInChat();
+        }
     }
 
     @Override
@@ -103,7 +117,6 @@ public class FXMLMainChatController implements Initializable {
             chat.sendNameToServer();
         }
         listenForIncommingMessages(chat);
-        System.out.println("true hej ");
         chat.requestNameList();
         chat.requestLobbyList();
         chat.requestIPList();
@@ -140,6 +153,11 @@ public class FXMLMainChatController implements Initializable {
         DataStorage.getAllChat().appendText("Please keep the chat mature \n");
     }
 
+    public void errorMessageInChat() {
+
+        DataStorage.getAllChat().appendText("Failed to connect to the Database please reconnect");
+    }
+
     private void keyListener(chatSystem.Chat chat) {
         typeToChat.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
@@ -162,9 +180,16 @@ public class FXMLMainChatController implements Initializable {
         new Thread(task).start();
     }
 
-    
+    public void handleDataBase() {
+
+        dataBaseConnect connect = new dataBaseConnect();
+        connect.connect();
+        connect.loadAllValuesIntoGame();
+
+    }
+
     @FXML
-    private void exit(ActionEvent event){
+    private void exit(ActionEvent event) {
 //        cs.changeScene(event, "FXMLloggIn");
         System.exit(0);
     }

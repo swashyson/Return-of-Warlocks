@@ -17,14 +17,32 @@ final public class Player {
     static float currentPoxY;
     static Player player;
     static int playerNumber = dataStorage.PlayersStorage.getPlayernumber();
-    static int playerHp;
+    static double angle;
+    static int hp = Integer.parseInt(dataStorage.AllDataBaseInformation.getPlayerHP());
+    static boolean playerDead = false;
 
-    public static int getPlayerHp() {
-        return playerHp;
+    public static boolean isPlayerDead() {
+        return playerDead;
     }
 
-    public static void setPlayerHp(int playerHp) {
-        Player.playerHp = playerHp;
+    public static void setPlayerDead(boolean playerDead) {
+        Player.playerDead = playerDead;
+    }
+
+    public static int getHp() {
+        return hp;
+    }
+
+    public static void setHp(int hp) {
+        Player.hp = hp;
+    }
+
+    public static double getAngle() {
+        return angle;
+    }
+
+    public static void setAngle(double angle) {
+        Player.angle = angle;
     }
 
     public static int getPlayerNumber() {

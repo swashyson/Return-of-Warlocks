@@ -16,13 +16,18 @@ public class allPlayersForMasterInGame {
     static String YposPlayer1;
     static String Player1Hp; 
     static String id;
+    static String playerAngle;
+
+   
+    static String hpplayer1;
 
     static String idFireBall;
     static String namePlayer1FireBall;
     static String XposPlayer1FireBall;
     static String YposPlayer1FireBall;
     static String angleFireball;
-    static String namePlayer2;
+    
+    static String namePlayer2; // 3 spelare
     static String XposPlayer2;
     static String YposPlayer2;
     static String Player2HP;
@@ -43,6 +48,21 @@ public class allPlayersForMasterInGame {
         allPlayersForMasterInGame.Player2HP = Player2HP;
     }
     static String id2;
+     public static String getHpplayer1() {
+        return hpplayer1;
+    }
+
+    public static void setHpplayer1(String hpplayer1) {
+        allPlayersForMasterInGame.hpplayer1 = hpplayer1;
+    }
+
+    public static String getPlayerAngle() {
+        return playerAngle;
+    }
+
+    public static void setPlayerAngle(String playerAngle) {
+        allPlayersForMasterInGame.playerAngle = playerAngle;
+    }
 
     public static String getAngleFireball() {
         return angleFireball;

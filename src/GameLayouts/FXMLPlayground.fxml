@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -12,17 +13,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPanePlayerField" prefHeight="800.0" prefWidth="1196.0" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLPlaygroundController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPanePlayerField" onKeyPressed="#spellListener" prefHeight="800.0" prefWidth="1196.0" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLPlaygroundController">
    <children>
       <Label layoutX="328.0" layoutY="683.0" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: #999999;" text="Picture of player" />
       <Label layoutX="463.0" layoutY="714.0" prefHeight="41.0" prefWidth="76.0" style="-fx-background-color: #999999;" text="Players Health" />
-      <Button layoutX="1088.0" layoutY="696.0" mnemonicParsing="false" onAction="#exit" prefHeight="57.0" prefWidth="62.0" style="-fx-background-color: #999998;" styleClass="exitbutton" stylesheets="@../resources/myButtons.css" />
+      <Button layoutX="1094.0" layoutY="687.0" maxHeight="95.0" maxWidth="73.0" minHeight="95.0" minWidth="73.0" mnemonicParsing="false" onAction="#exit" prefHeight="95.0" prefWidth="73.0" styleClass="exitbutton" stylesheets="@../resources/myButtons.css" />
       <ImageView fitHeight="630.0" fitWidth="1196.0" layoutY="39.0" preserveRatio="true">
          <image>
             <Image url="@../resources/playground.png" />
          </image>
       </ImageView>
-      <ImageView id="imageview_playingfield" fx:id="ma" fitHeight="513.0" fitWidth="874.0" layoutX="161.0" layoutY="98.0" onKeyPressed="#spellListener" preserveRatio="true">
+      <ImageView id="imageview_playingfield" fx:id="standingGround" fitHeight="513.0" fitWidth="874.0" layoutX="161.0" layoutY="98.0" preserveRatio="true">
          <image>
             <Image url="@../resources/stoneground874x513.png" />
          </image>
@@ -35,5 +36,7 @@
             <Image url="@../resources/warlocks_logo_splash2.png" />
          </image>
       </ImageView>
+      <Rectangle fx:id="hitboxPlayingField" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="513.0" layoutX="161.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="874.0" />
+      <ImageView id="p1_ImageView" fitHeight="47.0" fitWidth="52.0" layoutX="177.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
