@@ -118,7 +118,7 @@ public class FXMLPlaygroundController implements Initializable {
         createPlayerStartPointDisplay();
         detectMovementListener();
         playerField.Player.setPlayerHp(100);
-
+        
         
         thread = new Thread() {
             public void run() {
@@ -709,9 +709,9 @@ public class FXMLPlaygroundController implements Initializable {
 
     @FXML
     private void spellListener(KeyEvent ke) {
-
+        System.out.println("pressing key");
         if (ke.getCode() == KeyCode.DIGIT1) {
-
+            System.out.println("pressing 1");
             if (asignFireBallToMouse == true) {
 
                 asignFireBallToMouse = false;
