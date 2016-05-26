@@ -18,8 +18,17 @@ final public class Player {
     static Player player;
     static int playerNumber = dataStorage.PlayersStorage.getPlayernumber();
     static double angle;
+    static double degrees;
     static int hp = Integer.parseInt(dataStorage.AllDataBaseInformation.getPlayerHP());
     static boolean playerDead = false;
+
+    public static double getDegrees() {
+        return degrees;
+    }
+
+    public static void setDegrees(double degrees) {
+        Player.degrees = degrees;
+    }
 
     public static boolean isPlayerDead() {
         return playerDead;
@@ -93,7 +102,7 @@ final public class Player {
         Player.currentPoxY = currentPoxY;
     }
 
-    public Player(){
-    
+    public Player() {
+
     }
 }
