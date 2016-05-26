@@ -95,7 +95,7 @@ public class SlaveClient {
 
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() + "," + Player.getAngle() + "," + Player.getHp());
+            out.println("||||." + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY() + "," + PlayersStorage.getPlayernumber() + "," + Player.getAngle() + "," + Player.getHp() + "," + Player.getDegrees());
             //System.out.println("send: " + DataStorage.getUserName() + "," + Player.getCurrentPosX() + "," + Player.getCurrentPoxY());
             out.flush();
 
@@ -159,13 +159,15 @@ public class SlaveClient {
                             String playerID = null;
                             String angle = null;
                             String hp = null;
-                            if (namesList.length > 5) {
+                            String degrees = null;
+                            if (namesList.length > 6) {
                                 playerName = namesList[0];
                                 playerX = namesList[1];
                                 playerY = namesList[2];
                                 playerID = namesList[3];
                                 angle = namesList[4];
                                 hp = namesList[5];
+                                degrees = namesList[6];
                             } else {
 
                                 return;
@@ -181,6 +183,7 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setId(playerID);
                                     allPlayersForMasterInGame.setPlayerAngle(angle);
                                     allPlayersForMasterInGame.setHpplayer1(hp);
+                                    allPlayersForMasterInGame.setDegress(degrees);
                                     //System.out.println("ANGLE of the other player:" + angle );
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
 
@@ -192,6 +195,7 @@ public class SlaveClient {
                                     allPlayersForMasterInGame.setId(playerID);
                                     allPlayersForMasterInGame.setPlayerAngle(angle);
                                     allPlayersForMasterInGame.setHpplayer1(hp);
+                                    allPlayersForMasterInGame.setDegress(degrees);
                                     //System.out.println("ANGLE of the other player:" + angle );
                                     //System.out.println("Name: " + namesList[0] + "X: " + namesList[1] + "Y: " + namesList[2] + "PlayerID: " + namesList[3]);
                                 }

@@ -79,6 +79,7 @@ public class FXMLPlaygroundController implements Initializable {
     private ImageView ImageViewPlayer2;
     private AnchorPane AnchorPanePlayer1 = new AnchorPane();
     private StackPane stackPanePlayer1 = new StackPane();
+    private StackPane stackPanePlayer2 = new StackPane();
 
     private Circle c1;
     private Circle c2;
@@ -135,6 +136,7 @@ public class FXMLPlaygroundController implements Initializable {
     private boolean lockPlayerDeath = false;
 
     private int delay = 0;
+    private int immunProtectionForFireball = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -257,7 +259,9 @@ public class FXMLPlaygroundController implements Initializable {
 
             System.out.println("The value of degrees is: " + degrees);
 
-            setPlayerDirection(degrees);
+            player.setDegrees(degrees);
+
+            setPlayerDirection(degrees, ImageViewPlayer1, "1", "2");
 
             player.setAngle(angle);
 
@@ -287,80 +291,79 @@ public class FXMLPlaygroundController implements Initializable {
         }
     }
 
-    private void setPlayerDirection(double degrees) {
+    private void setPlayerDirection(double degrees, ImageView playerNumber, String number, String number2) {
 
         if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
 
             if (degrees >= 338 || degrees < 23) {
-                Image image = new Image("resources/p1_e.png");
-                ImageViewPlayer1.setImage(image);
+                Image image = new Image("resources/p"+ number +"_e.png");
+                playerNumber.setImage(image);
 
             } else if (degrees >= 23 && degrees < 68) {
-                Image image = new Image("resources/p1_se.png");
-                ImageViewPlayer1.setImage(image);
+                Image image = new Image("resources/p"+ number +"_se.png");
+                playerNumber.setImage(image);
 
             } else if (degrees >= 68 && degrees < 113) {
-                Image image = new Image("resources/p1_s.png");
-                ImageViewPlayer1.setImage(image);
-                
+                Image image = new Image("resources/p"+ number +"_s.png");
+                playerNumber.setImage(image);
+
             } else if (degrees >= 113 && degrees < 158) {
-                Image image = new Image("resources/p1_sw.png");
-                ImageViewPlayer1.setImage(image);
-                
+                Image image = new Image("resources/p"+ number +"_sw.png");
+                playerNumber.setImage(image);
+
             } else if (degrees >= 158 && degrees < 203) {
-                Image image = new Image("resources/p1_w.png");
-                ImageViewPlayer1.setImage(image);
-                
+                Image image = new Image("resources/p"+ number +"_w.png");
+                playerNumber.setImage(image);
+
             } else if (degrees >= 203 && degrees < 248) {
-                Image image = new Image("resources/p1_nw.png");
-                ImageViewPlayer1.setImage(image);
-                
+                Image image = new Image("resources/p"+ number +"_nw.png");
+                playerNumber.setImage(image);
+
             } else if (degrees >= 248 && degrees < 293) {
-                Image image = new Image("resources/p1_n.png");
-                ImageViewPlayer1.setImage(image);
+                Image image = new Image("resources/p"+ number +"_n.png");
+                playerNumber.setImage(image);
 
             } else if (degrees >= 293 && degrees < 338) {
-                Image image = new Image("resources/p1_ne.png");
-                ImageViewPlayer1.setImage(image);
+                Image image = new Image("resources/p"+ number +"_ne.png");
+                playerNumber.setImage(image);
 
             }
 
         } else if (Player.getPlayerNumber() == 2) {
 
-//            if (degrees >= 338 || degrees < 23) {
-//                Image image = new Image("resources/p2_e.png");
-//                ImageViewPlayer2.setImage(image);
-//
-//            } else if (degrees >= 23 && degrees < 68) {
-//                Image image = new Image("resources/p2_se.png");
-//                ImageViewPlayer2.setImage(image);
-//
-//            } else if (degrees >= 68 && degrees < 113) {
-//                Image image = new Image("resources/p2_s.png");
-//                ImageViewPlayer2.setImage(image);
-//                
-//            } else if (degrees >= 113 && degrees < 158) {
-//                Image image = new Image("resources/p2_sw.png");
-//                ImageViewPlayer2.setImage(image);
-//                
-//            } else if (degrees >= 158 && degrees < 203) {
-//                Image image = new Image("resources/p2_w.png");
-//                ImageViewPlayer2.setImage(image);
-//                
-//            } else if (degrees >= 203 && degrees < 248) {
-//                Image image = new Image("resources/p2_nw.png");
-//                ImageViewPlayer2.setImage(image);
-//                
-//            } else if (degrees >= 248 && degrees < 293) {
-//                Image image = new Image("resources/p2_n.png");
-//                ImageViewPlayer2.setImage(image);
-//
-//            } else if (degrees >= 293 && degrees < 338) {
-//                Image image = new Image("resources/p2_ne.png");
-//                ImageViewPlayer2.setImage(image);
-//
-//            }
-            
+            if (degrees >= 338 || degrees < 23) {
+                Image image = new Image("resources/p"+ number2 +"_e.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 23 && degrees < 68) {
+                Image image = new Image("resources/p"+ number2 +"_se.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 68 && degrees < 113) {
+                Image image = new Image("resources/p"+ number2 +"_s.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 113 && degrees < 158) {
+                Image image = new Image("resources/p"+ number2 +"_sw.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 158 && degrees < 203) {
+                Image image = new Image("resources/p"+ number2 +"_w.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 203 && degrees < 248) {
+                Image image = new Image("resources/p"+ number2 +"_nw.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 248 && degrees < 293) {
+                Image image = new Image("resources/p"+ number2 +"_n.png");
+                playerNumber.setImage(image);
+
+            } else if (degrees >= 293 && degrees < 338) {
+                Image image = new Image("resources/p"+ number2 +"_ne.png");
+                playerNumber.setImage(image);
+
+            }
         }
 
     }
@@ -466,8 +469,10 @@ public class FXMLPlaygroundController implements Initializable {
                     double xForPlayer1 = Double.parseDouble(allPlayersForMasterInGame.getXposPlayer1());
                     double yForPlayer1 = Double.parseDouble(allPlayersForMasterInGame.getYposPlayer1());
                     try {
-                        c2.setCenterX(xForPlayer1);
-                        c2.setCenterY(yForPlayer1);
+                        stackPanePlayer2.setLayoutX(xForPlayer1);
+                        stackPanePlayer2.setLayoutY(yForPlayer1);
+                        Double degrees = Double.parseDouble(allPlayersForMasterInGame.getDegress());
+                        setPlayerDirection(degrees, ImageViewPlayer2, "2", "1");
                     } catch (Exception ex) {
 
                         System.out.println("Skip1");
@@ -582,6 +587,10 @@ public class FXMLPlaygroundController implements Initializable {
 
                             playerDeath();
                         }
+                        if (immunProtectionForFireball > 0) {
+
+                            immunProtectionForFireball = immunProtectionForFireball - 1;
+                        }
 
                     }
 
@@ -606,13 +615,16 @@ public class FXMLPlaygroundController implements Initializable {
 
         int x = 0;
         int y = 0;
+        String imageView = null;
         if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) { //varför blir denna 0? johan //mattias
             x = 200;
             y = 200;
+            imageView = "resources/p1_standing.png";
         }
         if (Player.getPlayerNumber() == 2) {
             x = 400;
             y = 400;
+            imageView = "resources/p2_standing.png";
         }
         if (Player.getPlayerNumber() == 3) {
             x = 600;
@@ -632,7 +644,7 @@ public class FXMLPlaygroundController implements Initializable {
         c1.setFill(Color.BLACK);
         c1.setStrokeWidth(3);
 
-        ImageViewPlayer1 = new ImageView("resources/p1_standing.png");
+        ImageViewPlayer1 = new ImageView(imageView);
         ImageViewPlayer1.setLayoutX(x - 13);
         ImageViewPlayer1.setLayoutY(y - 22);
 
@@ -643,7 +655,7 @@ public class FXMLPlaygroundController implements Initializable {
         AnchorPanePlayerField.getChildren().add(stackPanePlayer1);
 
         nodes.add(c1);
-        
+
     }
 
     public void createItems() {
@@ -656,7 +668,19 @@ public class FXMLPlaygroundController implements Initializable {
             c2.setStroke(Color.BLACK);
             c2.setFill(Color.BLACK);
             c2.setStrokeWidth(3);
-            AnchorPanePlayerField.getChildren().add(c2);
+
+            if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+                ImageViewPlayer2 = new ImageView("resources/p2_standing.png");
+            } else {
+
+                ImageViewPlayer2 = new ImageView("resources/p1_standing.png");
+            }
+
+            stackPanePlayer2.getChildren().add(ImageViewPlayer2);
+            stackPanePlayer2.getChildren().add(c2);
+            stackPanePlayer2.getChildren().get(0).toFront();
+
+            AnchorPanePlayerField.getChildren().add(stackPanePlayer2);
 
             nodes.add(c2); // collision nodes
             //fireballNodes.add(c2);
@@ -778,7 +802,10 @@ public class FXMLPlaygroundController implements Initializable {
                 }
 
                 if (collisionDetected) {
-                    fireballHit();
+                    if (immunProtectionForFireball == 0) {
+                        fireballHit();
+                    }
+                    immunProtectionForFireball = 128;
                 }
             }
         });
@@ -962,8 +989,8 @@ public class FXMLPlaygroundController implements Initializable {
         if (lockPlayerDeath == false) {
             xpos.clear();
             ypos.clear();
-            c1.setCenterX(-500);
-            c1.setCenterY(-500);
+            stackPanePlayer1.setLayoutX(-500);
+            stackPanePlayer1.setLayoutY(-500);
             player.setCurrentPosX(-500);
             player.setCurrentPoxY(-500);
             player.setPlayerDead(true);

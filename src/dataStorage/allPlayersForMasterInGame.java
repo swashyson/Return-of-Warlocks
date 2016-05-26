@@ -16,8 +16,8 @@ public class allPlayersForMasterInGame {
     static String YposPlayer1;
     static String id;
     static String playerAngle;
+    static String degress;
 
-   
     static String hpplayer1;
 
     static String idFireBall;
@@ -25,12 +25,40 @@ public class allPlayersForMasterInGame {
     static String XposPlayer1FireBall;
     static String YposPlayer1FireBall;
     static String angleFireball;
-    
+
     static String namePlayer2; // 3 spelare
     static String XposPlayer2;
     static String YposPlayer2;
     static String id2;
-     public static String getHpplayer1() {
+
+    static int hp = Integer.parseInt(dataStorage.AllDataBaseInformation.getPlayerHP());
+    static boolean playerDead = false;
+
+    public static String getDegress() {
+        return degress;
+    }
+
+    public static void setDegress(String degress) {
+        allPlayersForMasterInGame.degress = degress;
+    }
+
+    public static int getHp() {
+        return hp;
+    }
+
+    public static void setHp(int hp) {
+        allPlayersForMasterInGame.hp = hp;
+    }
+
+    public static boolean isPlayerDead() {
+        return playerDead;
+    }
+
+    public static void setPlayerDead(boolean playerDead) {
+        allPlayersForMasterInGame.playerDead = playerDead;
+    }
+
+    public static String getHpplayer1() {
         return hpplayer1;
     }
 
