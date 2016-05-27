@@ -329,84 +329,96 @@ public class FXMLPlaygroundController implements Initializable {
 
     private void setPlayerDirection(double degrees, ImageView playerNumber, String number, String number2) {
 
-        if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+        Platform.runLater(new Runnable() {
 
-            if (degrees >= 338 || degrees < 23) {
-                Image image = new Image("resources/p" + number + "_e.png");
-                playerNumber.setImage(image);
+            @Override
+            public void run() {
+                if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
 
-            } else if (degrees >= 23 && degrees < 68) {
-                Image image = new Image("resources/p" + number + "_se.png");
-                playerNumber.setImage(image);
+                    if (degrees >= 338 || degrees < 23) {
+                        Image image = new Image("resources/p" + number + "_e.png");
+                        playerNumber.setImage(image);
 
-            } else if (degrees >= 68 && degrees < 113) {
-                Image image = new Image("resources/p" + number + "_s.png");
-                playerNumber.setImage(image);
+                    } else if (degrees >= 23 && degrees < 68) {
+                        Image image = new Image("resources/p" + number + "_se.png");
+                        playerNumber.setImage(image);
 
-            } else if (degrees >= 113 && degrees < 158) {
-                Image image = new Image("resources/p" + number + "_sw.png");
-                playerNumber.setImage(image);
+                    } else if (degrees >= 68 && degrees < 113) {
+                        Image image = new Image("resources/p" + number + "_s.png");
+                        playerNumber.setImage(image);
 
-            } else if (degrees >= 158 && degrees < 203) {
-                Image image = new Image("resources/p" + number + "_w.png");
-                playerNumber.setImage(image);
+                    } else if (degrees >= 113 && degrees < 158) {
+                        Image image = new Image("resources/p" + number + "_sw.png");
+                        playerNumber.setImage(image);
 
-            } else if (degrees >= 203 && degrees < 248) {
-                Image image = new Image("resources/p" + number + "_nw.png");
-                playerNumber.setImage(image);
+                    } else if (degrees >= 158 && degrees < 203) {
+                        Image image = new Image("resources/p" + number + "_w.png");
+                        playerNumber.setImage(image);
 
-            } else if (degrees >= 248 && degrees < 293) {
-                Image image = new Image("resources/p" + number + "_n.png");
-                playerNumber.setImage(image);
+                    } else if (degrees >= 203 && degrees < 248) {
+                        Image image = new Image("resources/p" + number + "_nw.png");
+                        playerNumber.setImage(image);
 
-            } else if (degrees >= 293 && degrees < 338) {
-                Image image = new Image("resources/p" + number + "_ne.png");
-                playerNumber.setImage(image);
+                    } else if (degrees >= 248 && degrees < 293) {
+                        Image image = new Image("resources/p" + number + "_n.png");
+                        playerNumber.setImage(image);
 
+                    } else if (degrees >= 293 && degrees < 338) {
+                        Image image = new Image("resources/p" + number + "_ne.png");
+                        playerNumber.setImage(image);
+
+                    }
+
+                } else if (Player.getPlayerNumber() == 2) {
+
+                    if (degrees >= 338 || degrees < 23) {
+                        Image image = new Image("resources/p" + number2 + "_e.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 23 && degrees < 68) {
+                        Image image = new Image("resources/p" + number2 + "_se.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 68 && degrees < 113) {
+                        Image image = new Image("resources/p" + number2 + "_s.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 113 && degrees < 158) {
+                        Image image = new Image("resources/p" + number2 + "_sw.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 158 && degrees < 203) {
+                        Image image = new Image("resources/p" + number2 + "_w.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 203 && degrees < 248) {
+                        Image image = new Image("resources/p" + number2 + "_nw.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 248 && degrees < 293) {
+                        Image image = new Image("resources/p" + number2 + "_n.png");
+                        playerNumber.setImage(image);
+
+                    } else if (degrees >= 293 && degrees < 338) {
+                        Image image = new Image("resources/p" + number2 + "_ne.png");
+                        playerNumber.setImage(image);
+
+                    }
+                }
             }
-
-        } else if (Player.getPlayerNumber() == 2) {
-
-            if (degrees >= 338 || degrees < 23) {
-                Image image = new Image("resources/p" + number2 + "_e.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 23 && degrees < 68) {
-                Image image = new Image("resources/p" + number2 + "_se.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 68 && degrees < 113) {
-                Image image = new Image("resources/p" + number2 + "_s.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 113 && degrees < 158) {
-                Image image = new Image("resources/p" + number2 + "_sw.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 158 && degrees < 203) {
-                Image image = new Image("resources/p" + number2 + "_w.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 203 && degrees < 248) {
-                Image image = new Image("resources/p" + number2 + "_nw.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 248 && degrees < 293) {
-                Image image = new Image("resources/p" + number2 + "_n.png");
-                playerNumber.setImage(image);
-
-            } else if (degrees >= 293 && degrees < 338) {
-                Image image = new Image("resources/p" + number2 + "_ne.png");
-                playerNumber.setImage(image);
-
-            }
-        }
+        });
 
     }
 
     public void moveCalcFireBall() {
 
-        ImageViewFireball.setVisible(true);
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                ImageViewFireball.setVisible(true);
+            }
+        });
 
         if (player.isPlayerDead() == false) {
             xposFireBall.clear();
@@ -697,7 +709,6 @@ public class FXMLPlaygroundController implements Initializable {
             }
         });
 
-        
     }
 
     public void updateGUICD() {
@@ -1196,35 +1207,42 @@ public class FXMLPlaygroundController implements Initializable {
 
     public void playerDeath() {
 
-        if (lockPlayerDeath == false) {
-            if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
-                xpos.clear();
-                ypos.clear();
-                stackPanePlayer1.setLayoutX(-500);
-                stackPanePlayer1.setLayoutY(-500);
-                player1InformationPan.setLayoutX(-500);
-                player1InformationPan.setLayoutY(-500);
-                player.setCurrentPosX(-500);
-                player.setCurrentPoxY(-500);
-                player.setPlayerDead(true);
-                slaveClient.sendDeath();
-                lockPlayerDeath = true;
-                System.out.println("Dead");
-            } else if (Player.getPlayerNumber() == 2) {
-                xpos.clear();
-                ypos.clear();
-                stackPanePlayer2.setLayoutX(-500);
-                stackPanePlayer2.setLayoutY(-500);
-                player2InformationPan.setLayoutX(-500);
-                player2InformationPan.setLayoutY(-500);
-                player.setCurrentPosX(-500);
-                player.setCurrentPoxY(-500);
-                player.setPlayerDead(true);
-                slaveClient.sendDeath();
-                lockPlayerDeath = true;
-                System.out.println("Dead");
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                if (lockPlayerDeath == false) {
+                    if (Player.getPlayerNumber() == 1 || Player.getPlayerNumber() == 0) {
+                        xpos.clear();
+                        ypos.clear();
+                        stackPanePlayer1.setLayoutX(-500);
+                        stackPanePlayer1.setLayoutY(-500);
+                        player1InformationPan.setLayoutX(-500);
+                        player1InformationPan.setLayoutY(-500);
+                        player.setCurrentPosX(-500);
+                        player.setCurrentPoxY(-500);
+                        player.setPlayerDead(true);
+                        slaveClient.sendDeath();
+                        lockPlayerDeath = true;
+                        System.out.println("Dead");
+                    } else if (Player.getPlayerNumber() == 2) {
+                        xpos.clear();
+                        ypos.clear();
+                        stackPanePlayer2.setLayoutX(-500);
+                        stackPanePlayer2.setLayoutY(-500);
+                        player2InformationPan.setLayoutX(-500);
+                        player2InformationPan.setLayoutY(-500);
+                        player.setCurrentPosX(-500);
+                        player.setCurrentPoxY(-500);
+                        player.setPlayerDead(true);
+                        slaveClient.sendDeath();
+                        lockPlayerDeath = true;
+                        System.out.println("Dead");
+                    }
+                }
             }
-        }
+        });
+
     }
 
     @FXML
