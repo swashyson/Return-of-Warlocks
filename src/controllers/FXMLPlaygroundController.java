@@ -697,6 +697,7 @@ public class FXMLPlaygroundController implements Initializable {
             }
         });
 
+        
     }
 
     public void updateGUICD() {
