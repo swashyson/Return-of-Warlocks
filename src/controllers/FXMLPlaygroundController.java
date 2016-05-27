@@ -44,6 +44,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -80,6 +81,10 @@ public class FXMLPlaygroundController implements Initializable {
     private playerField.Player player;
     @FXML
     private Label guihp;
+    @FXML
+    private Label guiCD;
+    @FXML
+    private Label winnerLabel;
 
     @FXML
     private ImageView ImageViewCharacter;
@@ -95,7 +100,9 @@ public class FXMLPlaygroundController implements Initializable {
     private Circle fireBallCircle;
     private Circle fireballCircle2;
     private ImageView ImageViewFireball;
+    private ImageView ImageViewFireball2;
     private StackPane stackPaneFireball = new StackPane();
+    private StackPane stackPaneFireball2 = new StackPane();
 
     float next_point_x;
     float next_point_y;
@@ -160,6 +167,9 @@ public class FXMLPlaygroundController implements Initializable {
     double calc;
     double calc2;
 
+    private int fireballCollisionTimer;
+    private boolean lockTheGame = false;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -210,45 +220,48 @@ public class FXMLPlaygroundController implements Initializable {
     public void detectMovementListener() {
         if (player.isPlayerDead() == false) {
             AnchorPanePlayerField.setOnMouseClicked((MouseEvent me) -> {
+                System.out.println("BUTTON: " + me.getButton());
 
-                if (asignFireBallToMouse == false || fireBallCooldown > 0) {
-                    if (lockMovement == false) {
+                if (me.getButton().equals(MouseButton.PRIMARY)) {
+                    if (asignFireBallToMouse == false || fireBallCooldown > 0) {
+                        if (lockMovement == false) {
 
-                        xpos.clear();
-                        ypos.clear();
+                            xpos.clear();
+                            ypos.clear();
 
-                        player.setCursorPosX((float) me.getX() - 25); //center
-                        player.setCursorPoxY((float) me.getY() - 25);
+                            player.setCursorPosX((float) me.getX() - 25); //center
+                            player.setCursorPoxY((float) me.getY() - 25);
 
-                        player.setCurrentPosX((float) stackPanePlayer1.getLayoutX());
-                        player.setCurrentPoxY((float) stackPanePlayer1.getLayoutY());
+                            player.setCurrentPosX((float) stackPanePlayer1.getLayoutX());
+                            player.setCurrentPoxY((float) stackPanePlayer1.getLayoutY());
+
+                            asignFireBallToMouse = false;
+
+                            t = new Thread(() -> {
+                                moveCalc();
+                            });
+                            t.start();
+                        }
+                    } else if (asignFireBallToMouse == true && fireBallCooldown == 0) {
+
+                        xposFireBall.clear();
+                        yposFireBall.clear();
+
+                        fireball.setCursorPosX((float) me.getX());
+                        fireball.setCursorPoxY((float) me.getY());
+
+                        fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX() + 11); //center
+                        fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY() + 11);
 
                         asignFireBallToMouse = false;
+                        fireBallCooldown = Integer.parseInt(AllDataBaseInformation.getFireBallCD());
 
-                        t = new Thread(() -> {
-                            moveCalc();
+                        t5 = new Thread(() -> {
+                            moveCalcFireBall();
                         });
-                        t.start();
+                        t5.start();
+
                     }
-                } else if (asignFireBallToMouse == true && fireBallCooldown == 0) {
-
-                    xposFireBall.clear();
-                    yposFireBall.clear();
-
-                    fireball.setCursorPosX((float) me.getX());
-                    fireball.setCursorPoxY((float) me.getY());
-
-                    fireball.setCurrentPosX((float) stackPanePlayer1.getLayoutX() + 25); //center
-                    fireball.setCurrentPoxY((float) stackPanePlayer1.getLayoutY() + 25);
-
-                    asignFireBallToMouse = false;
-                    fireBallCooldown = Integer.parseInt(AllDataBaseInformation.getFireBallCD());
-
-                    t5 = new Thread(() -> {
-                        moveCalcFireBall();
-                    });
-                    t5.start();
-
                 }
             });
 
@@ -479,9 +492,8 @@ public class FXMLPlaygroundController implements Initializable {
                         stackPaneFireball.setLayoutX(x);
                         stackPaneFireball.setLayoutY(y);
 
-                        fireBallCircle.setCenterX(x);
-                        fireBallCircle.setCenterY(y);
-
+                        //fireBallCircle.setCenterX(x);
+                        //fireBallCircle.setCenterY(y);
                         fireball.setCurrentPosX((float) xposFireBall.get(0));
                         fireball.setCurrentPoxY((float) yposFireBall.get(0));
 
@@ -534,8 +546,8 @@ public class FXMLPlaygroundController implements Initializable {
                     double xForPlayer1FireBall = Double.parseDouble(allPlayersForMasterInGame.getXposPlayer1FireBall());
                     double yForPlayer1FireBall = Double.parseDouble(allPlayersForMasterInGame.getYposPlayer1FireBall());
                     try {
-                        fireballCircle2.setCenterX(xForPlayer1FireBall);
-                        fireballCircle2.setCenterY(yForPlayer1FireBall);
+                        stackPaneFireball2.setLayoutX(xForPlayer1FireBall);
+                        stackPaneFireball2.setLayoutY(yForPlayer1FireBall);
                     } catch (Exception ex) {
 
                         System.out.println("Skip2");
@@ -605,6 +617,7 @@ public class FXMLPlaygroundController implements Initializable {
                         updateFireBallDisplay();
                         if (fireBallCooldown > 0) {
                             fireBallCooldown = fireBallCooldown - 1;
+                            updateGUICD();
                         }
                         if (shrinkTimer > 0) {
                             shrinkTimer = shrinkTimer - 1;
@@ -644,6 +657,11 @@ public class FXMLPlaygroundController implements Initializable {
 
                             immunProtectionForFireball = immunProtectionForFireball - 1;
                         }
+                        if (player.getWinningPlayer() != null && lockTheGame == false) {
+
+                            checkForWinner();
+                        }
+
                         updatePlayerHealth();
 
                     }
@@ -663,6 +681,35 @@ public class FXMLPlaygroundController implements Initializable {
             }
         });
         t2.start();
+    }
+
+    public void checkForWinner() {
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                winnerLabel.setVisible(true);
+                winnerLabel.setText("Winner: " + player.getWinningPlayer());
+                System.out.println("Vinnaren är::" + player.getWinningPlayer());
+                lockTheGame = true;
+            }
+        });
+
+    }
+
+    public void updateGUICD() {
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                int cd = fireBallCooldown / 128;
+                String cdString = Integer.toString(cd);
+                guiCD.setText(cdString);
+            }
+        });
     }
 
     public void updatePlayerHealth() {
@@ -720,6 +767,7 @@ public class FXMLPlaygroundController implements Initializable {
         c1.setStroke(Color.BLACK);
         c1.setFill(Color.BLACK);
         c1.setStrokeWidth(3);
+        c1.setVisible(false);
 
         //setting character images
         ImageViewCharacter = new ImageView();
@@ -737,10 +785,9 @@ public class FXMLPlaygroundController implements Initializable {
         } else if (Player.getPlayerNumber() == 2) {
 
             Image ImageCharacter = new Image("resources/p2_characterview.png");
-            ImageViewCharacter = new ImageView();
             ImageViewCharacter.setImage(ImageCharacter);
         }
-        
+
         AnchorPanePlayerField.getChildren().add(ImageViewCharacter);
 
         ImageViewPlayer1 = new ImageView(imageView);
@@ -841,9 +888,16 @@ public class FXMLPlaygroundController implements Initializable {
             fireballCircle2.setStroke(Color.BLACK);
             fireballCircle2.setFill(Color.BLACK);
             fireballCircle2.setStrokeWidth(3);
-            AnchorPanePlayerField.getChildren().add(fireballCircle2);
-
+            stackPaneFireball2.getChildren().add(fireballCircle2);
             fireballNodes.add(fireballCircle2);
+
+            Image ImageFireball = new Image("resources/fireball.png");
+            ImageViewFireball2 = new ImageView(ImageFireball);
+            ImageViewFireball2.setVisible(true);
+            stackPaneFireball2.getChildren().add(ImageViewFireball2);
+            stackPaneFireball2.getChildren().get(1).toFront();
+
+            AnchorPanePlayerField.getChildren().add(stackPaneFireball2);
 
             createHealthAndNameBarDisplaysForEnemys();
 
@@ -992,16 +1046,16 @@ public class FXMLPlaygroundController implements Initializable {
 
                         @Override
                         public void run() {
-                            fireBallCircle.setCenterX(-200);
-                            fireBallCircle.setCenterY(-200);
+                            for (int i = 0; i < xposFireBall.size(); i++) {
 
-                            ImageViewFireball.setVisible(false);
+                                xposFireBall.remove(10);
+                                yposFireBall.remove(10);
+                            }
 
+                            stackPaneFireball.setLayoutX(-200);
+                            stackPaneFireball.setLayoutY(-200);
                             fireball.setCurrentPosX(-200);
                             fireball.setCurrentPoxY(-200);
-
-                            xposFireBall.clear();
-                            yposFireBall.clear();
                         }
                     });
 

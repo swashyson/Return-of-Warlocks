@@ -52,5 +52,15 @@
             <Image url="@../resources/fireball_ability.png" />
          </image>
       </ImageView>
+      <Label fx:id="guiCD" layoutX="643.0" layoutY="695.0" text="0">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Label fx:id="winnerLabel" layoutX="277.0" layoutY="269.0" prefHeight="131.0" prefWidth="643.0" text="Winner" textFill="WHITE" visible="false">
+         <font>
+            <Font size="66.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

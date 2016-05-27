@@ -251,6 +251,7 @@ public class SlaveClient {
                         if (test.contains("||||d")) {
                             name = test.substring(5);
                             System.out.println("The winner is: " + name);
+                            Player.setWinningPlayer(name);
 
                         }
 

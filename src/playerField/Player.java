@@ -20,7 +20,16 @@ final public class Player {
     static double angle;
     static double degrees;
     static int hp = Integer.parseInt(dataStorage.AllDataBaseInformation.getPlayerHP());
-    static boolean playerDead = false;
+    static boolean playerDead = false; 
+    static String winningPlayer = null;
+
+    public static String getWinningPlayer() {
+        return winningPlayer;
+    }
+
+    public static void setWinningPlayer(String winningPlayer) {
+        Player.winningPlayer = winningPlayer;
+    }
 
     public static double getDegrees() {
         return degrees;
