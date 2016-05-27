@@ -37,6 +37,14 @@
     -fx-background-position: center center;
 }
 
+.healthheartlabel{
+    -fx-background-image: url("health_heart.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 69 63;
+    -fx-background-position: center center;
+    
+}
+
 /*@font-face {
     src: url('/fonts/xenippa1.ttf');
 }

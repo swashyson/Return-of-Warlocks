@@ -23,8 +23,7 @@ import java.util.logging.Logger;
  */
 public class dataBaseConnect {
 
-    String url = "jdbc:mysql://85.197.159.180:3306/tomra";
-    //String url = "jdbc:mysql://192.168.1.231:3306/tomra"; // ändra beroende på vilket dator ni sitter på
+    String url = "jdbc:mysql://85.197.159.180:3306/tomra"; // ändra beroende på vilket dator ni sitter på
     String user = "mohini";
     String password = "mohini";
 

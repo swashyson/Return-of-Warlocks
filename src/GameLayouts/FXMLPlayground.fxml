@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -15,12 +16,19 @@
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPanePlayerField" onKeyPressed="#spellListener" prefHeight="800.0" prefWidth="1196.0" styleClass="lobbypane" stylesheets="@../resources/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FXMLPlaygroundController">
    <children>
-      <Label layoutX="328.0" layoutY="683.0" prefHeight="103.0" prefWidth="106.0" style="-fx-background-color: #999999;" text="Picture of player" />
-      <Label layoutX="463.0" layoutY="714.0" prefHeight="41.0" prefWidth="76.0" style="-fx-background-color: #999999;" text="Players Health" />
+      <Label fx:id="guihp" alignment="CENTER" contentDisplay="CENTER" layoutX="453.0" layoutY="695.0" pickOnBounds="false" prefHeight="63.0" prefWidth="69.0" styleClass="healthheartlabel" stylesheets="@../resources/style.css" text="100" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
       <Button layoutX="1094.0" layoutY="687.0" maxHeight="95.0" maxWidth="73.0" minHeight="95.0" minWidth="73.0" mnemonicParsing="false" onAction="#exit" prefHeight="95.0" prefWidth="73.0" styleClass="exitbutton" stylesheets="@../resources/myButtons.css" />
+      <ImageView fitHeight="602.0" fitWidth="1168.0" layoutX="14.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/animatedlava2.gif" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="630.0" fitWidth="1196.0" layoutY="39.0" preserveRatio="true">
          <image>
-            <Image url="@../resources/playground.png" />
+            <Image url="@../resources/playground_frame.png" />
          </image>
       </ImageView>
       <ImageView id="imageview_playingfield" fx:id="standingGround" fitHeight="513.0" fitWidth="874.0" layoutX="161.0" layoutY="98.0" preserveRatio="true">
@@ -31,12 +39,18 @@
             <DropShadow height="23.97" radius="9.9925" width="18.0" />
          </effect>
       </ImageView>
-      <ImageView fitHeight="103.0" fitWidth="113.0" layoutX="709.0" layoutY="698.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="100.0" fitWidth="199.0" layoutX="47.0" layoutY="682.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../resources/warlocks_logo_splash2.png" />
+            <Image url="@../resources/warlocks_logo199x100.png" />
          </image>
       </ImageView>
       <Rectangle fx:id="hitboxPlayingField" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="513.0" layoutX="161.0" layoutY="98.0" stroke="BLACK" strokeType="INSIDE" width="874.0" />
       <ImageView id="p1_ImageView" fitHeight="47.0" fitWidth="52.0" layoutX="177.0" layoutY="114.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="328.0" layoutY="680.0" preserveRatio="true" />
+      <ImageView fitHeight="80.0" fitWidth="50.0" layoutX="626.0" layoutY="695.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/fireball_ability.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

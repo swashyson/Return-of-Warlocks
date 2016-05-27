@@ -40,9 +40,8 @@ public class FXMLloggInController implements Initializable {
     private TextField textfieldName;
 
     private int isConnectedToServer = 0;
-
-    private final AudioHandler audio = new AudioHandler();
     ActionEvent event;
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         this.event = event;
